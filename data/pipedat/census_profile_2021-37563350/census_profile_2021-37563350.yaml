@@ -1,0 +1,32 @@
+pipeline:
+  pipeline_id: '37563350'
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2023-03-15'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_profile_2021-37563350.R
+description:
+  name: Census Profile, 2021 Census of Population
+  description: A detailed statistical portrait of Canada and its people by their demographic,
+    social and economic characteristics.
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 44
+    first_name: ''
+    last_name: ''
+    organization: Statistics Canada
+    department: ''
+    role: ''
+    email: infostats@statcan.gc.ca
+    phone: ''
+  citekey: statisticscanada2021a
+  url: https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/details/download-telecharger.cfm?Lang=E
+  uuid: .na.character
+  availability: open

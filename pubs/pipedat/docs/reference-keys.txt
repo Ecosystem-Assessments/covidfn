@@ -1,0 +1,9 @@
+fig:aoi
+tab:dataapp
+pipedat-report
+area-of-interest
+data-summary
+gridded-data
+canadian-social-vulnerabilities-using-the-2021-census-of-poulation
+timeline-of-covid-19-in-canada
+assessment-of-acceptable-housing-in-canada

@@ -11,6 +11,7 @@ pipeline <- function() {
   get_basemap()
 
   # Integrate data 
+  library(pipedat)
   pipedat::pipeflow()
   
   # Figures 

@@ -1,0 +1,33 @@
+pipeline:
+  pipeline_id: 288ca300
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2023-03-13'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_boundary_division_2021-288ca300.R
+description:
+  name: Census cartographic subdivision boundary files 2016
+  description: Boundary files for subdivision areas of the 2016 Canadian census
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 44
+    first_name: ''
+    last_name: ''
+    organization: Statistics Canada
+    department: ''
+    role: ''
+    email: infostats@statcan.gc.ca
+    phone: ''
+  citekey:
+  - statisticscanada2022f
+  - statisticscanada2022
+  url: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip
+  uuid: .na.character
+  availability: open

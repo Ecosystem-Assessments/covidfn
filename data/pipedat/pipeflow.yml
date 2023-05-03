@@ -7,27 +7,22 @@ pipedat:
     grd: data/grid/grid.tif
     integrate: TRUE
     ingrid: TRUE
-    keep_raw: TRUE
-    bbox:
-      xmin: -72
-      ymin: 35
-      xmax: -50
-      ymax: 50
-    timespan:
-      - 2020
-      - 2021
-      - 2022
+    keep_raw: FALSE
   # ==========================================================================
-  # UID of pipelines to eexecute
+  # UID of pipelines to execute
   pipelines:
-    - "pipeline_id1"
-    - "pipeline_id2"
-    - ...
-    - "pipeline_idn"
+    - "a56e753b" # Covid Timeline Canada
+    # - "8b0bbc44" # Open Database of Healthcare Facilities
+    - "852db1a3" # Census 2021 housing suitability
+    - "b48b01d6" # Census 2021 dwelling condition
+    - "f4abec86" # Census 2021 acceptable housing
+    - "5e4be996" # Census cartographic subdivision boundary files 2021
+    - "288ca300" # Census cartographic division boundary files 2021
+    - "175ec912" # Acceptable housing in Canada
+    - "37563350" # Census Profile, 2021 Census of Population
+    - "8671c3e4" # Canadian social vulnerabilities using the 2021 Census of Poulation
+    # - "7daa23ee" # Census 2021 road network file
   # ==========================================================================
-  # Additional parameters parsed to species pipelines 
+  # Additional parameters parsed to pipelines 
   params:
-    halpern_layers:
-      - "inorganic"
-      - "plumes_fert"
-      - "plumes_pest"
+    - census_geo_8671c3e4: "division"
