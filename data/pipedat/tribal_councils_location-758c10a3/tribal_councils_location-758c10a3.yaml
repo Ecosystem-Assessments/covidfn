@@ -1,0 +1,35 @@
+pipeline:
+  pipeline_id: 758c10a3
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2023-05-03'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/tribal_councils_location-758c10a3.R
+description:
+  name: Tribal Councils Location
+  description: The tribal council geographic location dataset contains the geographic
+    location of all tribal councils in Canada as points as well as basic attributes
+    data. Each tribal council point represents its address as it is registered in
+    Indigenous and Northern Affairs Canada (INAC) Indian Government Support System
+    (IGSS).
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 55
+    first_name: ''
+    last_name: ''
+    organization: Aboriginal Affairs and Northern Development Canada
+    department: ''
+    role: ''
+    email: aadnc.infopubs.aandc@canada.ca
+    phone: ''
+  citekey: cirnac2019
+  url: https://open.canada.ca/data/en/dataset/73dbaaca-24b6-4c04-bd52-e7b7ab0c3d8f
+  uuid: 73dbaaca-24b6-4c04-bd52-e7b7ab0c3d8f
+  availability: open

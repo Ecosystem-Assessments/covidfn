@@ -1,0 +1,37 @@
+pipeline:
+  pipeline_id: 7daa23ee
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2023-03-14'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_road_network_file_2021-7daa23ee.R
+description:
+  name: Census 2021 road network file
+  description: The 2021 Census Road Network File includes the unique identifier, DGUID,
+    name and type for each side of a street arc (where applicable) for provinces and
+    territories, and census subdivisions. In the 2021 Census Road Network File, streets
+    are ranked according to five levels of detail, suitable for mapping at small to
+    medium scales.
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 44
+    first_name: ''
+    last_name: ''
+    organization: Statistics Canada
+    department: ''
+    role: ''
+    email: infostats@statcan.gc.ca
+    phone: ''
+  citekey:
+  - statisticscanada2021a
+  - statisticscanada2021b
+  url: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/rnf-frr/index2021-eng.cfm?year=21
+  uuid: ''
+  availability: open

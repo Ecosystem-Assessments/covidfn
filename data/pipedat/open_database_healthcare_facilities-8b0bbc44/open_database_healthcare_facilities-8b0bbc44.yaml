@@ -1,0 +1,37 @@
+pipeline:
+  pipeline_id: 8b0bbc44
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2022-11-09'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/open_database_healthcare_facilities-8b0bbc44.R
+description:
+  name: Open Database of Healthcare Facilities
+  description: The Open Database of Healthcare Facilities (ODHF) contains the names,
+    addresses and geo-coordinates of healthcare facilities across Canada. Facilities
+    are classified by type. The current version (version 1.1) contains approximately
+    7,000 records compiled from open data sources, publicly available data, and data
+    directly provided by sources for inclusion as open data.
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 43
+    first_name: ''
+    last_name: ''
+    organization: Statistics Canada
+    department: ''
+    role: ''
+    email: STATCAN.infostats-infostats.STATCAN@canada.ca
+    phone: ''
+  citekey:
+  - statisticscanada2020
+  - statisticscanada2020a
+  url: https://open.canada.ca/data/en/dataset/543fe07a-fd79-40e9-a829-ccd697526765
+  uuid: 543fe07a-fd79-40e9-a829-ccd697526765
+  availability: open

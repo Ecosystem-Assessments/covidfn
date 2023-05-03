@@ -98,9 +98,13 @@ div.csl-indent {
 <li class="chapter" data-level="3" data-path="data-summary.html"><a href="data-summary.html"><i class="fa fa-check"></i><b>3</b> Data summary</a></li>
 <li class="chapter" data-level="4" data-path="gridded-data.html"><a href="gridded-data.html"><i class="fa fa-check"></i><b>4</b> Gridded data</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="gridded-data.html"><a href="gridded-data.html#canadian-social-vulnerabilities-using-the-2021-census-of-poulation"><i class="fa fa-check"></i><b>4.1</b> Canadian social vulnerabilities using the 2021 Census of Poulation</a></li>
-<li class="chapter" data-level="4.2" data-path="gridded-data.html"><a href="gridded-data.html#timeline-of-covid-19-in-canada"><i class="fa fa-check"></i><b>4.2</b> Timeline of COVID-19 in Canada</a></li>
-<li class="chapter" data-level="4.3" data-path="gridded-data.html"><a href="gridded-data.html#assessment-of-acceptable-housing-in-canada"><i class="fa fa-check"></i><b>4.3</b> Assessment of acceptable housing in Canada</a></li>
+<li class="chapter" data-level="4.1" data-path="gridded-data.html"><a href="gridded-data.html#aboriginal-lands-of-canada-legislative-boundaries"><i class="fa fa-check"></i><b>4.1</b> Aboriginal Lands of Canada Legislative Boundaries</a></li>
+<li class="chapter" data-level="4.2" data-path="gridded-data.html"><a href="gridded-data.html#canadian-social-vulnerabilities-using-the-2021-census-of-poulation"><i class="fa fa-check"></i><b>4.2</b> Canadian social vulnerabilities using the 2021 Census of Poulation</a></li>
+<li class="chapter" data-level="4.3" data-path="gridded-data.html"><a href="gridded-data.html#census-2021-road-network-file"><i class="fa fa-check"></i><b>4.3</b> Census 2021 road network file</a></li>
+<li class="chapter" data-level="4.4" data-path="gridded-data.html"><a href="gridded-data.html#timeline-of-covid-19-in-canada"><i class="fa fa-check"></i><b>4.4</b> Timeline of COVID-19 in Canada</a></li>
+<li class="chapter" data-level="4.5" data-path="gridded-data.html"><a href="gridded-data.html#assessment-of-acceptable-housing-in-canada"><i class="fa fa-check"></i><b>4.5</b> Assessment of acceptable housing in Canada</a></li>
+<li class="chapter" data-level="4.6" data-path="gridded-data.html"><a href="gridded-data.html#inuit-regions-inuit-nunangat"><i class="fa fa-check"></i><b>4.6</b> Inuit Regions (Inuit Nunangat)</a></li>
+<li class="chapter" data-level="4.7" data-path="gridded-data.html"><a href="gridded-data.html#open-database-of-healthcare-facilities"><i class="fa fa-check"></i><b>4.7</b> Open Database of Healthcare Facilities</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
 <li class="divider"></li>
@@ -125,7 +129,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="data-summary" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">3</span> Data summary<a href="data-summary.html#data-summary" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<table>
+<table style="width:100%;">
 <caption><span id="tab:dataapp">Table 3.1: </span>List of data accessed, formatted, and incorporated in a study grid through the <code>pipedat</code> package</caption>
 <colgroup>
 <col width="1%" />
@@ -149,6 +153,15 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/aboriginal_lands_canada-6eefac0b.R">6eefac0b</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/522b07b9-78e2-4819-b736-ad9208eb1067">Aboriginal Lands of Canada Legislative Boundaries</a></td>
+<td align="left">The Aboriginal Lands of Canada Legislative Boundaries web service includes legislative boundaries of Indian Reserves, Land Claim Settlement Lands (lands created under Comprehensive Land Claims Process that do not or will not have Indian Reserve status under the Indian Act) and Indian Lands.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">58</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-nrc2022" role="doc-biblioref">N. R. Canada</a> (<a href="bibliography.html#ref-nrc2022" role="doc-biblioref">2022</a>)</span></td>
+</tr>
+<tr class="even">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/canadian_vulnerabilities_census-8671c3e4.R">8671c3e4</a></td>
 <td align="left"><a href="NA">Canadian social vulnerabilities using the 2021 Census of Poulation</a></td>
 <td align="left">Assessment of proxies of social vulnerabilities across Canada using data from the 2021 Census of Population.</td>
@@ -157,59 +170,68 @@ div.csl-indent {
 <td align="right">NA</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_acceptable_housing_2021-f4abec86.R">f4abec86</a></td>
 <td align="left"><a href="https://www150.statcan.gc.ca/n1/tbl/csv/98100246-eng.zip">Census 2021 acceptable housing</a></td>
 <td align="left">Acceptable housing by tenure: Canada, provinces and territories, census divisions and census subdivisions</td>
 <td align="left">-</td>
 <td align="left">2023-05-03</td>
 <td align="right">44</td>
-<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022e" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022e" role="doc-biblioref">2022e</a>)</span></td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022e" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022e" role="doc-biblioref">2022e</a>)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_boundary_division_2021-288ca300.R">288ca300</a></td>
 <td align="left"><a href="https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip">Census cartographic subdivision boundary files 2016</a></td>
 <td align="left">Boundary files for subdivision areas of the 2016 Canadian census</td>
 <td align="left">-</td>
 <td align="left">2023-05-03</td>
 <td align="right">44</td>
-<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">2022b</a>)</span>; <span class="citation"><a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">2022a</a>)</span></td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">2022b</a>)</span>; <span class="citation"><a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">2022a</a>)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_boundary_subdivision_2021-5e4be996.R">5e4be996</a></td>
 <td align="left"><a href="https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcsd000b21a_e.zip">Census cartographic subdivision boundary files 2021</a></td>
 <td align="left">Boundary files for subdivision areas of the 2021 Canadian census</td>
 <td align="left">-</td>
 <td align="left">2023-05-03</td>
 <td align="right">44</td>
-<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">2022b</a>)</span>; <span class="citation"><a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">2022a</a>)</span></td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022f" role="doc-biblioref">2022b</a>)</span>; <span class="citation"><a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022" role="doc-biblioref">2022a</a>)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_dwelling_condition_2021-b48b01d6.R">b48b01d6</a></td>
 <td align="left"><a href="https://www150.statcan.gc.ca/n1/tbl/csv/98100233-eng.zip">Census 2021 dwelling condition</a></td>
 <td align="left">Dwelling condition by tenure: Canada, provinces and territories, census divisions and census subdivisions</td>
 <td align="left">-</td>
 <td align="left">2023-05-03</td>
 <td align="right">44</td>
-<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022d" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022d" role="doc-biblioref">2022c</a>)</span></td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022d" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022d" role="doc-biblioref">2022c</a>)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_housing_suitability_2021-852db1a3.R">852db1a3</a></td>
 <td align="left"><a href="https://www150.statcan.gc.ca/n1/tbl/csv/98100237-eng.zip">Census 2021 housing suitability</a></td>
 <td align="left">Housing suitability by tenure: Canada, provinces and territories, census divisions and census subdivisions</td>
 <td align="left">-</td>
 <td align="left">2023-05-03</td>
 <td align="right">44</td>
-<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022c" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2022c" role="doc-biblioref">2022d</a>)</span></td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2022c" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2022c" role="doc-biblioref">2022d</a>)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_profile_2021-37563350.R">37563350</a></td>
 <td align="left"><a href="https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/details/download-telecharger.cfm?Lang=E">Census Profile, 2021 Census of Population</a></td>
 <td align="left">A detailed statistical portrait of Canada and its people by their demographic, social and economic characteristics.</td>
 <td align="left">-</td>
 <td align="left">2023-05-03</td>
 <td align="right">44</td>
-<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2021a" role="doc-biblioref">Canada</a> (<a href="bibliography.html#ref-statisticscanada2021a" role="doc-biblioref">2021</a>)</span></td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2021a" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2021a" role="doc-biblioref">2021b</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_road_network_file_2021-7daa23ee.R">7daa23ee</a></td>
+<td align="left"><a href="https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/rnf-frr/index2021-eng.cfm?year=21">Census 2021 road network file</a></td>
+<td align="left">The 2021 Census Road Network File includes the unique identifier, DGUID, name and type for each side of a street arc (where applicable) for provinces and territories, and census subdivisions. In the 2021 Census Road Network File, streets are ranked according to five levels of detail, suitable for mapping at small to medium scales.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">44</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2021a" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2021a" role="doc-biblioref">2021b</a>)</span>; <span class="citation"><a href="bibliography.html#ref-statisticscanada2021b" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2021b" role="doc-biblioref">2021a</a>)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/covid_timeline_canada-a56e753b.R">a56e753b</a></td>
@@ -221,6 +243,24 @@ div.csl-indent {
 <td align="left"><span class="citation"><a href="bibliography.html#ref-CovidTimelineCanada" role="doc-biblioref">Berry et al.</a> (<a href="bibliography.html#ref-CovidTimelineCanada" role="doc-biblioref">2021</a>)</span></td>
 </tr>
 <tr class="odd">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/first_nations_location-ce594316.R">ce594316</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/b6567c5c-8339-4055-99fa-63f92114d9e4">First Nations Location</a></td>
+<td align="left">The First Nations geographic location dataset contains the geographic location of First Nations (groups and subgroups) in Canada as points as well as basic attributes data.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">55</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-isc2022" role="doc-biblioref">I. S. Canada</a> (<a href="bibliography.html#ref-isc2022" role="doc-biblioref">2022</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/geolocated_placenames-b5433840.R">b5433840</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/fe945388-1dd9-4a4a-9a1e-5c552579a28c">Geolocated placenames in Canada</a></td>
+<td align="left">The collection of geolocated placenames in Canada represents a consistent and comprehensive distribution of named places across Canada. Named places include large and small cities, villages, First Nations Communities, Small Hamlets etc.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">65</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-isedc2020" role="doc-biblioref">Science and Innovation</a> (<a href="bibliography.html#ref-isedc2020" role="doc-biblioref">2020</a>)</span></td>
+</tr>
+<tr class="odd">
 <td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/housing_acceptability_canada-175ec912.R">175ec912</a></td>
 <td align="left"><a href="NA">Assessment of acceptable housing in Canada</a></td>
 <td align="left">Acceptable housing across Canada based on Statistics Canada’s census and statistics on acceptable housing, dwelling conditions, and housing suitability</td>
@@ -228,6 +268,51 @@ div.csl-indent {
 <td align="left">2023-05-03</td>
 <td align="right">NA</td>
 <td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/inuit_communities_location-621e9a76.R">621e9a76</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/2bcf34b5-4e9a-431b-9e43-1eace6c873bd">Inuit Communities Location</a></td>
+<td align="left">The Inuit Communities geographic location dataset contains the geographic location of Inuit Communities in Canada as points, as well as data attributes specific to each community.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">55</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-cirnac2020" role="doc-biblioref">Relations and orthern Affairs Canada</a> (<a href="bibliography.html#ref-cirnac2020" role="doc-biblioref">2020</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/inuit_regions-ce5d1455.R">ce5d1455</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/f242b881-75e3-40bb-a148-63410b4ce2af">Inuit Regions (Inuit Nunangat)</a></td>
+<td align="left">The Inuit Regions, also known as the Inuit Nunangat, dataset contains the geographical boundaries of the 4 Inuit Regions in Canada: Inuvialuit, Nunavut, Nunavik and Nunatsiavut.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">55</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-cirnac2019a" role="doc-biblioref">Relations and orthern Affairs Canada</a> (<a href="bibliography.html#ref-cirnac2019a" role="doc-biblioref">2019a</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/native_land_digital-7fe284e4.R">7fe284e4</a></td>
+<td align="left"><a href="https://native-land.ca/">Native Land Digital</a></td>
+<td align="left">Native Land is an app to help map Indigenous territories, treaties, and languages. The map provided does not represent or intend to represent official or legal boundaries of any Indigenous nations. To learn about definitive boundaries, contact the nations in question. Also, the map is not perfect – it is a work in progress with tons of contributions from the community. Please send fixes to <a href="mailto:info@native-land.ca" class="email">info@native-land.ca</a> if you find errors.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">54</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-nativelanddigital2022" role="doc-biblioref">Digital</a> (<a href="bibliography.html#ref-nativelanddigital2022" role="doc-biblioref">2022</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/open_database_healthcare_facilities-8b0bbc44.R">8b0bbc44</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/543fe07a-fd79-40e9-a829-ccd697526765">Open Database of Healthcare Facilities</a></td>
+<td align="left">The Open Database of Healthcare Facilities (ODHF) contains the names, addresses and geo-coordinates of healthcare facilities across Canada. Facilities are classified by type. The current version (version 1.1) contains approximately 7,000 records compiled from open data sources, publicly available data, and data directly provided by sources for inclusion as open data.</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">43</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-statisticscanada2020" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2020" role="doc-biblioref">2020a</a>)</span>; <span class="citation"><a href="bibliography.html#ref-statisticscanada2020a" role="doc-biblioref">S. Canada</a> (<a href="bibliography.html#ref-statisticscanada2020a" role="doc-biblioref">2020b</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/tribal_councils_location-758c10a3.R">758c10a3</a></td>
+<td align="left"><a href="https://open.canada.ca/data/en/dataset/73dbaaca-24b6-4c04-bd52-e7b7ab0c3d8f">Tribal Councils Location</a></td>
+<td align="left">The tribal council geographic location dataset contains the geographic location of all tribal councils in Canada as points as well as basic attributes data. Each tribal council point represents its address as it is registered in Indigenous and Northern Affairs Canada (INAC) Indian Government Support System (IGSS).</td>
+<td align="left">-</td>
+<td align="left">2023-05-03</td>
+<td align="right">55</td>
+<td align="left"><span class="citation"><a href="bibliography.html#ref-cirnac2019" role="doc-biblioref">Relations and orthern Affairs Canada</a> (<a href="bibliography.html#ref-cirnac2019" role="doc-biblioref">2019b</a>)</span></td>
 </tr>
 </tbody>
 </table>

@@ -1,0 +1,33 @@
+pipeline:
+  pipeline_id: b5433840
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2022-09-19'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/geolocated_placenames-b5433840.R
+description:
+  name: Geolocated placenames in Canada
+  description: The collection of geolocated placenames in Canada represents a consistent
+    and comprehensive distribution of named places across Canada. Named places include
+    large and small cities, villages, First Nations Communities, Small Hamlets etc.
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 65
+    first_name: ''
+    last_name: ''
+    organization: Innovation Science and Economic Development Canada
+    department: ''
+    role: ''
+    email: ic.broadband-largebande.ic@canada.ca
+    phone: ''
+  citekey: isedc2020
+  url: https://open.canada.ca/data/en/dataset/fe945388-1dd9-4a4a-9a1e-5c552579a28c
+  uuid: fe945388-1dd9-4a4a-9a1e-5c552579a28c
+  availability: open

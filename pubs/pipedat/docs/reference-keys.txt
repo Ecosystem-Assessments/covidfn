@@ -4,6 +4,10 @@ pipedat-report
 area-of-interest
 data-summary
 gridded-data
+aboriginal-lands-of-canada-legislative-boundaries
 canadian-social-vulnerabilities-using-the-2021-census-of-poulation
+census-2021-road-network-file
 timeline-of-covid-19-in-canada
 assessment-of-acceptable-housing-in-canada
+inuit-regions-inuit-nunangat
+open-database-of-healthcare-facilities

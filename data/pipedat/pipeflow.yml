@@ -12,7 +12,7 @@ pipedat:
   # UID of pipelines to execute
   pipelines:
     - "a56e753b" # Covid Timeline Canada
-    # - "8b0bbc44" # Open Database of Healthcare Facilities
+    - "8b0bbc44" # Open Database of Healthcare Facilities
     - "852db1a3" # Census 2021 housing suitability
     - "b48b01d6" # Census 2021 dwelling condition
     - "f4abec86" # Census 2021 acceptable housing
@@ -21,7 +21,14 @@ pipedat:
     - "175ec912" # Acceptable housing in Canada
     - "37563350" # Census Profile, 2021 Census of Population
     - "8671c3e4" # Canadian social vulnerabilities using the 2021 Census of Poulation
-    # - "7daa23ee" # Census 2021 road network file
+    - "7daa23ee" # Census 2021 road network file
+    - "7fe284e4" # Native Land Digital
+    - "ce594316" # First Nations Location
+    - "621e9a76" # Inuit Communities Location
+    - "6eefac0b" # Aboriginal Lands of Canada Legislative Boundaries
+    - "758c10a3" # Tribal Councils Location
+    - "ce5d1455" # Inuit Regions
+    - "b5433840" # Geolocated placenames in Canada
   # ==========================================================================
   # Additional parameters parsed to pipelines 
   params:

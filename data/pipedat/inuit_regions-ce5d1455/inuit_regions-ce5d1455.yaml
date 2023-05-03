@@ -1,0 +1,33 @@
+pipeline:
+  pipeline_id: ce5d1455
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2023-05-03'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/inuit_regions-ce5d1455.R
+description:
+  name: Inuit Regions (Inuit Nunangat)
+  description: 'The Inuit Regions, also known as the Inuit Nunangat, dataset contains
+    the geographical boundaries of the 4 Inuit Regions in Canada: Inuvialuit, Nunavut,
+    Nunavik and Nunatsiavut.'
+  access_date: '2023-05-03'
+  contacts:
+  - contact_id: 55
+    first_name: ''
+    last_name: ''
+    organization: Aboriginal Affairs and Northern Development Canada
+    department: ''
+    role: ''
+    email: aadnc.infopubs.aandc@canada.ca
+    phone: ''
+  citekey: cirnac2019a
+  url: https://open.canada.ca/data/en/dataset/f242b881-75e3-40bb-a148-63410b4ce2af
+  uuid: f242b881-75e3-40bb-a148-63410b4ce2af
+  availability: open
