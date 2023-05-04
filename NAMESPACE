@@ -3,6 +3,7 @@
 export()
 export(fig_aoi)
 export(fig_logo)
+export(fn_extract)
 export(get_aoi)
 export(get_basemap)
 export(global_parameters)

@@ -14,6 +14,9 @@ pipeline <- function() {
   library(pipedat)
   pipedat::pipeflow()
   
+  # Extract values under points
+  fn_extract()
+  
   # Figures 
   fig_aoi()
   
