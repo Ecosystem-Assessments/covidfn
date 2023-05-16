@@ -1,0 +1,36 @@
+pipeline:
+  pipeline_id: '92230392'
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2023-05-16'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/canadian_geographical_names-92230392.R
+description:
+  name: Geographical Names of Canada Data
+  description: These files contain names recognized by the Geographical Names Board
+    of Canada. The records include the names of populated places and administrative
+    areas, water features such as lakes, rivers and bays, terrain features like mountains,
+    capes and valleys; and undersea features such as seamounts and trenches. The data
+    are provided by federal, provincial and territorial naming authorities, and managed
+    by the Geographical Names Board of Canada Secretariat at Natural Resources Canada.
+  access_date: '2023-05-16'
+  contacts:
+  - contact_id: 74
+    first_name: ''
+    last_name: ''
+    organization: Natural Resources Canada
+    department: Canada Centre for Mapping and Earth Observation
+    role: ''
+    email: nrcan.geonames-toponymes.rncan@canada.ca
+    phone: ''
+  citekey: nrc2023
+  url: https://natural-resources.canada.ca/earth-sciences/geography/download-geographical-names-data/9245
+  uuid: .na.character
+  availability: open

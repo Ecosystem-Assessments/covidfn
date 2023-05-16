@@ -4,12 +4,20 @@
 
 fn_extract <- function() {
   library(stars)
-  dat <- pipedat::importdat(c("ce594316", "621e9a76", "b5433840"), "format")
+  dat <- pipedat::importdat(c("ce594316", "621e9a76", "b5433840","92230392"), "format")
   vulnerabilities <- here::here("data","pipegrid") |>
                      dir(full.names = TRUE) |>
                      lapply(stars::read_stars)
   
-  # Fix mistake in pipeline
+  # Filter canadian cities from geographical places
+  nm <- "canadian_geographical_names-92230392.gpkg"
+  dat[[nm]] <- dplyr::filter(
+    dat[[nm]],
+    Generic.Category == "Populated Place"
+  )
+  
+  # Fix mistake in pipeline 
+  # WARNING: pipelines from `pipedat` will have to be corrected
   sf::st_crs(vulnerabilities[[13]]) <- sf::st_crs(vulnerabilities[[12]])
   vulnerabilities[[13]] <- st_set_dimensions(vulnerabilities[[13]], "x", point = FALSE)
   vulnerabilities[[13]] <- st_set_dimensions(vulnerabilities[[13]], "y", point = FALSE)
@@ -31,7 +39,8 @@ fn_extract <- function() {
       dat[[i]], 
       dsn = here::here(out, names(dat)[i]),
       quiet = TRUE,
-      overwrite = TRUE
+      overwrite = TRUE,
+      append = FALSE
     )
   }
 }
