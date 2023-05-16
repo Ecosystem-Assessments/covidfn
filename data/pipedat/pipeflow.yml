@@ -33,3 +33,4 @@ pipedat:
   # Additional parameters parsed to pipelines 
   params:
     - census_geo_8671c3e4: "division"
+    - covid_monthly: "monthly"
