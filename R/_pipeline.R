@@ -17,6 +17,9 @@ pipeline <- function() {
   # Extract values under points
   fn_extract()
   
+  # Explore relationships between covid and social vulnerabilities
+  out_lm()
+  
   # Figures 
   fig_aoi()
   

@@ -42,5 +42,12 @@ fn_extract <- function() {
       overwrite = TRUE,
       append = FALSE
     )
-  }
+    
+    dat[[i]] <- sf::st_drop_geometry(dat[[i]])
+    nm <- glue::glue("{tools::file_path_sans_ext(names(dat)[i])}.csv")
+    write.csv(
+      dat[[i]], 
+      file = here::here(out, nm)
+    )
+  }  
 }
