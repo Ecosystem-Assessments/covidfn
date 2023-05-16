@@ -19,6 +19,7 @@ pipeline <- function() {
   
   # Explore relationships between covid and social vulnerabilities
   out_lm()
+  out_cluster()
   
   # Figures 
   fig_aoi()
