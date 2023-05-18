@@ -100,7 +100,7 @@ out_cluster <- function() {
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
   outfig <- here::here("figures","clustering")
-  chk_create(outfig)
+  pipedat::chk_create(outfig)
   exist <- file.exists(here::here(outfig, "validation.jpg"))
   if (!exist) {
     k <- 2:10
@@ -145,7 +145,7 @@ out_cluster <- function() {
   if (!exist) {
     # Number of clusters selected
     # WARNING: This is selected and adjusted manually
-    k <- 9
+    k <- 2
 
     # Object with only selected clustering results
     clMed <- kmedoid[[k-1]]$clustering

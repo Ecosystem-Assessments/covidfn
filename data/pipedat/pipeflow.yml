@@ -7,7 +7,6 @@ pipedat:
     grd: data/grid/grid.tif
     integrate: TRUE
     ingrid: TRUE
-    keep_raw: FALSE
   # ==========================================================================
   # UID of pipelines to execute
   pipelines:

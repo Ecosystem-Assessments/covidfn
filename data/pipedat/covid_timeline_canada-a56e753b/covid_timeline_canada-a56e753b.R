@@ -15,7 +15,7 @@
 #' \dontrun{
 #' dp_a56e753b()
 #' }
-dp_a56e753b <- function(bbox = NULL, bbox_crs = NULL, timespan = NULL, ingrid = TRUE, keep_raw = TRUE, covid_period = "all", ...) {
+dp_a56e753b <- function(bbox = NULL, bbox_crs = NULL, timespan = NULL, ingrid = TRUE, covid_period = "all", ...) {
   uid <- "a56e753b"
   nm <- glue::glue("{get_shortname(uid)}-{uid}")
   path <- make_path(uid)
@@ -60,6 +60,24 @@ dp_a56e753b <- function(bbox = NULL, bbox_crs = NULL, timespan = NULL, ingrid = 
       "CovidTimelineCanada_hr.csv"
     )
     for(i in 1:3) file.rename(here::here(path,"raw",from[i]), here::here(path,"raw",to[i]))
+    
+    # {{~~~~~~~~~~~~~~}}~~~~~ #
+    # Metadata
+    meta <- get_metadata(
+      pipeline_type = "data",
+      pipeline_id = uid,
+      access = timestamp()
+    )
+    
+    # bibtex
+    bib <- get_bib(uid)
+
+    # Export
+    mt <- here::here(path, nm)
+    masterwrite(meta, mt)
+    masterwrite(bib, mt)  
+    write_pipeline(uid)
+
   }
   # _________________________________________________________________________________________ #    
   
@@ -199,9 +217,7 @@ dp_a56e753b <- function(bbox = NULL, bbox_crs = NULL, timespan = NULL, ingrid = 
   }
   # _________________________________________________________________________________________ #
 
-  # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
-  # Metadata & bibtex
-  # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
+  
   # Metadata
   meta <- get_metadata(
     pipeline_type = "data",
@@ -219,6 +235,6 @@ dp_a56e753b <- function(bbox = NULL, bbox_crs = NULL, timespan = NULL, ingrid = 
   write_pipeline(uid)
 
   # Clean 
-  clean_path(uid, keep_raw)
+  clean_path(uid)
   # _________________________________________________________________________________________ #
 }
