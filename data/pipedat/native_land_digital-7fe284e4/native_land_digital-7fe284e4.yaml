@@ -20,7 +20,7 @@ description:
     contact the nations in question. Also, the map is not perfect -- it is a work
     in progress with tons of contributions from the community. Please send fixes to
     info@native-land.ca if you find errors.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 54
     first_name: ''
@@ -34,3 +34,7 @@ description:
   url: https://native-land.ca/
   uuid: .na.character
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: native_land_digital-7fe284e4

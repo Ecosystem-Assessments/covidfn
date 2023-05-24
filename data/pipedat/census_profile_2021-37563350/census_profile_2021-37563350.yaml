@@ -16,7 +16,7 @@ description:
   name: Census Profile, 2021 Census of Population
   description: A detailed statistical portrait of Canada and its people by their demographic,
     social and economic characteristics.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 44
     first_name: ''
@@ -30,3 +30,7 @@ description:
   url: https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/details/download-telecharger.cfm?Lang=E
   uuid: .na.character
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: census_profile_2021-37563350.csv

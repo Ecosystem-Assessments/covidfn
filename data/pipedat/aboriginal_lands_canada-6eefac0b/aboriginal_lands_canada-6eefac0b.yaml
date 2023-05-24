@@ -18,7 +18,7 @@ description:
     legislative boundaries of Indian Reserves, Land Claim Settlement Lands (lands
     created under Comprehensive Land Claims Process that do not or will not have Indian
     Reserve status under the Indian Act) and Indian Lands.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 58
     first_name: ''
@@ -32,3 +32,16 @@ description:
   url: https://open.canada.ca/data/en/dataset/522b07b9-78e2-4819-b736-ad9208eb1067
   uuid: 522b07b9-78e2-4819-b736-ad9208eb1067
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: aboriginal_lands_canada-6eefac0b
+ingrid:
+  timestamp: '2023-05-24'
+  description: Aboriginal Lands, which include legislative boundaries of Indian Reserves,
+    Land Claim Settlement Lands (lands created under Comprehensive Land Claims Process
+    that do not or will not have Indian Reserve status under the Indian Act) and Indian
+    Lands, were integrated in the study grid as presence absence data.
+  files:
+    filenames: aboriginal_lands_canada-6eefac0b
+    names: Location of aboriginal lands

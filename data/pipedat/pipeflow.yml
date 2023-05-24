@@ -28,7 +28,7 @@ pipedat:
     - "758c10a3" # Tribal Councils Location
     - "ce5d1455" # Inuit Regions
     - "b5433840" # Geolocated placenames in Canada
-    - "92230392" # Geolocated placenames in Canada
+    - "92230392" # Geographical Names of Canada Data
   # ==========================================================================
   # Additional parameters parsed to pipelines 
   params:

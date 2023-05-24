@@ -16,7 +16,7 @@ description:
   name: Census 2021 acceptable housing
   description: 'Acceptable housing by tenure: Canada, provinces and territories, census
     divisions and census subdivisions'
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 44
     first_name: ''
@@ -30,3 +30,7 @@ description:
   url: https://www150.statcan.gc.ca/n1/tbl/csv/98100246-eng.zip
   uuid: .na.character
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: census_acceptable_housing_2021-f4abec86

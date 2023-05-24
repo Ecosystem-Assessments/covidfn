@@ -13,9 +13,9 @@ pipeline:
   date_created: '2023-03-13'
   url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/census_boundary_division_2021-288ca300.R
 description:
-  name: Census cartographic subdivision boundary files 2016
-  description: Boundary files for subdivision areas of the 2016 Canadian census
-  access_date: '2023-05-18'
+  name: Census cartographic division boundary files 2021
+  description: Boundary files for division areas of the 2021 Canadian census
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 44
     first_name: ''
@@ -31,3 +31,7 @@ description:
   url: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip
   uuid: .na.character
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: census_boundary_division_2021-288ca300

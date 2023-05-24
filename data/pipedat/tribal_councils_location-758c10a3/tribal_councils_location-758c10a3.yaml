@@ -19,7 +19,7 @@ description:
     data. Each tribal council point represents its address as it is registered in
     Indigenous and Northern Affairs Canada (INAC) Indian Government Support System
     (IGSS).
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 55
     first_name: ''
@@ -33,3 +33,7 @@ description:
   url: https://open.canada.ca/data/en/dataset/73dbaaca-24b6-4c04-bd52-e7b7ab0c3d8f
   uuid: 73dbaaca-24b6-4c04-bd52-e7b7ab0c3d8f
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: tribal_councils_location-758c10a3

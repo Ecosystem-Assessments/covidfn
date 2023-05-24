@@ -20,7 +20,7 @@ description:
     capes and valleys; and undersea features such as seamounts and trenches. The data
     are provided by federal, provincial and territorial naming authorities, and managed
     by the Geographical Names Board of Canada Secretariat at Natural Resources Canada.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 74
     first_name: ''
@@ -34,3 +34,7 @@ description:
   url: https://natural-resources.canada.ca/earth-sciences/geography/download-geographical-names-data/9245
   uuid: .na.character
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: canadian_geographical_names-92230392

@@ -19,7 +19,7 @@ description:
     territories, and census subdivisions. In the 2021 Census Road Network File, streets
     are ranked according to five levels of detail, suitable for mapping at small to
     medium scales.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 44
     first_name: ''
@@ -35,3 +35,22 @@ description:
   url: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/rnf-frr/index2021-eng.cfm?year=21
   uuid: ''
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: census_road_network_file_2021-7daa23ee
+ingrid:
+  timestamp: '2023-05-24'
+  description: The road network from the Census 2021 road network file [@statisticscanada2021a;
+    statisticscanada2021b] was rasterized as a 1 $km^2$ resolution then integrated
+    in the study grid to obtain a raster of the distribution of the Canadian road
+    network. The distance of the centroid of each cell in the grid to the closest
+    road was then measured to obtain an assessment of the distance to the closest
+    road across Canada.
+  files:
+    filenames:
+    - census_road_network_file_2021-7daa23ee-road_network
+    - census_road_network_file_2021-7daa23ee-distance_to_road_network
+    names:
+    - Road network
+    - Distance to closest road

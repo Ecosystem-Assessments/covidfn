@@ -21,7 +21,7 @@ description:
     quality of COVID-19 data in Canada. This repository is maintained by the COVID-19
     Canada Open Data Working Group and is one component of the What Happened? COVID-19
     in Canada project.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 67
     first_name: Jean-Paul
@@ -36,7 +36,7 @@ description:
   uuid: .na.character
   availability: open
 format:
-  timestamp: '2023-05-18'
+  timestamp: '2023-05-24'
   description: No modifications applied to the data; simple export of raw data.
   filenames:
   - covid_timeline_canada-a56e753b-pt
@@ -47,335 +47,174 @@ format:
   - covid_timeline_canada-a56e753b-CovidTimelineCanada_pt
   - covid_timeline_canada-a56e753b-CovidTimelineCanada_hr
 ingrid:
-  timestamp: '2023-05-18'
-  description:
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Cases available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  - Deaths available in the covid timeline canada dataset were cumulated monthly for
-    each health region and divided by the total population in the health region
-  filenames:
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_01
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_02
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_03
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_04
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_05
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_06
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_07
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_08
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_09
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_10
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_11
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2020_12
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_01
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_02
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_03
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_04
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_05
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_06
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_07
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_08
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_09
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_10
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_11
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2021_12
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_01
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_02
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_03
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_04
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_05
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_06
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_07
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_08
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_09
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_10
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_11
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2022_12
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2023_01
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2023_02
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2023_03
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2023_04
-  - covid_timeline_canada-a56e753b-cases_population_proportion-2023_05
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_01
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_02
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_03
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_04
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_05
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_06
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_07
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_08
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_09
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_10
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_11
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_12
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_01
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_02
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_03
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_04
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_05
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_06
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_07
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_08
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_09
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_10
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_11
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_12
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_01
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_02
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_03
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_04
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_05
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_06
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_07
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_08
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_09
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_10
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_11
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_12
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_01
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_02
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_03
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_04
-  - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_05
-  names:
-  - Cases by total population size - 2020/01
-  - Cases by total population size - 2020/02
-  - Cases by total population size - 2020/03
-  - Cases by total population size - 2020/04
-  - Cases by total population size - 2020/05
-  - Cases by total population size - 2020/06
-  - Cases by total population size - 2020/07
-  - Cases by total population size - 2020/08
-  - Cases by total population size - 2020/09
-  - Cases by total population size - 2020/10
-  - Cases by total population size - 2020/11
-  - Cases by total population size - 2020/12
-  - Cases by total population size - 2021/01
-  - Cases by total population size - 2021/02
-  - Cases by total population size - 2021/03
-  - Cases by total population size - 2021/04
-  - Cases by total population size - 2021/05
-  - Cases by total population size - 2021/06
-  - Cases by total population size - 2021/07
-  - Cases by total population size - 2021/08
-  - Cases by total population size - 2021/09
-  - Cases by total population size - 2021/10
-  - Cases by total population size - 2021/11
-  - Cases by total population size - 2021/12
-  - Cases by total population size - 2022/01
-  - Cases by total population size - 2022/02
-  - Cases by total population size - 2022/03
-  - Cases by total population size - 2022/04
-  - Cases by total population size - 2022/05
-  - Cases by total population size - 2022/06
-  - Cases by total population size - 2022/07
-  - Cases by total population size - 2022/08
-  - Cases by total population size - 2022/09
-  - Cases by total population size - 2022/10
-  - Cases by total population size - 2022/11
-  - Cases by total population size - 2022/12
-  - Cases by total population size - 2023/01
-  - Cases by total population size - 2023/02
-  - Cases by total population size - 2023/03
-  - Cases by total population size - 2023/04
-  - Cases by total population size - 2023/05
-  - Deaths by total population size - 2020/01
-  - Deaths by total population size - 2020/02
-  - Deaths by total population size - 2020/03
-  - Deaths by total population size - 2020/04
-  - Deaths by total population size - 2020/05
-  - Deaths by total population size - 2020/06
-  - Deaths by total population size - 2020/07
-  - Deaths by total population size - 2020/08
-  - Deaths by total population size - 2020/09
-  - Deaths by total population size - 2020/10
-  - Deaths by total population size - 2020/11
-  - Deaths by total population size - 2020/12
-  - Deaths by total population size - 2021/01
-  - Deaths by total population size - 2021/02
-  - Deaths by total population size - 2021/03
-  - Deaths by total population size - 2021/04
-  - Deaths by total population size - 2021/05
-  - Deaths by total population size - 2021/06
-  - Deaths by total population size - 2021/07
-  - Deaths by total population size - 2021/08
-  - Deaths by total population size - 2021/09
-  - Deaths by total population size - 2021/10
-  - Deaths by total population size - 2021/11
-  - Deaths by total population size - 2021/12
-  - Deaths by total population size - 2022/01
-  - Deaths by total population size - 2022/02
-  - Deaths by total population size - 2022/03
-  - Deaths by total population size - 2022/04
-  - Deaths by total population size - 2022/05
-  - Deaths by total population size - 2022/06
-  - Deaths by total population size - 2022/07
-  - Deaths by total population size - 2022/08
-  - Deaths by total population size - 2022/09
-  - Deaths by total population size - 2022/10
-  - Deaths by total population size - 2022/11
-  - Deaths by total population size - 2022/12
-  - Deaths by total population size - 2023/01
-  - Deaths by total population size - 2023/02
-  - Deaths by total population size - 2023/03
-  - Deaths by total population size - 2023/04
-  - Deaths by total population size - 2023/05
+  timestamp: '2023-05-24'
+  description: Cases or Deaths available in the covid timeline canada dataset [@CovidTimelineCanada]
+    were cumulated monthly for each health region and divided by the total population
+    in the health region
+  files:
+    filenames:
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_01
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_02
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_03
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_04
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_05
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_06
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_07
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_08
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_09
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_10
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_11
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2020_12
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_01
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_02
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_03
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_04
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_05
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_06
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_07
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_08
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_09
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_10
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_11
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2021_12
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_01
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_02
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_03
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_04
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_05
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_06
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_07
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_08
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_09
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_10
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_11
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2022_12
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2023_01
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2023_02
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2023_03
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2023_04
+    - covid_timeline_canada-a56e753b-cases_population_proportion-2023_05
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_01
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_02
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_03
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_04
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_05
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_06
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_07
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_08
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_09
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_10
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_11
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2020_12
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_01
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_02
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_03
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_04
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_05
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_06
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_07
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_08
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_09
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_10
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_11
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2021_12
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_01
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_02
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_03
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_04
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_05
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_06
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_07
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_08
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_09
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_10
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_11
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2022_12
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_01
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_02
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_03
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_04
+    - covid_timeline_canada-a56e753b-deaths_population_proportion-2023_05
+    names:
+    - Cases by total population size - 2020/01
+    - Cases by total population size - 2020/02
+    - Cases by total population size - 2020/03
+    - Cases by total population size - 2020/04
+    - Cases by total population size - 2020/05
+    - Cases by total population size - 2020/06
+    - Cases by total population size - 2020/07
+    - Cases by total population size - 2020/08
+    - Cases by total population size - 2020/09
+    - Cases by total population size - 2020/10
+    - Cases by total population size - 2020/11
+    - Cases by total population size - 2020/12
+    - Cases by total population size - 2021/01
+    - Cases by total population size - 2021/02
+    - Cases by total population size - 2021/03
+    - Cases by total population size - 2021/04
+    - Cases by total population size - 2021/05
+    - Cases by total population size - 2021/06
+    - Cases by total population size - 2021/07
+    - Cases by total population size - 2021/08
+    - Cases by total population size - 2021/09
+    - Cases by total population size - 2021/10
+    - Cases by total population size - 2021/11
+    - Cases by total population size - 2021/12
+    - Cases by total population size - 2022/01
+    - Cases by total population size - 2022/02
+    - Cases by total population size - 2022/03
+    - Cases by total population size - 2022/04
+    - Cases by total population size - 2022/05
+    - Cases by total population size - 2022/06
+    - Cases by total population size - 2022/07
+    - Cases by total population size - 2022/08
+    - Cases by total population size - 2022/09
+    - Cases by total population size - 2022/10
+    - Cases by total population size - 2022/11
+    - Cases by total population size - 2022/12
+    - Cases by total population size - 2023/01
+    - Cases by total population size - 2023/02
+    - Cases by total population size - 2023/03
+    - Cases by total population size - 2023/04
+    - Cases by total population size - 2023/05
+    - Deaths by total population size - 2020/01
+    - Deaths by total population size - 2020/02
+    - Deaths by total population size - 2020/03
+    - Deaths by total population size - 2020/04
+    - Deaths by total population size - 2020/05
+    - Deaths by total population size - 2020/06
+    - Deaths by total population size - 2020/07
+    - Deaths by total population size - 2020/08
+    - Deaths by total population size - 2020/09
+    - Deaths by total population size - 2020/10
+    - Deaths by total population size - 2020/11
+    - Deaths by total population size - 2020/12
+    - Deaths by total population size - 2021/01
+    - Deaths by total population size - 2021/02
+    - Deaths by total population size - 2021/03
+    - Deaths by total population size - 2021/04
+    - Deaths by total population size - 2021/05
+    - Deaths by total population size - 2021/06
+    - Deaths by total population size - 2021/07
+    - Deaths by total population size - 2021/08
+    - Deaths by total population size - 2021/09
+    - Deaths by total population size - 2021/10
+    - Deaths by total population size - 2021/11
+    - Deaths by total population size - 2021/12
+    - Deaths by total population size - 2022/01
+    - Deaths by total population size - 2022/02
+    - Deaths by total population size - 2022/03
+    - Deaths by total population size - 2022/04
+    - Deaths by total population size - 2022/05
+    - Deaths by total population size - 2022/06
+    - Deaths by total population size - 2022/07
+    - Deaths by total population size - 2022/08
+    - Deaths by total population size - 2022/09
+    - Deaths by total population size - 2022/10
+    - Deaths by total population size - 2022/11
+    - Deaths by total population size - 2022/12
+    - Deaths by total population size - 2023/01
+    - Deaths by total population size - 2023/02
+    - Deaths by total population size - 2023/03
+    - Deaths by total population size - 2023/04
+    - Deaths by total population size - 2023/05

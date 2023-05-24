@@ -19,7 +19,7 @@ description:
     are classified by type. The current version (version 1.1) contains approximately
     7,000 records compiled from open data sources, publicly available data, and data
     directly provided by sources for inclusion as open data.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 43
     first_name: ''
@@ -35,3 +35,23 @@ description:
   url: https://open.canada.ca/data/en/dataset/543fe07a-fd79-40e9-a829-ccd697526765
   uuid: 543fe07a-fd79-40e9-a829-ccd697526765
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: Minor modifications applied to the data to clean and standardize it.
+  filenames: open_database_healthcare_facilities-8b0bbc44
+ingrid:
+  timestamp: '2023-05-24'
+  description: The location of healthcare facilities available in the Open Database
+    of Healthcare Facilities [ODHF; @statisticscanada2020; @statisticscanada2020a]
+    were used to assess the distance to the closest healthcare facility. Facilities
+    were divided between critical and longterm care using the classifications avaialble
+    in the ODHF. Hospitals and ambulatory health care services were considered as
+    critical care facilities, while nursing and residential care facilities were considered
+    as longterm care facilities.
+  files:
+    filenames:
+    - open_database_healthcare_facilities-8b0bbc44-critical
+    - open_database_healthcare_facilities-8b0bbc44-longterm
+    names:
+    - Distance to healthcare facilities - critical care
+    - Distance to healthcare facilities - longterm care

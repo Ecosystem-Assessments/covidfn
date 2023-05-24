@@ -17,7 +17,7 @@ description:
   description: The Inuit Communities geographic location dataset contains the geographic
     location of Inuit Communities in Canada as points, as well as data attributes
     specific to each community.
-  access_date: '2023-05-18'
+  access_date: '2023-05-24'
   contacts:
   - contact_id: 55
     first_name: ''
@@ -31,3 +31,7 @@ description:
   url: https://open.canada.ca/data/en/dataset/2bcf34b5-4e9a-431b-9e43-1eace6c873bd
   uuid: 2bcf34b5-4e9a-431b-9e43-1eace6c873bd
   availability: open
+format:
+  timestamp: '2023-05-24'
+  description: No modifications applied to the data; simple export of raw data.
+  filenames: inuit_communities_location-621e9a76
