@@ -1,0 +1,104 @@
+---
+title: "pipedat"
+subtitle: "Data summary"
+date: "`r Sys.Date()`"
+knit: "bookdown::render_book"
+documentclass: scrbook
+bibliography: [pipedat.bib]
+# biblio-style: apalike
+# csl: frontiers.csl
+link-citations: yes
+colorlinks: yes
+lot: yes
+lof: yes
+fontsize: 12pt
+monofont: "Courier"
+monofontoptions: "Scale=0.7"
+site: bookdown::bookdown_site
+always_allow_html: true
+---
+
+```{r setup, include = FALSE, purl = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE,
+  echo = FALSE,
+  message = FALSE,
+  dev = "png",
+  dpi = 108,
+  fig.width = 8,
+  fig.height = 6,
+  fig.align = 'center',
+  width = 120#,
+  # table.attr = 'class="flat-table"'
+)
+```
+
+
+#### Citation {-}
+
+***Add package citation***
+
+# `pipedat` report
+
+This document provides a summary of the data that was downloaded, formatted and incorporated in a study grid through the `pipedat` package. 
+
+***Add a brief description of pipedat***
+
+# Area of interest
+
+```{r aoi, fig.cap = "Area of interest and study grid used to integrate data."}
+knitr::include_graphics(here::here("figures","pipedat","aoi","aoi.png"))
+```
+
+# Data summary 
+
+```{r dataapp}
+meta <- read.csv(here::here("data","pipedat","metadata.csv")) |>
+        dplyr::mutate(
+          uid = glue::glue("[{uid}]({uid_url})"),
+          name = glue::glue("[{name}]({url})")
+        )
+dplyr::select(meta, uid, name, description, timespan, access, contact, source) |>
+knitr::kable(
+  col.names = c("UID","Name","Description","Timespan","Access date","Contacts","Source"),
+  row.names = FALSE,
+  caption = "List of data accessed, formatted, and incorporated in a study grid through the `pipedat` package"
+) 
+```
+
+# Gridded data 
+
+```{r gridded, results='asis'}
+files <- list.dirs(here::here("data","pipedat"), full.names = TRUE)
+iid <- stringr::str_detect(files, "ingrid")
+files <- files[iid]
+figs <- here::here("figures", "pipedat", "ingrid") |>
+        dir(full.names = TRUE, pattern = "png")
+
+if (length(files) > 0) {
+  # All folders in a loop
+  for(i in 1:length(files)) {
+    # Load metadata 
+    meta <- dir(here::here(files[i], ".."), full.names = TRUE, pattern = "yaml") |>
+            yaml::read_yaml()
+            
+    # names and figs
+    nm <- meta$description$name
+    uid <- figs[stringr::str_detect(figs, meta$pipeline$pipeline_id)]
+    
+    # Text
+    cat("  \n##",  nm, "\n")
+    cat(meta$ingrid$description)
+    cat("  \n")
+    cat(glue::glue("![]({uid})"))
+    cat("  \n")
+  }
+}
+```
+
+# Bibliography {-}
+
+<!-- <div id="refs"></div> -->
+
