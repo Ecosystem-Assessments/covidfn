@@ -27,7 +27,7 @@ format:
   timestamp: '2023-05-24'
   description: |2-
 
-            Data from the 2021 Census of Population [@statisticscanada2021a] was used to select relevant population indicators as proxies of social vulnerabilities. The indicators were then joined to the {geos} and subsequently integrated in the study grid. The selected indicators are: <br>
+            Data from the 2021 Census of Population [@statisticscanada2021a] was used to select relevant population indicators as proxies of social vulnerabilities. The indicators were then joined to the census cartographic divisions boundary files for 2021 [@statisticscanada2022f; @statisticscanada2022] and subsequently integrated in the study grid. The selected indicators are: <br>
             <table>
               <tr>
                 <th>Indicator</th>
@@ -120,15 +120,15 @@ ingrid:
             </table>
   files:
     filenames:
-    - canadian_vulnerabilities_census-8671c3e4-division-gini_index_adj_household_total_income
-    - canadian_vulnerabilities_census-8671c3e4-division-p90p10_ratio_ajd_household_aftertax_income
-    - canadian_vulnerabilities_census-8671c3e4-division-low_income_measure_aftertax_percent
-    - canadian_vulnerabilities_census-8671c3e4-division-low_income_cutoffs_aftertax_percent
-    - canadian_vulnerabilities_census-8671c3e4-division-percent_indigenous_identity
-    - canadian_vulnerabilities_census-8671c3e4-division-percent_children_one_parent_family
-    - canadian_vulnerabilities_census-8671c3e4-division-percent_parent_one_parent_family
-    - canadian_vulnerabilities_census-8671c3e4-division-percent_no_certificate_diploma_degree
-    - canadian_vulnerabilities_census-8671c3e4-division-percent_government_transfers
+    - canadian_vulnerabilities_census-8671c3e4-census_division-gini_index_adj_household_total_income
+    - canadian_vulnerabilities_census-8671c3e4-census_division-p90p10_ratio_ajd_household_aftertax_income
+    - canadian_vulnerabilities_census-8671c3e4-census_division-low_income_measure_aftertax_percent
+    - canadian_vulnerabilities_census-8671c3e4-census_division-low_income_cutoffs_aftertax_percent
+    - canadian_vulnerabilities_census-8671c3e4-census_division-percent_indigenous_identity
+    - canadian_vulnerabilities_census-8671c3e4-census_division-percent_children_one_parent_family
+    - canadian_vulnerabilities_census-8671c3e4-census_division-percent_parent_one_parent_family
+    - canadian_vulnerabilities_census-8671c3e4-census_division-percent_no_certificate_diploma_degree
+    - canadian_vulnerabilities_census-8671c3e4-census_division-percent_government_transfers
     names:
     - Gini index on adjusted household total income
     - P90/P10 ratio on adjusted household after-tax income

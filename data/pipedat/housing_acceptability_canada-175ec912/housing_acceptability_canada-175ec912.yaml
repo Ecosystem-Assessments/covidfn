@@ -27,7 +27,7 @@ format:
   description: 'Data from housing suitability [@statisticscanada2022c], dwelling condition
     [@statisticscanada2022d], and acceptable housing [@statisticscanada2022e] of the
     2021 Census of Population [@statisticscanada2021a] were joined with the 2021 Census
-    cartographic division boundary file [@statisticscanada2022; statisticscanada2022f].
+    cartographic division boundary file [@statisticscanada2022; @statisticscanada2022f].
     <br> According to Statistics Canada housing suitability *"refers to whether a
     private household is living in suitable accommodations according to the National
     Occupancy Standard (NOS); that is, whether the dwelling has enough bedrooms for
