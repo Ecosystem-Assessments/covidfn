@@ -42,11 +42,16 @@ if (length(files) > 0) {
     nm <- meta$description$name
     uid <- figs[stringr::str_detect(figs, meta$pipeline$pipeline_id)]
     
+    # urls
+    beg <- "https://github.com/Ecosystem-Assessments/covidfn/blob/main/pubs/figures/ingrid/"
+    fin <- "?raw=true"
+    urls <- glue::glue("{beg}{basename(uid)}{fin}")
+    
     # Text
     cat("  \n###",  nm, "\n")
     cat(meta$ingrid$description)
     cat("  \n")
-    cat(glue::glue("![]({uid})"))
+    cat(glue::glue("![]({urls})"))
     cat("  \n")
   }
 }
