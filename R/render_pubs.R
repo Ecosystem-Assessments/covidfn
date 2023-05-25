@@ -14,7 +14,8 @@ render_report <- function() {
     # file.copy("./figures/", "./report/", recursive = TRUE)
   })
   from <- here::here("pubs","report","docs")
-  to <- here::here("docs","report")
+  # to <- here::here("docs","report")
+  to <- here::here("docs")
   if (file.exists(to)) fs::file_delete(to)
   fs::file_move(from, to)
 }
