@@ -3,7 +3,7 @@
 ## Area of interest
 
 ```{r aoi, fig.cap = "Area of interest and study grid used to integrate data."}
-knitr::include_graphics(here::here("figures","pipedat","aoi","aoi.png"))
+knitr::include_graphics("https://github.com/Ecosystem-Assessments/covidfn/blob/main/pubs/figures/pipedat/aoi/aoi.png?raw=true")
 ```
 
 ## Data summary 
