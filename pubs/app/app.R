@@ -1,91 +1,9 @@
-# Libraries
-library(shiny)
-# library(DT)
-library(leaflet)
-library(leafem)
+# Libraries, functions & parameters
+source("code/helpers.R")
+source("code/param.R")
 
-# Data 
-## TIFS 
-
-## Extractions 
-# dat <- list() 
-dat <- read.csv("../../output/fn_extract/first_nations_location-ce594316.csv")
-
-# Locate files   
-files <- list.dirs("../../data/pipedat", full.names = TRUE)
-iid <- stringr::str_detect(files, "ingrid")
-files <- files[iid]
-
-meta <- list()
-for(i in 1:length(files)) {
-  tmp <- dir(paste0(files[i], "/.."), full.names = TRUE, pattern = "yaml") |>
-    yaml::read_yaml()  
-    
-  meta[[i]] <- data.frame(
-    filenames = tmp$ingrid$files$filenames,
-    names = tmp$ingrid$files$names
-  )
-}
-meta <- dplyr::bind_rows(meta)
-
-indicators <- dplyr::filter(
-  meta, 
-  !stringr::str_detect(filenames, "covid_timeline_canada")
-)
-indicators$filenames <- paste0(indicators$filenames, ".tif")
-indicators$filenames2 <- gsub("-",".",indicators$filenames)
-
-filescovid <- dplyr::filter(
-  meta, 
-  stringr::str_detect(filenames, "covid_timeline_canada")
-)
-filescovid <- filescovid$filenames
-
-# Colors 
-# pal <- leaflet::colorBin("YlOrRd", domain = geo$density)
-
-# Functions 
-## Get years or months from input period
-getY <- function(x) format(x, "%Y")
-getM <- function(x) format(x, "%m")
-
-## Identify columns to summarize
-idCols <- function(y, per) {
-  year <- getY(per)
-  month <- getM(per)
-  nm <- colnames(dat)
-  
-  # Locate relevant columns 
-  cvd <- stringr::str_detect(nm, "covid")
-  yvar <- stringr::str_detect(nm, tolower(y))
-  beg <- stringr::str_detect(nm, paste0(year[1],"_",month[1]))
-  end <- stringr::str_detect(nm, paste0(year[2],"_",month[2]))
-  rg <- which(cvd & yvar & beg):which(cvd & yvar & end)
-  
-  # Summarize column and return
-  rowSums(dat[,rg], na.rm = TRUE)
-}
-
-# Get relevant covid data
-geoCovid <- function(y, per) {
-  year <- getY(per)
-  month <- getM(per)
-  
-  # Locate relevant columns 
-  yvar <- stringr::str_detect(filescovid, tolower(y))
-  beg <- stringr::str_detect(filescovid, paste0(year[1],"_",month[1]))
-  end <- stringr::str_detect(filescovid, paste0(year[2],"_",month[2]))
-  rg <- which(yvar & beg):which(yvar & end)
-  
-  dat = lapply(filescovid[rg], function(x) {
-    stars::read_stars(paste0("../../data/pipegrid/",x,".tif"))
-  }) 
-  do.call("c",dat) |>
-    stars::st_redimension()|>
-    # merge() |>
-    stars::st_apply(c("x","y"), sum, na.rm = TRUE)      
-}
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# User interface
 ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch = "yeti", version = 5),
   titlePanel("CovidFN"),
@@ -167,21 +85,21 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   ydat <- reactive({
-    idCols(input$y, input$per)
+    idCols(pts, input$y, input$per)
   })
   
   xdat <- reactive({
-    nm <- indicators$filenames2[indicators$names == input$x]
-    dat[,nm]
+    nm <- indicators$dotfiles[indicators$names == input$x]
+    pts[,nm]
   })
   
   ygeo <- reactive({
-    geoCovid(input$y, input$per)
+    geoCovid(covid$tiffiles, input$y, input$per)
   })
   
   xgeo <- reactive({
-    nm <- indicators$filenames[indicators$names == input$x]
-    stars::read_stars(paste0("../../data/pipegrid/",nm))
+    nm <- indicators$tiffiles[indicators$names == input$x]
+    stars::read_stars(paste0("data/tifs/",nm))
   })
   
   lmdat <- reactive({
