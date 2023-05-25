@@ -38,3 +38,5 @@ figures/*
 !figures/atlas/
 !figures/webinar/
 frontpage.svg
+deploy.R
+rsconnect/

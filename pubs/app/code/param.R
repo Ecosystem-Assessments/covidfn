@@ -18,4 +18,4 @@ covid <- dplyr::filter(
 )
 
 # Point extractions 
-pts <- read.csv("data/pts/first_nations_location-ce594316.csv")
+pts <- read.csv("pubs/app/data/pts/first_nations_location-ce594316.csv")

@@ -23,6 +23,7 @@ pipeline <- function() {
   
   # Figures 
   fig_aoi()
+  fig_ingrid()
   
   # Report and publications 
   render_frontpate()
