@@ -11,11 +11,15 @@ app_data <- function() {
     from = here::here("output","fn_extract","first_nations_location-ce594316.csv"),
     to = here::here(out,"pts","first_nations_location-ce594316.csv")
   )
+  file.copy(
+    from = here::here("output","fn_extract","canadian_geographical_names-92230392.csv"),
+    to = here::here(out,"pts","canadian_geographical_names-92230392.csv")
+  )
   
   # Tif files 
   grd <- sf::st_read(here::here("data","aoi","aoi.gpkg"), quiet = TRUE) |>
          sf::st_transform(crs = 3857) |>
-         stars::st_rasterize(cellsize = 20000, dy = 20000)
+         stars::st_rasterize(cellsize = 40000, dy = 20000)
   files <- dir(here::here("data","pipegrid"), full.names = TRUE)
   
   dat <- lapply(files, function(x) {

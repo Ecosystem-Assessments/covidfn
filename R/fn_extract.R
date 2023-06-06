@@ -35,6 +35,13 @@ fn_extract <- function() {
   out <- here::here("output","fn_extract")
   chk_create(out)
   for(i in 1:length(dat)){
+    # Remove certain values that are not of interest for now. 
+    dat[[i]] <- dplyr::select(dat[[i]],
+      -`inuit_regions-ce5d1455.tif`,
+      -`census_road_network_file_2021-7daa23ee-road_network.tif`,
+      -`aboriginal_lands_canada-6eefac0b.tif`
+    )
+    
     sf::st_write(
       dat[[i]], 
       dsn = here::here(out, names(dat)[i]),
@@ -43,7 +50,11 @@ fn_extract <- function() {
       append = FALSE
     )
     
+    xy <- sf::st_coordinates(dat[[i]]) |>
+          as.data.frame() |>
+          dplyr::rename(longitude = X, latitude = Y)
     dat[[i]] <- sf::st_drop_geometry(dat[[i]])
+    dat[[i]] <- cbind(dat[[i]], xy)
     nm <- glue::glue("{tools::file_path_sans_ext(names(dat)[i])}.csv")
     write.csv(
       dat[[i]], 

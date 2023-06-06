@@ -11,9 +11,9 @@ ui <- fluidPage(
     # Menu 
     sidebarPanel(
       selectInput(
-        "datasel", 
+        "dataset", 
         label = "Select dataset (only 1 for now)", 
-        choices = c("First Nations"),#"Canadian geographical names"), 
+        choices = c("First Nations","Canadian geographical names"), 
         multiple = FALSE, 
         selected = "First nations"
       ),
@@ -38,12 +38,15 @@ ui <- fluidPage(
       ),
       br(),
       hr(),
-      selectInput(
-        "x", 
+      checkboxGroupInput(
+        inputId = "x",
         label = "X: Indicators of social vulnerability", 
         choices = indicators$names, 
-        multiple = FALSE, 
-        selected = "Indigenous identity"
+        selected = "Indigenous identity",
+        inline = FALSE, 
+        width = NULL, 
+        choiceNames = NULL,
+        choiceValues = NULL
       ),
       width = 3
     ),
@@ -83,14 +86,24 @@ ui <- fluidPage(
   )  
 )
 
-server <- function(input, output, session) {
+server <- function(input, output, session) {    
+  pts <- reactive({
+    if(input$dataset == "First Nations") {
+      read.csv("data/pts/first_nations_location-ce594316.csv")
+    } else if (input$dataset == "Canadian geographical names") {
+      read.csv("data/pts/canadian_geographical_names-92230392.csv")
+    }
+  })
+  
   ydat <- reactive({
-    idCols(pts, input$y, input$per)
+    idCols(pts(), input$y, input$per)
   })
   
   xdat <- reactive({
-    nm <- indicators$dotfiles[indicators$names == input$x]
-    pts[,nm]
+      uid <- lapply(input$x, function(x) which(indicators$names == x)) |>
+             unlist()
+      nm <- indicators$dotfiles[uid]
+      pts()[,nm]      
   })
   
   ygeo <- reactive({
@@ -111,80 +124,87 @@ server <- function(input, output, session) {
   })
   
   lmmod <- reactive({
-    summary(lm(lmdat()$y ~ lmdat()$x))
+    lm(lmdat()$y ~ ., data = lmdat()) |>
+    summary()
   })
   
   output$scatter <- renderPlot({
-    plot(
-      y = lmdat()$y,
-      x = lmdat()$x,
-      xlab = input$x, 
-      ylab = paste0(input$y, " - ", input$per[1],"-", input$per[2]),
-      pch = 20,
-      col = "#1262b1",
-      cex = 1.5,
-      cex.lab = 1.5
-    )
+    if(length(input$x) == 1) {
+      plot(
+        y = lmdat()$y,
+        x = lmdat()$x,
+        xlab = input$x, 
+        ylab = paste0(input$y, " - ", input$per[1],"-", input$per[2]),
+        pch = 20,
+        col = "#1262b1",
+        cex = 1.5,
+        cex.lab = 1.5
+      )      
+    }
   })
   
   output$linear_model <- renderDataTable({
-    dat <- as.data.frame(lmmod()$coefficients)
-    dat$Variables <- rownames(dat)
+    dat <- as.data.frame(lmmod()$coefficients) |>
+           round(6)
+    dat$Variables <- c("Intercept", input$x)
     dat <- dplyr::select(dat, Variables, dplyr::everything())
   },
-  options = list(pageLength = 10)
+  options = list(pageLength = 20)
   )
 
   output$r2 <- renderText(lmmod()$adj.r.squared)
   
   output$mapy <- renderLeaflet({
-    # Color palette
-    rgeo <- range(ygeo()[[1]], na.rm=T)
-    pal <- leaflet::colorNumeric(
-      viridis::viridis_pal(option = "D")(100), 
-      domain = rgeo
-    )
-  
-    # Map
-    leaflet(ygeo()) |> 
-    setView(lng = -90, lat = 70, zoom = 3) |>
-    addProviderTiles("CartoDB.Positron") |>
-    addStarsImage(
-      opacity = 1,
-      color = viridis::viridis(100)
-    ) |>
-    addLegend(
-      position = "bottomright",
-      pal = pal,
-      values = seq(rgeo[1], rgeo[2], length.out = 5),
-      opacity = 1,
-      title = ""
+    if(length(input$x) == 1) {
+      # Color palette
+      rgeo <- range(ygeo()[[1]], na.rm=T)
+      pal <- leaflet::colorNumeric(
+        viridis::viridis_pal(option = "D")(100), 
+        domain = rgeo
       )
+    
+      # Map
+      leaflet(ygeo()) |> 
+      setView(lng = -90, lat = 70, zoom = 3) |>
+      addProviderTiles("CartoDB.Positron") |>
+      addStarsImage(
+        opacity = 1,
+        color = viridis::viridis(100)
+      ) |>
+      addLegend(
+        position = "bottomright",
+        pal = pal,
+        values = seq(rgeo[1], rgeo[2], length.out = 5),
+        opacity = 1,
+        title = ""
+        )
+    }
   })
   
   output$mapx <- renderLeaflet({
-    # Color palette
-    rgeo <- range(xgeo()[[1]], na.rm=T)
-    pal <- leaflet::colorNumeric(
-      viridis::viridis_pal(option = "D")(100), 
-      domain = rgeo
-    )
-  
-    # Map
-    leaflet(xgeo()) |> 
-    setView(lng = -90, lat = 70, zoom = 3) |>
-    addProviderTiles("CartoDB.Positron") |>
-    addStarsImage(
-      opacity = 1,
-      color = viridis::viridis(100)
-    ) |>
-    addLegend(
-      position = "bottomright",
-      pal = pal,
-      values = seq(rgeo[1], rgeo[2], length.out = 5),
-      opacity = 1,
-      title = ""
+    if(length(input$x) == 1) {
+      rgeo <- range(xgeo()[[1]], na.rm=T)
+      pal <- leaflet::colorNumeric(
+        viridis::viridis_pal(option = "D")(100), 
+        domain = rgeo
       )
+    
+      # Map
+      leaflet(xgeo()) |> 
+      setView(lng = -90, lat = 70, zoom = 3) |>
+      addProviderTiles("CartoDB.Positron") |>
+      addStarsImage(
+        opacity = 1,
+        color = viridis::viridis(100)
+      ) |>
+      addLegend(
+        position = "bottomright",
+        pal = pal,
+        values = seq(rgeo[1], rgeo[2], length.out = 5),
+        opacity = 1,
+        title = ""
+        )
+    }
   })
 }
 
