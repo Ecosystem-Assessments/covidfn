@@ -12,7 +12,7 @@ ui <- fluidPage(
     sidebarPanel(
       selectInput(
         "dataset", 
-        label = "Select dataset (only 1 for now)", 
+        label = "Select dataset", 
         choices = c("First Nations","Canadian geographical names"), 
         multiple = FALSE, 
         selected = "First nations"

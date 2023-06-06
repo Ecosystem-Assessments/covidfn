@@ -55,6 +55,7 @@ fn_extract <- function() {
           dplyr::rename(longitude = X, latitude = Y)
     dat[[i]] <- sf::st_drop_geometry(dat[[i]])
     dat[[i]] <- cbind(dat[[i]], xy)
+    dat[[i]] <- lapply(dat[[i]], function(x) round(x, 6))
     nm <- glue::glue("{tools::file_path_sans_ext(names(dat)[i])}.csv")
     write.csv(
       dat[[i]], 
