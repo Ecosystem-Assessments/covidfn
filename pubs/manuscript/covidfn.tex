@@ -1,0 +1,581 @@
+\documentclass[preprint, 3p,
+authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+
+\usepackage[hyphens]{url}
+
+  \journal{Journal of Environmental Management} % Sets Journal name
+
+\usepackage{graphicx}
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+% TODO: Currently lineno needs to be loaded after amsmath because of conflict
+% https://github.com/latex-lineno/lineno/issues/5
+\usepackage{lineno} % add
+  \linenumbers % turns line numbering on
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={Indicators of social vulnerability explain rates of COVID-19 infections across Canada},
+            colorlinks=false,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+
+\setcounter{secnumdepth}{5}
+% Pandoc toggle for numbering sections (defaults to be off)
+
+
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% From pandoc table feature
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+
+
+
+\usepackage{setspace}
+\usepackage{float}
+
+
+
+\begin{document}
+
+
+\begin{frontmatter}
+
+  \title{Indicators of social vulnerability explain rates of COVID-19
+infections across Canada}
+    \author[uoft]{David Beauchesne%
+  %
+  }
+   \ead{david.beauchesne@hotmail.com} 
+    \author[tmu]{Eric Liberda%
+  %
+  }
+   \ead{eric.liberda@torontomu.ca} 
+    \author[tmu]{Robert Moriarity%
+  %
+  }
+   \ead{rob.moriarity@torontomu.ca} 
+    \author[uoft]{Nicholas Spence%
+  %
+  }
+   \ead{nicholas.spence@utoronto.ca} 
+    \author[uoft]{Leonard J.S. Tsuji%
+  %
+  }
+   \ead{leonard.tsuji@utoronto.ca} 
+    \author[qu]{Aleksandra Zuk%
+  %
+  }
+   \ead{amz4@queensu.ca} 
+      \affiliation[uoft]{
+    organization={Department of Health and Society, University of
+Toronto},addressline={27 King's College
+Cir.},city={Toronto},postcode={M5S
+1A1},state={Ontario},country={Canada},}
+    \affiliation[tmu]{
+    }
+    \affiliation[qu]{
+    }
+    \cortext[cor1]{Corresponding author}
+  
+  \begin{abstract}
+  Write abstract here in yaml header
+  \end{abstract}
+    \begin{keyword}
+    COVID-19 \sep Social vulnerability \sep Canada \sep  \sep  \sep 
+    
+  \end{keyword}
+  
+ \end{frontmatter}
+
+\onehalfspacing
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+The objective of this article was to explore how rates of COVID-19
+outcomes during the pandemic were linked to indicators of social
+vulnerability (\emph{e.g.} employment, income, dwelling condition)
+across Canada. Our specific goals were to 1) characterize the spatial
+distribution of social vulnerabilities across Canada, and 2) explore the
+relationship between social vulnerabilities and rates of COVID-19
+infections and deaths during the pandemic. Our goal with this assessment
+is identify readily available indicators of social vulnerability and
+target those that should be alleviated to improve our response to
+another pandemic in the future.
+
+\hypertarget{material-and-methods}{%
+\section{Material and methods}\label{material-and-methods}}
+
+\hypertarget{spatial-scope}{%
+\subsection{Spatial scope}\label{spatial-scope}}
+
+This assessment is focused on a continental Canada-wide assessment
+(Figure 1).
+
+\hypertarget{data-sources}{%
+\subsection{Data sources}\label{data-sources}}
+
+\hypertarget{covid-19-data}{%
+\subsubsection{COVID-19 data}\label{covid-19-data}}
+
+\begin{quote}
+The Timeline of COVID-19 in Canada (CovidTimelineCanada) is intended to
+be the definitive source for data regarding the COVID-19 pandemic in
+Canada. In addition to making available the ready-to-use datasets, this
+repository also acts as a hub for collaboration on expanding and
+improving the availability and quality of COVID-19 data in Canada. This
+repository is maintained by the COVID-19 Canada Open Data Working Group
+and is one component of the What Happened? COVID-19 in Canada project.
+\end{quote}
+
+This dataset provides daily data on COVID-19 infections and deaths for
+99 Canadian health regions throughout the pandemic. We selected data
+spanning from the onset of the pandemic in Canada (2020-01-15 in the
+data) until 2023-05-17.
+
+\textbf{\emph{Note that the end date should be discussed and decided
+upon together. Some things to consider for this decision: when certain
+provinces began phasing out reporting at the level of health regions
+(see
+https://github.com/ccodwg/CovidTimelineCanada/blob/main/docs/data\_sources/hr\_reporting.md),
+and the advent of rapid testing.}}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Number of health regions, population size, and number of cases
+and deaths for each Canadian province.}\tabularnewline
+\toprule
+Province & Health regions & Population & Cases & Deaths \\
+\midrule
+\endfirsthead
+\toprule
+Province & Health regions & Population & Cases & Deaths \\
+\midrule
+\endhead
+AB & 5 & 4442879 & 632775 & 5733 \\
+BC & 5 & 5214805 & 399103 & 5430 \\
+MB & 5 & 1383765 & 156136 & 2501 \\
+NB & 7 & 789225 & 90652 & 765 \\
+NL & 4 & 520553 & 55335 & 344 \\
+NS & 4 & 992055 & 85262 & 865 \\
+NT & 1 & 45504 & 11508 & 22 \\
+NU & 1 & 39403 & 3531 & 7 \\
+ON & 34 & 14826276 & 1619039 & 16535 \\
+PE & 1 & 164318 & 57251 & 103 \\
+QC & 18 & 8604495 & 1336022 & 17858 \\
+SK & 13 & 1204858 & 154058 & 1868 \\
+YT & 1 & 42986 & 5588 & 32 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{indicators-of-social-vulnerability}{%
+\subsubsection{Indicators of social
+vulnerability}\label{indicators-of-social-vulnerability}}
+
+The whole country was divided into a 1 \(km^2\) grid cell to
+characterize the selected indicators of social vulnerability. The list
+of indicators used is available in Table 1. The following sections
+present the different data sources and the indicators they were used to
+obtain.
+
+\textbf{\emph{Note that for a manuscript, I would focus on the
+indicators of social vulnerability rather than the dataset, but to
+facilitate our work, I present it here by focusing on datasets.}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.68}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.32}}@{}}
+\caption{List of indicators of social vulnerability considered for this
+assessment.}\tabularnewline
+\toprule
+Indicators of social vulnerability & Source \\
+\midrule
+\endfirsthead
+\toprule
+Indicators of social vulnerability & Source \\
+\midrule
+\endhead
+Gini index on adjusted household total income & 2021 Census of
+Population \\
+P90/P10 ratio on adjusted household after-tax income & 2021 Census of
+Population \\
+Prevalence of low income based on the Low-income measure, after tax
+(LIM-AT) (\%) & 2021 Census of Population \\
+Prevalence of low income based on the Low-income cut-offs, after tax
+(LICO-AT) (\%) & 2021 Census of Population \\
+Indigenous identity & 2021 Census of Population \\
+Children in a one-parent family & 2021 Census of Population \\
+Parents in one-parent families & 2021 Census of Population \\
+No certificate, diploma or degree & 2021 Census of Population \\
+Government transfers (\%) & 2021 Census of Population \\
+Housing suitability & 2021 Census of Population \\
+Dwelling condition & 2021 Census of Population \\
+Acceptable housing & 2021 Census of Population \\
+Distance to closest road & 2021 Census Road Network \\
+Distance to closest critical healthcare facility & Open Database of
+Healthcare Facilities \\
+Distance to closest longterm healthcare facility & Open Database of
+Healthcare Facilities \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{census-of-population}{%
+\paragraph{2021 Census of Population}\label{census-of-population}}
+
+Data from the 2021 Census of Population \citep{statisticscanada2021a}
+was used to select relevant population indicators as proxies of social
+vulnerabilities. The indicators were then joined to the census
+cartographic divisions boundary files for 2021
+\citep{statisticscanada2022f, statisticscanada2022} and subsequently
+integrated in the study grid. The selected indicators were:
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Gini index on adjusted household total income}: \emph{``The
+  Gini coefficient is a number between zero and one that measures the
+  relative degree of inequality in the distribution of income. The
+  coefficient would register zero (minimum inequality) for a population
+  in which each person received exactly the same adjusted household
+  income and it would register a coefficient of one (maximum inequality)
+  if one person received all the adjusted household income and the rest
+  received none. Even though a single Gini coefficient value has no
+  simple interpretation, comparisons of the level over time or between
+  populations are very straightforward: the higher the coefficient, the
+  higher the inequality of the distribution.''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{P90/P10 ratio on adjusted household after-tax income}:
+  \emph{``The P90/P10 ratio is a measure of inequality. It is the ratio
+  of the 90th and the 10th percentile of the adjusted household
+  after-tax income. The 90th percentile means 90\% of the population has
+  income that falls below this threshold. The 10th percentile means 10\%
+  of the population has income that falls below this threshold.''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Prevalence of low income based on the Low-income measure,
+  after tax (LIM-AT) (\%)}: \emph{``The Low‑income measure, after tax,
+  refers to a fixed percentage (50\%) of median adjusted after‑tax
+  income of private households. The household after‑tax income is
+  adjusted by an equivalence scale to take economies of scale into
+  account. This adjustment for different household sizes reflects the
+  fact that a household's needs increase, but at a decreasing rate, as
+  the number of members increases.''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Prevalence of low income based on the Low-income cut-offs,
+  after tax (LICO-AT) (\%)}: \emph{``The Low‑income cut‑offs, after tax
+  refer to income thresholds, defined using 1992 expenditure data, below
+  which economic families or persons not in economic families would
+  likely have devoted a larger share of their after‑tax income than
+  average to the necessities of food, shelter and clothing. More
+  specifically, the thresholds represented income levels at which these
+  families or persons were expected to spend 20 percentage points or
+  more of their after‑tax income than average on food, shelter and
+  clothing. These thresholds have been adjusted to current dollars using
+  the all‑items Consumer Price Index (CPI).''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Indigenous identity}: \emph{``Indigenous identity refers to
+  whether the person identified with the Indigenous peoples of Canada.
+  This includes those who identify as First Nations (North American
+  Indian), Métis and/or Inuk (Inuit), and/or those who report being
+  Registered or Treaty Indians (that is, registered under the Indian Act
+  of Canada), and/or those who have membership in a First Nation or
+  Indian band. Aboriginal peoples of Canada (referred to here as
+  Indigenous peoples) are defined in the Constitution Act, 1982, Section
+  35 (2) as including the Indian, Inuit and Métis peoples of Canada.''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Children in a one-parent family}: \emph{``Percent children
+  living in one-parent family.''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Parents in one-parent families}: \emph{``Percent parent in
+  one-parent family,''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{No certificate, diploma or degree}: \emph{``Percent population
+  with no certificate, diploma or degree, population 25-64 years old.''}
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Government transfers (\%)}: \emph{``Percent of total income
+  composed of government transfers in 2020, corresponding to all cash
+  benefits received from federal, provincial, territorial or municipal
+  governments during the reference period.''}
+\end{itemize}
+\end{quote}
+
+Data from housing suitability \citep{statisticscanada2022c}, dwelling
+condition \citep{statisticscanada2022d}, and acceptable housing
+\citep{statisticscanada2022e} of the 2021 Census of Population
+\citep{statisticscanada2021a} were also joined with the 2021 Census
+cartographic division boundary file {[}\citet{statisticscanada2022};
+statisticscanada2022f{]}.
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Housing suitability}: According to Statistics Canada, housing
+  suitability \emph{``refers to whether a private household is living in
+  suitable accommodations according to the National Occupancy Standard
+  (NOS); that is, whether the dwelling has enough bedrooms for the size
+  and composition of the household. A household is deemed to be living
+  in suitable accommodations if its dwelling has enough bedrooms, as
+  calculated using the NOS. Housing suitability assesses the required
+  number of bedrooms for a household based on the age, sex, and
+  relationships among household members. An alternative variable,
+  persons per room, considers all rooms in a private dwelling and the
+  number of household members. Housing suitability and the National
+  Occupancy Standard (NOS) on which it is based were developed by Canada
+  Mortgage and Housing Corporation (CMHC) through consultations with
+  provincial housing agencies.''} Housing suitability was assessed as
+  the proportion of households in a census division considered as not
+  suitable.
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Dwelling condition}: Dwelling condition refers to whether the
+  dwelling is in need of repairs. Acceptability of dwelling condition
+  was assessed as the proportion of households in a census division
+  considered as needing major repairs.
+\end{itemize}
+\end{quote}
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Acceptable housing}: According to Statistics Canada,
+  acceptable housing \emph{``refers to whether a household meets each of
+  the three indicator thresholds established by the Canada Mortgage and
+  Housing Corporation for housing adequacy, suitability and
+  affordability. Housing indicator thresholds are defined as follows: 1)
+  adequate housing is reported by their residents as not requiring any
+  major repairs; 2) affordable housing has shelter costs less than 30\%
+  of total before-tax household income; 3) suitable housing has enough
+  bedrooms for the size and composition of resident households according
+  to the National Occupancy Standard (NOS), conceived by the Canada
+  Mortgage and Housing Corporation and provincial and territorial
+  representatives. Acceptable housing identifies which thresholds the
+  household falls below, if any. Housing that is adequate in condition,
+  suitable in size and affordable is considered to be acceptable.''}
+  Here, acceptable housing was assessed as the proportion of households
+  in a census division that was below any of the thresholds of adequacy,
+  affordability or suitability.
+\end{itemize}
+\end{quote}
+
+\hypertarget{census-2021-road-network-file}{%
+\paragraph{Census 2021 road network
+file}\label{census-2021-road-network-file}}
+
+The road network from the Census 2021 road network file
+{[}\citet{statisticscanada2021a}; statisticscanada2021b{]} was
+rasterized as a 1 \(km^2\) resolution then integrated in the study grid
+to obtain a raster of the distribution of the Canadian road network. The
+distance of the centroid of each cell in the grid to the closest road
+was then measured to obtain an assessment of the distance to the closest
+road across Canada.
+
+\hypertarget{open-database-of-healthcare-facilities}{%
+\paragraph{Open Database of Healthcare
+Facilities}\label{open-database-of-healthcare-facilities}}
+
+The location of healthcare facilities available in the Open Database of
+Healthcare Facilities {[}ODHF; \citet{statisticscanada2020};
+\citet{statisticscanada2020a}{]} were used to assess the distance to the
+closest healthcare facility. Facilities were divided between critical
+and longterm care using the classifications available in the ODHF.
+Hospitals and ambulatory health care services were considered as
+critical care facilities, while nursing and residential care facilities
+were considered as longterm care facilities.
+
+\hypertarget{assessment}{%
+\subsection{Assessment}\label{assessment}}
+
+\hypertarget{integrated-dataset}{%
+\subsubsection{Integrated dataset}\label{integrated-dataset}}
+
+For each Canadian health unit, we extracted the number of cases, the
+number of deaths, and the average value of each selected indicator of
+social vulnerability.
+
+\hypertarget{correlations}{%
+\subsubsection{Correlations}\label{correlations}}
+
+TODO: Assess the correlation between COVID-19 outcomes and indicators of
+social vulnerability
+
+\hypertarget{linear-regressions}{%
+\subsubsection{Linear regressions}\label{linear-regressions}}
+
+TODO: Build competing regression models to explain COVID-19 outcomes as
+a function of social vulnerabilities. Perhaps use mixed models and use
+provinces as a random factor in the assessment
+
+\hypertarget{cluster-analysis}{%
+\subsubsection{Cluster analysis}\label{cluster-analysis}}
+
+TODO:
+
+\begin{itemize}
+\tightlist
+\item
+  Identify HR that are most similar in terms of COVID-19 outcomes and
+  social indicators
+\item
+  Identify variables that explain intra-cluster similarity
+\item
+  Identify variables that explain inter-cluster dissimilarity
+\end{itemize}
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\hypertarget{credit-author-statememnt}{%
+\section*{Credit author statememnt}\label{credit-author-statememnt}}
+\addcontentsline{toc}{section}{Credit author statememnt}
+
+\textbf{David Beauchesne}: Conceptualization, Methodology, Software,
+Formal analysis, Data Curation, Writing - Original Draft, Writing --
+review \& editing, Visualization; ****:
+
+\hypertarget{declaration-of-competing-interest}{%
+\section*{Declaration of competing
+interest}\label{declaration-of-competing-interest}}
+\addcontentsline{toc}{section}{Declaration of competing interest}
+
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+\hypertarget{data-and-code-availability}{%
+\section*{Data and code availability}\label{data-and-code-availability}}
+\addcontentsline{toc}{section}{Data and code availability}
+
+The data used for the cumulative effects assessment of marine shipping
+in the St.~Lawrence and Saguenay Rivers are through Zenodo (DOI: ) and
+available at the following link: \textbf{\emph{add link}}. The data
+shared is the integration of all valued components and stressors within
+our study grid, which is used to perform the cumulative effects
+assessment. However, the data shared by First Nations is unavailable due
+to data sharing agreements. The raw data are not available on Zenodo, as
+the assessment integrates data from over 80 different projects. However,
+code is available through a research compendiu (see below) to access all
+publicly available data, which make up the vast majority of all data
+used for the assessment. The code used for this assessment is available
+through a research compendium called \emph{ceanav} and available through
+a GitHub repository
+(https://github.com/EffetsCumulatifsNavigation/ceanav) and archived on
+Zenodo (DOI: ). \textbf{\emph{Note:}} \emph{DOIs will be added once
+review process for publication is completed}
+
+\newpage
+
+\hypertarget{figures}{%
+\section*{Figures}\label{figures}}
+\addcontentsline{toc}{section}{Figures}
+
+\hypertarget{tables}{%
+\section*{Tables}\label{tables}}
+\addcontentsline{toc}{section}{Tables}
+
+\newpage
+
+\renewcommand\refname{References}
+\bibliography{covidfn.bib}
+
+
+\end{document}

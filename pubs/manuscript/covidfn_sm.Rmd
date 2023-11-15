@@ -1,0 +1,1369 @@
+---
+title: Assessing the cumulative effects of maritime activities in the St. Lawrence and Saguenay Rivers in Canada
+author:
+  - name: David Beauchesne
+    email: david.beauchesne@hotmail.com
+    affiliation: uoft
+    correspondingauthor: true
+  - name: Cindy Grant
+    email: cindy.grant@bio.ulaval.ca
+    affiliation: ul
+  - name: Catherine Guillemette 
+    email: catherine.guillemette@tc.gc.ca
+    affiliation: tc
+  - name: Philippe Archambault
+    email: philippe.archambault@bio.ulaval.ca
+    affiliation: ul
+address:
+  - code: uoft
+    organization: Department of Health and Society, University of Toronto
+    addressline: 27 King's College Cir.
+    postcode: M5S 1A1
+    state: Ontario
+    city: Toronto
+    country: Canada
+  - code: qo
+    organization: Québec Océan
+    addressline: 1045, av. de la Médecine
+    postcode: G1V 0A6
+    city: Québec
+    state: Québec
+    country: Canada
+  - code: ul
+    organization: Département de biologie, Université Laval
+    addressline: 1045, av. de la Médecine
+    postcode: G1V 0A6
+    city: Québec
+    state: Québec
+    country: Canada
+  - code: tc
+    organization: Transport Canada
+    addressline: 330 Sparks St.
+    postcode: K1A 0N8
+    city: Ottawa
+    state: Ontario
+    country: Canada
+journal: "Journal of Environmental Management"
+date: "`r Sys.Date()`"
+classoption: preprint, 3p, authoryear
+bibliography: ceanav.bib
+linenumbers: false
+numbersections: true
+# Use a CSL with `citation_package = "default"`
+# csl: https://www.zotero.org/styles/elsevier-harvard
+output: 
+  rticles::elsevier_article:
+    keep_tex: true
+    citation_package: natbib
+header-includes:
+  - \usepackage{setspace}
+  - \usepackage{float}
+---
+
+\onehalfspacing
+
+```{r setup, include = FALSE, purl = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE,
+  echo = FALSE,
+  message = FALSE,
+  dev = "png",
+  dpi = 108,
+  fig.width = 8,
+  fig.height = 6,
+  fig.align = "center",
+  width = 120 # ,
+  # table.attr = 'class="flat-table"'
+)
+```
+
+# Supplementary methods
+
+## Environmental stressors
+
+```{r stresssetup, echo = FALSE}
+st <- read.csv("../data/metadata_stresseurs.csv")
+```
+
+Characterization of environmental stressors in the study area resulted in the description of `r length(unique(st$stresseur))` stressors divided into `r nrow(st)` subcategories that are considered for the cumulative effects assessment of marine vessel activities (Table \@ref(tab:stress)). The following sections present the data, methods, and results for the characterization of stressors in the St. Lawrence and Saguenay Rivers.
+
+```{r stress}
+tab <- dplyr::select(st, title_en, english, description_en, source)
+tab$title_en[duplicated(tab$title_en)] <- ""
+uid <- which(tab$title_en != "")[-1] - 1
+tab$source <- gsub(",", ", ", tab$source)
+
+tab |>
+  knitr::kable(
+    col.names = c("Environmental stressors", "Subcategories", "Description", "Source"),
+    row.names = FALSE,
+    caption = "
+    List of environmental stressor subcategories considered for the cumulative effects assessment of marine vessel activities in the St. Lawrence and the Saguenay river. See Appendix 1 for more details on data sources."
+  ) # %>%
+# kableExtra::row_spec(uid, extra_css = "border-bottom: 2px solid")
+```
+
+### Anchorage {#ancrage}
+
+> ***We thank the Canadian Coast Guard and Corinne Berthold for the discussions and support.***
+
+```{r ancrage_setup, echo = FALSE, results = 'asis'}  
+meta <- yaml::read_yaml("../data/data-metadata/int_st_ancrage.yml")
+```
+
+Anchorage sites were characterized through the integration of two databases from the Canadian Coast Guard [@gcc2022] and the Canadian Hydrographic Service [@shc2020]. The Canadian Coast Guard database provides the location of commercial anchorage sites from the mooring data sheets between Les Escoumins and Montreal [@gcc2022]. Since this database does not cover the entire study area, we completed the characterization of anchorage sites using the Canadian Hydrographic Service database; this database provides the location of moorings and mooring areas in Canadian navigable waters [@shc2020]. We selected the moorings and mooring areas east of Les Escoumins in order to complete the profile of the study area. It is important to mention that the resulting data layer considers only commercial navigation and that anchorage sites for recreational boating are not represented. 
+
+A total of `r meta$dataDescription$observations$total` sites were identified in the study area. To characterize the intensity of this environmental stressor, a 2 $km$ buffer zone was drawn around each anchoring site. The number of anchorage sites intersecting each study grid cell was then assessed to obtain an assessment of the number of sites ($n$) per $km^2$ with the potential to affect a cell ($n$ sites * $km^{-2}$). This characterization allows us to obtain an assessment of the environmental risk associated with anchorage sites in each study grid cell by assuming that risks are higher when multiple anchorage sites are located close to each other. It is important to note that we are not characterizing the intensity of use of these sites by vessels here, but rather the presence of anchorage sites.
+
+
+### Accidental spills
+
+> ***We thank Pierre Nellis at the Canadian Coast Guard for the discussions and support.***
+
+```{r deversement_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_st_deversement.yml")
+```
+
+Accidental spills were characterized using a marine spill incident inventory from the Canadian Coast Guard [@gcc2020]. This inventory provides the location of accidental marine spills for the period `r meta$dataDescription$temporal$start` to `r meta$dataDescription$temporal$end`. A total of `r meta$dataDescription$observations$total` accidental spills were identified for the study area.
+
+Each spill is characterized according to its content and grouped into three distinct groups: hydrocarbons (*e.g.* gasoline, diesel, propane), other (*e.g.* ballast water, wastewater, organic matter) and unknown content (Table \@ref(tab:deversementGen)). The spills are also categorized by the volume in litres of contaminant spilled (Table \@ref(tab:deversementlvl)).
+
+
+```{r deversementGen}
+tab <- as.data.frame(meta$dataDescription$categories) |>
+  dplyr::select(english, souscategories_en, observations)
+
+tab |>
+  knitr::kable(
+    col.names = c("Contaminant category", "Subcategory", "Number of spills"),
+    row.names = FALSE,
+    caption = "Categories and number of accidental spills recorded in the St. Lawrence and the Saguenay river between 2016 and 2020 [@gcc2020]."
+  )
+```
+
+```{r deversementlvl}
+tab <- as.data.frame(meta$dataDescription$classes) |>
+  dplyr::select(lvls_en, nombre)
+
+tab |>
+  knitr::kable(
+    col.names = c("Categories of volumes spilled", "Number of spills"),
+    row.names = FALSE,
+    caption = "Categories of volumes spilled and number of accidental spills recorded in the St. Lawrence and the Saguenay river between 2016 and 2020 [@gcc2020]."
+  ) # %>%
+# kableExtra::kable_styling(full_width = F)
+```
+
+
+Since accidental spills have an effect that goes beyond the immediate location of the incidents due to the diffusion of the spill in the environment, the first step in characterizing the intensity of spills was to establish a potential zone of influence for each incident. We chose a passive diffusive model to establish the zone of influence and relative intensity of accidental spills in the study area [see @halpern2008a].
+
+The diffusion model establishes the zone of influence of the spills by creating concentric rings with a radius of 10 $m$ centred on the incident site. An initial value equal to the category of the reported incident volume is assigned to the centre ring and represents the relative intensity of the incident on the environment. For example, an initial value of 2 was assigned to a spill of 0 to 100 litres (Table \@ref(tab:deversementlvl)). As a precautionary measure, an initial value of 2 was also assigned to `r meta$dataDescription$classes$number[length(meta$dataDescription$classes$number)]` spill with unknown volume. A value is then successively assigned to the adjacent rings according to a decay function of 2\% of the value of the previous ring, until a minimum threshold of 0.05\% of the global maximum -- 3 in our case -- is reached. This approach assumes a linear decrease in the influence of the incidents on the environment up to a maximum radius of influence of about 3 $km$ depending on the severity of the spill.
+
+The intensity and spatial distribution of accidental spills in the study area was evaluated by distributing the relative intensity values modelled by the diffusive model within the 1 $km^2$ study grid. For each concentric ring modelled, we multiplied the intensity value within each cell $j$ of the study grid by the proportion of the ring area that intersects a cell $j$:
+
+$$I_{spill,j} = \sum_{k=1}^{n_j} I_{tot, k} * \frac{A_{j,k}}{A_{tot,k}}$$
+
+where $j$ is a study grid cell, $k$ is a modelled concentric ring, $I_{tot}$ is the predicted relative intensity within the $k$ ring, $A$ is the area of the $k$ concentric ring that intersects a $j$ cell, and $A_{tot}$ is the total area of the $k$ concentric ring. Since the intensity values correspond to volume categories rather than a continuous quantity, the results of this diffusive model are relative and unitless.
+
+
+### Dredging
+
+> ***We thank Simon Blais of Environment and Climate Change Canada and Pierre Michon of the Quebec Ministry of the Environment and the Fight Against Climate Change for the discussions and support.***
+
+```{r dragage_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_st_dragage.yml")
+```
+
+The St. Lawrence Seaway has historically been dredged wherever the natural depth would not allow boats to pass safely. Between Montreal and Cap Gribane, which is located downstream from Cap Tourmente, about 30 $km$ from Île d'Orléans, the navigable waterway is approximately 340 km long and artificial banks have been added over a distance of about 210 km to ensure safe navigation [@ghd2019]. The waterway has been deepened and widened over time, mainly due to increases in the size of vessels and marine traffic. A historic characterization of capitalization dredging activities -- *i.e.* dredging to deepen and widen the waterway -- of the St. Lawrence Seaway is described by @cote2007 and @cote2007a. Some portions of the waterway must also be dredged at regular intervals -- *i.e.* maintenance dredging -- due to the sediment dynamics of the environments. The same is true for certain port facilities along the St. Lawrence and Saguenay rivers, which must ensure the ability of their vessel facilities to operate safely.
+
+In this study, contemporary dredging activities for the period `r meta$dataDescription$temporal$start` to `r meta$dataDescription$temporal$end` were characterized. Most of the data on dredged and deposited volumes come from a compilation of documents and data on dredging activities throughout the St. Lawrence [@mtq2016; @mtq2017; @eccc2020]. Dredging data available in a report assessing the environmental impacts of dredging in the St. Lawrence Seaway completed these data [@ghd2019]. Dredging activities for the Port of Quebec were characterized through discussions with a representative of the Port of Quebec City (Marie-Ève Lemieux, personal communication). Various reports were used to characterize maintenance dredging activities for Port Alfred [@englobe2016; @englobe2017; @melcc2019], and capitalization dredging activities planned for the Port of Montreal at Contrecoeur [@snclavalin2017; @snclavalin2017b; @aeic2021] and for the Port of Trois-Rivières [@stantec2015]. Lastly, data on dredging and disposal sites were transmitted by the Essipit Innu First Nation [@bouchard2022].
+
+The volumes dredged were then plotted for the dredging and disposal sites. Where provided within the reports, coordinates delineating the sites considered were used. Where a single coordinate representing the geometric centre of the sites where dredging took place was available without additional information on the exact location of the activity, an area with a radius of 100 $m$ was drawn to represent the dredging or disposal area. Where the location was described, or a figure was available in the detailed reports, the dredged and disposal areas were georeferenced manually. The St. Lawrence Seaway dredging and disposal site locations were taken from a database provided by the Canadian Coast Guard [@gcc2021b].
+
+Dredging sites and dredged sediment disposal sites were characterized based on the total volume dredged in $m^3$ during the period considered (Table \@ref(tab:dragageGen)). A total of `r length(meta$dataDescription$dragage$volume)` dredging sites (Table \@ref(tab:dragageSite)) and `r length(meta$dataDescription$depot$volume)` disposal sites (Table \@ref(tab:dragageDepot)) were characterized in the study area. It should be noted that the total volumes dredged do not correspond to the total volumes deposited since some of the disposal sites are on land and accordingly, were not included in this study.
+
+Port expansion projects for the Port of Montreal at Contrecoeur [@snclavalin2017; @snclavalin2017b; @aeic2021] and for the Port of Trois-Rivières [@stantec2015] provided plans for capitalization dredging in the coming years. These plans were therefore identified (Table \@ref(tab:dragageGen); Table \@ref(tab:dragagePrevu)).
+
+```{r dragageGen}
+tab <- as.data.frame(meta$dataDescription$categories) |>
+  dplyr::select(english, sites, volume, volume_moyen, volume_sd)
+
+tab |>
+  knitr::kable(
+    col.names = c("Category", "Number of sites", "Total volumes", "Average total volumes", "Standard deviation"),
+    row.names = FALSE,
+    caption = "Categories and description of dredging activities recorded in the St. Lawrence and the Saguenay river between 2001 and 2020. The volumes are presented in $m^3$."
+  )
+```
+
+
+```{r dragageSite}
+tab <- as.data.frame(meta$dataDescription$dragage) |>
+  dplyr::arrange(municipalite, name)
+
+tab |>
+  knitr::kable(
+    col.names = c("Region", "Site name", "Total volumes"),
+    row.names = FALSE,
+    caption = "Dredging sites and total volumes dredged in $m^3$ in the St. Lawrence and the Saguenay river between 2001 and 2020."
+  )
+```
+
+
+```{r dragageDepot}
+tab <- as.data.frame(meta$dataDescription$depot) |>
+  dplyr::arrange(municipalite, name)
+
+tab |>
+  knitr::kable(
+    col.names = c("Region", "Site name", "Total volumes"),
+    row.names = FALSE,
+    caption = "Disposal sites and total volumes deposited in $m^3$ in the St. Lawrence and the Saguenay river between 2001 and 2020."
+  )
+```
+
+```{r dragagePrevu}
+tab <- as.data.frame(meta$dataDescription$dragage_prevu) |>
+  dplyr::arrange(municipalite, name)
+
+tab |>
+  knitr::kable(
+    col.names = c("Region", "Site name", "Total volumes"),
+    row.names = FALSE,
+    caption = "Capitalization dredging sites and total expected volumes in $m^3$ in the St. Lawrence and the Saguenay river."
+  )
+```
+
+The intensity of dredging (Figure \@ref(fig:dragage)), sediment disposal (Figure \@ref(fig:depot)), and planned dredging (Figure \@ref(fig:dragageprevu)) activities was characterized by distributing the total volumes dredged within our 1 $km^2$ grid. For example, imagine a dredging activity that resulted in the extraction of 100 $m^3$ of sediment over a total area of 2 $km^2$ and that this site covers exactly 2 cells of our study grid. This means that the values assigned to the 1 $km^2$ cells would be 50 $m^3$ each.
+
+To do so, we multiplied the total volumes in each cell $j$ by the proportion of the dredged area covering cell $j$:
+
+$$I_{dredging,j} = \sum_{k=1}^{n_j} V_{tot, k} * \frac{A_{j,k}}{A_{tot,k}}$$
+
+where $j$ is a study grid cell, $k$ is a dredging or disposal activity, $V_{tot}$ is the total volume dredged or deposited during the dredging or disposal activity, $A$ is the dredging area where dredging would take place $k$ that intersects a $j$ cell, and $A_{tot}$ is the total area where the $k$ dredging or disposal occurs. This formula calculates an assessment of the dredging intensity in $m^3$. Since we calculated the intensity in cells of 1 $km^2$, units are in $m^3 * km^{-2}$.
+
+
+### Shipwrecks {#naufrage}
+
+> ***We thank Sohaib Gabsis at Fisheries and Oceans Canada for the discussions and support.***
+
+```{r naufrage_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_st_naufrage.yml")
+```
+
+Environmental stress related to shipwrecks was characterized using a Canadian Coast Guard database on the distribution of vessels of concern [@gcc2021]. Most of the vessel data still need to be validated by the Canadian Coast Guard and the accuracy of the coordinates cannot be guaranteed; however, this database is the best available source of information and as such is used for the cumulative effects assessment. This database identifies `r meta$dataDescription$observations$total` shipwrecks within the study area. The intensity of this environmental stressor was characterized using Gaussian smoothing -- *i.e.* an interpolation method based on a normal distribution -- of 3 $km$ in order to identify areas potentially affected by shipwrecks and to account for the uncertainty of the shipwreck coordinates recorded by the Canadian Coast Guard.
+
+It is important to note that shipwrecks may be protected when they are considered archeological sites; in this context, shipwrecks posing no risk to the environment were instead considered archeological areas of interest within areas of cultural, heritage and archeological interest valued components.  
+
+
+### Shipping
+
+> ***We thank Clément Chion and Jean-François Sénécal of the Université du Québec en Outaouais, Jeff Campagnola of Transport Canada and Samuel Turgeon of the Saguenay-St. Lawrence Marine Park for the discussions and support.***
+
+
+```{r navigation_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_st_navigation.yml")
+```
+
+The intensity of shipping within the study area was assessed using satellite data from the Automatic Identification System (AIS) developed by Maerospace Corporation and acquired for the Canadian Space Agency
+[@tc2020; @tc2020b].
+This database contains `r meta$dataDescription$observations$total`
+vessel locations (`r meta$dataDescription$observations$moyenne` $\pm$ `r meta$dataDescription$observations$sd` observations per year) for
+`r sum(meta$dataDescription$categories$boats, na.rm = TRUE)` vessels between
+`r meta$dataDescription$temporal$start` and `r meta$dataDescription$temporal$end`.
+It is important to note that this number does not indicate the number of transits, but rather the number of geographic locations identified by the AIS.
+
+Individual location data were transformed into linear shipping segments representing individual and continuous vessel transits, assuming a straight line transit between successive locations.
+Vessels were identified by their Maritime Mobile Service Identity (MMSI) number.
+All available locations were used for each vessel to plot their movements within the study area.
+Since vessels may enter and exit the study area, or stay anchored for longer periods of time, vessel movements were segmented into a number of individual linear segments.
+Segmentation was performed when two consecutive locations were over 5 hours or more than 80.5 km apart.
+Linear segments overlapping the land environment at a distance of over 2 km were removed from the database. This arbitrary distance of 2 km was used to remove outlier segments from the database, while still keeping segments describing coastal shipping or vessels frequenting port facilities. This segmentation resulted in `r meta$dataDescription$segments` linear shipping segments. Since a number of vessel types navigate the waters of the St. Lawrence and Saguenay rivers, we considered `r length(meta$dataDescription$categories$accronyme)-2` different vessel categories to complete the characterization of shipping intensity in the study area (Table \@ref(tab:navCat)). Among the available categories, we removed the *Other* category due to its lack of specificity and the *Fishing* category since few transits were available in the database.
+
+To characterize shipping, we used an intensity index characterizing shipping in terms of single use -- or transits. For each vessel category, we assessed shipping intensity within the study area by the number of shipping segments that intersected each 1 $km^2$ cell of the study grid between `r meta$dataDescription$temporal$start` and `r meta$dataDescription$temporal$end`.
+This index results in an assessment of shipping intensity expressed as number of vessels ($n$) per $km^2$ ($n$ $vessels$ $*$ $km^{-2}$)
+
+Despite efforts to segment and remove impossible transits, some impossible transits may still remain. For example, a very small number of transits is observed north of Île d'Orléans for cargo shipping (Figure \@ref(fig:CARGO)); these transits could not be removed by the automatic segmentation that was done and the total number of transits makes it impractical to remove them manually. These impossible transits are however rare and, as such, unlikely to affect the assessment at the scale of the study area.
+
+```{r navCat}
+tab <- as.data.frame(meta$dataDescription$categories)
+tab <- dplyr::arrange(tab, english)
+tab$transit <- as.character(round(tab$transit, 2))
+tab <- tab[!tab$accronyme %in% c("Observation", "navigation_portuaire"), ] # Remove observation mm and ports
+tab <- dplyr::select(tab, english, boats, observations, segments)
+
+
+tab |>
+  knitr::kable(
+    col.names = c("Ship type", "Ships", "Locations", "Tracks"),
+    row.names = FALSE,
+    caption = "Description of the types of ships considered for the cumulative effects assessment of marine vessel activities in the St. Lawrence and the Saguenay river and their representation in the Automatic Identification System data used [@tc2020; @tc2020b]. "
+  )
+```
+
+
+We completed the description of shipping intensity with two additional shipping categories. The first deals with the intensity of marine mammal watching activities on craft with a class 1 permit in 2017 [@turgeon2019]. The data available from @turgeon2019 provides a characterization of the number of observation vessels that went through a regular 500m x 500m grid. We resampled this grid to distribute the number of transits recorded within our 1 $km^2$ study grid. Although this exercise is limited to the Saguenay-St. Lawrence Marine Park, this is where most of the marine mammal watching excursions take place in the study area.
+
+The second category deals with shipping in port areas, *i.e.* activities that take place near port facilities such as ports and marinas. Under the assumption that shipping activities are more prevalent in port areas, AIS data were used to quantify the number of transits through the port areas within the study area. The port areas were characterized using data on the location of port facilities [@mtq2021] and industrial port areas [@mei2021] in Quebec. A port area zone of influence was plotted by applying a buffer zone of 200 $m$. This zone is deliberately narrow in order to primarily capture vessels that frequent port areas rather than vessels transiting the St. Lawrence River waterway, especially for facilities in the fluvial sector. The number of transits through these port areas was then calculated using the AIS data. According to this approach, a total of `r meta$dataDescription$navigationPortuaire$transits` transits were identified in port areas between `r meta$dataDescription$temporal$start` and `r meta$dataDescription$temporal$end`. These transits were then plotted in the 1 $km^2$ study grid by assigning to each cell the number of transits of the most heavily frequented overlapping port area. For example, if a grid cell was affected by a port area with 100 transits and by another area with 200 transits, that cell was assigned a value of 200.
+<!-- references here (mtq 2021 and mei2021) probably have accents that screw up rendering -->
+
+
+### Commercial fishing
+
+> ***We thank Marc Mingelbier, Paschale Noël Bégin et Marie-Josée Gagnon from the Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs for the discussions and support in characterizing commercial fisheries in the fluvial sector.***
+
+```{r peche_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_st_peche_commerciale.yml")
+```
+
+#### Marine sector
+
+The intensity of commercial fishing activity within the study area was assessed using data from the Fisheries and Oceans Canada logbook program [@mpo2021; @mpo2021b; @mpo2021c]. Although logbooks are not mandatory for all fisheries, they still provide a sufficiently exhaustive assessment of commercial fishing activity distribution and intensity in the study area. We used data between `r meta$dataDescription$temporal$start` and `r meta$dataDescription$temporal$end` to characterize commercial fishing distribution and intensity in the study area. This period was characterized by `r meta$dataDescription$observations$total` fishing activities (`r meta$dataDescription$observations$moyenne` $\pm$ `r meta$dataDescription$observations$sd` observations per year). During this period, a total of `r length(meta$dataDescription$especes$cible)` species were targeted for commercial fishing and a total of `r length(meta$dataDescription$especes$capture$ID)` different species were caught.
+
+
+Commercial fishing is carried out with a wide variety of fishing gear such as traps, trawls, dragging, gillnets and longlines. Each type of fishing gear may have different effects on the ecosystems where fishing activities take place. For example, fishing with traps has very different effects from fishing with trawls. We thus divided fishing based on their environmental effects according to the categories suggested by @halpern2008a and repeated by @beauchesne2020 for the Estuary and Gulf of St. Lawrence (Tables \@ref(tab:pecheEnginFreq) and \@ref(tab:pecheEngin)):
+demersal, destructive, high bycatch (DD)
+demersal, non-destructive, high bycatch (DNH)
+demersal, non-destructive, low bycatch (DNL)
+pelagic, high bycatch (PHB)
+pelagic, low bycatch (PLB)
+
+Gear can also be categorized based on its mobility. Fixed gear such as traps are left in place and have a more localized effect. Mobile gear such as trawls can be towed for several kilometres during fishing activities. We used the type of mobility to generate an area of effects for fishing activities. This approach allows for the potential uncertainty associated with fishing activity coordinates, gear mobility, and the absence of start and end coordinates for mobile gear. We used an area with a radius of 200 and 2000 metres for fixed and mobile gear fishing activities, respectively [@beauchesne2020]. Types of gear were characterized using a commercial fisheries fishing gear index database together with the logbook database [@mpo2021b].
+
+
+```{r pecheEnginFreq}
+tab <- as.data.frame(meta$dataDescription$categories) |>
+  dplyr::filter(source == "0033,0034,0035") |>
+  dplyr::select(english, description_en, frequence)
+beg <- meta$dataDescription$temporal$start
+end <- meta$dataDescription$temporal$end
+
+tab |>
+  knitr::kable(
+    col.names = c("Category", "Description", "Frequency"),
+    caption = paste("Description of gear type categories with the frequency of commercial fishing activities recorded in logbooks between", beg, "and", end, "[@mpo2021; @mpo2021b; @mpo2021c].")
+  )
+```
+
+```{r pecheEngin}
+tab <- data.frame(
+  gear = c(
+    "Trap", "Bottom trawl", "Drag", "Gillnet", "Line fishing",
+    "Longline", "Diving", "Purse seine", "Danish or Scottish seine",
+    "Shoreline seine", "Trap", "Jigger"
+  ),
+  class = c("DNH", "DD", "DD", "PHB", "PLB", "PHB", "DNL", "PLB", "DNH", "DNH", "DNH", "PLB"),
+  mob = c("Fixed", "Mobile", "Mobile", "Fixed", "Fixed", "Fixed", "Fixed", "Fixed", "Fixed", "Fixed", "Fixed", "Fixed")
+)
+
+tab |>
+  knitr::kable(
+    col.names = c("Type of gear", "Category", "Mobility"),
+    caption = "Classification of gear types according to their environmental effects and mobility. DD: demersal, destructive, high bycatch; DNH: demersal, non-destructive, high bycatch; DNL: demersal, non-destructive, low bycatch; PHB: pelagic, high bycatch; PLB: pelagic, low bycatch. Adapted from @beauchesne2020."
+  )
+```
+
+
+To characterize fishing intensity ($I_{fishing}$), we assessed the total frequency of fishing activities during the period considered (`r meta$dataDescription$temporal$start` - `r meta$dataDescription$temporal$end`) overlapping each study grid cell: 
+
+$$I_{fishing,j} = \sum_{k=1}^{n_j} P_{j,k}$$
+
+where $j$ is a study grid cell, $k$ is a fishing activity, and $P_k$ is the buffer zone surrounding each $k$ fishing activity. This formula calculates fishing intensity expressed as the number of identified fishing activities. Since we quantified the intensity within cells of 1 $km^2$, the units are in number of activities ($n$) per $km^2$, or $n * km^{-2}$. Since buffer zones were used around each activity, it is possible that a single fishing activity is identified for more than one cell in the study grid. The total sum of activities in the study grid will therefore not equal the total sum of fishing activities identified in the study area. 
+
+#### Fluvial sector 
+
+Commercial fisheries in the fluvial sector were characterized using data from a description of the main environmental pressures observed in the St. Lawrence in 2012 [@mingelbier2012]. Commercial fisheries activities using fyke nets during the spring, the summer and the fall before 2011 were characterized in segments of 5 km, and dividing the St. Lawrence between the southern and northern shores using the waterway. The intensity of commercial fisheries was measured as the mean number of fyke nets deployed par day in each segment dividing the fluvial sector of the study area; data were then given a value of 1, 3 or 5, corresponding to low, moderate and high fisheries intensity. Those values were integrated in the study grid for the assessment. It should be noted that those data are not exhaustive or representative of all commercial fisheries activities in the fluvial sector; they are, however, the most up to date information available at this time. 
+
+
+### Marine pollution
+
+```{r pollution_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_st_pollution_maritime.yml")
+```
+
+As in @halpern2019, marine pollution was characterized by combining environmental stressors related to marine vessel activities. This choice assumes that water quality is more at risk from shipping activities and the resulting pollution via operational discharges, gas leaks, waste discharges, etc. In the absence of exhaustive data on operational discharges and the difficulty of establishing a direct link between water quality and cumulative marine vessel activities, we used the marine pollution index as a proxy to identify the environments most at risk from pollution from marine vessel activities.
+
+The marine pollution index is obtained by combining the relative intensity of all stressors directly associated with shipping activities, *i.e.* anchorage sites, dredging activities, shipping-related activities and commercial fishing. Characterization of the accidental spills is not included since it relates to toxic spills in the environment rather than as a stressor related to regular shipping activities. The marine pollution intensity ($I_{pollution}$) within a cell $j$ is the sum of the intensity of selected environmental stressors normalized between 0 and 1:
+
+$$I_{pollution,j} = \frac{1}{|S|} \sum_{s \in S} I_{s,j}$$
+
+where $|S|$ is the number of environmental stressors considered, $s$ are the individual environmental stressors, and $I_{s,j}$ is the relative intensity of the stressor $s$ within cell $j$.
+
+
+## Valued components 
+
+```{r cvsetup, echo = FALSE}
+cv <- read.csv("../data/data-metadata/metadata_composantes_valorisees.csv")
+```
+
+Characterization of valued components in the study area resulted in the description of `r length(unique(cv$title))` valued components divided into `r nrow(cv)`subcategories (Table \@ref(tab:cv)). The subcategories were identified primarily by the availability and accessibility of data for the biophysical valued components (*i.e.* bank integrity, habitats, and marine mammals); thus, they should not be considered an exhaustive representation of the diversity of valued component subcategories. In the case of cultural, heritage and archeological areas of interest, the categories identified correspond to the data reported by various First Nations, but should not be interpreted as an exhaustive representation of First Nations land use (see section on areas of interests for more details). 
+
+Most of the data were integrated into the study grid as presence-absence; continuous quantitative characterization was performed for marine mammals only. The approach used is described in the section specific to marine mammals. The following sections present the data and results of the data integration enabling us to characterize the valued components in the study area.
+
+```{r cv}
+tab <- dplyr::select(cv, title, type, title_en, type_en, francais, english, source) |>
+  dplyr::arrange(title, type, francais) |>
+  dplyr::select(-title, -type, -francais)
+tab$title_en[duplicated(tab$title_en)] <- ""
+tab$type_en[duplicated(tab$type_en)] <- ""
+uid <- which(tab$title_en != "")[-1] - 1
+tab$source <- gsub(",", ", ", tab$source)
+
+tab |>
+  knitr::kable(
+    col.names = c("Valued components", "Type", "Subcategories", "Source"),
+    row.names = FALSE,
+    caption = "List of valued component subcategories considered for the cumulative effects assessment of marine vessel activities in the St. Lawrence and the Saguenay river. See Appendix 1 for more details on data sources."
+  ) # %>%
+# kableExtra::row_spec(uid, extra_css = "border-bottom: 2px solid")
+```
+
+
+### Plant and wildlife habitats {#habitat}
+
+```{r habitat_setup, echo = FALSE}
+meta <- yaml::read_yaml("../data/data-metadata/int_cv_habitat.yml")
+```
+
+A data search was conducted to characterize various types of habitats characteristic of the St. Lawrence and Saguenay rivers that could be affected by marine vessel activities. The habitats considered are those for which data were open and accessible from the federal and provincial platforms [Open Government](https://open.canada.ca/en), [Données Québec](https://www.donneesquebec.ca/) and the [St. Lawrence Global Observatory](https://ogsl.ca/), or data shared by various departments, ministries and partners. This data search enabled us to characterize `r length(meta$dataDescription$categories$accronyme)` habitat types within the study area (Table \@ref(tab:habitatCat)). The habitats were characterized as presence-absence in the study grid. The following sections provide more information on the characterization of the various habitat types.
+
+
+```{r habitatCat}
+tab <- as.data.frame(meta$dataDescription$categories)
+tab <- dplyr::arrange(tab, type, source, francais)
+tab$superficie <- round(tab$superficie, 2)
+
+# Remove duplicated names, except for milieu humide subcategory
+uid <- tab$francais == "Milieu humide"
+tab$francais <- ifelse(tab$francais == tab$type, "", tab$francais)
+tab$francais[uid] <- "Milieu humide"
+
+tab <- dplyr::select(tab, type_en, english, description_en, superficie, source)
+
+tab |>
+  knitr::kable(
+    col.names = c("Categories", "Subcategories", "Description", "Area $km^2$", "Source$^*$"),
+    row.names = FALSE,
+    caption = "Categories of habitats considered for the analysis of the cumulative effects of navigation in the St. Lawrence and the Saguenay river and their total area in the study area. $^*$See Appendix 1 for more details on data sources."
+  )
+```
+
+
+#### Habitats important for life cycles
+
+##### Spawning and nursery sites
+
+> ***We thank Marc Mingelbier and Marie-Josée Gagnon from the Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs du Québec for the discussions and support.***
+
+
+Spawning sites are environments critical to the maintenance of fish populations; indeed, disturbances to these sites, or to species behaviour during the spawning period, can have major impacts on fish population dynamics. Similarly, feeding and protection sites for early life stages of fish (*e.g.* larvae, fry, juveniles) are are criticial to the maintenance of fish population. These sites, called nursery areas, are thus critical to fish survival. This means that the protection of spawning and nursery sites is of major importance since they constitute a bottleneck for fish population dynamics.
+
+The data used to characterize spawning and nursery areas in the study area come from an *in situ* observation data integration exercise covering the period from 1974 to 2019 [@melccfp2023a; @melccfp2023b; Tableau \@ref(tab:frayerealevinage)].The identified spawning and nursery sites aggregate data for 71 and 49 fish species, respectively, and cover an area of approximately 275 and 230 $km^2$ within the study area. The data agregates confirmed or potential spawning and nursery sites where habitats were deemed suitable for fish spawning or rearing. Therefore, it is likely that these data are partial and should not be considered an exhaustive description of spawning and nursery sites in the study area. The data are composed of points and polygons. We added a 100 $m$ buffer zone around the points, and then incorporated the presence of spawning sites within our 1 $km^2$ study grid.
+
+We completed the characterization of spawning areas with data in the marine sector coming from the integration of 4 datasets from the Department of Fisheries and Oceans Canada describing the spawning areas of American shad [*Alosa sapidissima*; @mpo2019c], lake sturgeon [*Acipenser fulvescens*; @mpo2019d], Atlantic sturgeon [*Acipenser oxyrhynchus*; @mpo2019e] and rainbow smelt [*Osmerus mordax*; @mpo2019f]. Those data were integrated in the study grid along with data from the fluvial sector.
+
+
+##### Birds
+
+> ***We thank Jean-François Rail of Environment and Climate Change Canada for the discussions and support.***
+
+The data used to characterize sites of importance to birds came from two separate sources that were inserted into the study grid on a presence-absence basis. The first database, which describes the location of bird colonies, is called the [Computerized Database of Quebec Seabirds](https://ogsl.ca/en/biodiversity-birds-eccc-biomq-about/) [CDQS; @rail2002; @eccc2021]. This database was compiled and is updated by the Canadian Wildlife Service (CWS) for the Quebec region. The CDQS contains information on the location of seabird colonies and their nesting sites for the following families: Gaviidae (*i.e.* loons), Hydrobatidae (*i.e.* petrels), Sulidae (*i.e.* gannets/boobies), Phalacrocoracidae (*i.e.* cormorants), Laridae (*i.e.* seagulls, gulls, terns), Alcidae (*i.e.* guillemots, penguins, puffins), and the common eider (*i.e.* Anatidae). For our analysis, we considered only the location of the various colonies available through the CDQS without considering individual species in order to identify the locations that are home to seabird colonies. We also used data from the year 2000 onward only. Our study area included `r meta$dataDescription$BIOMQ$Nombre` sites with a total area of `r meta$dataDescription$BIOMQ$Superficie` $km^2$.
+
+The second database identified Important Bird Areas [IBAs; @oiseauxcanada2015; @etudesoiseauxcanada2015]. IBAs are identified based on information on threatened bird species, sites with significant bird populations, or range-restricted species. Internationally accepted assessment [criteria](https://www.ibacanada.org/documents/current_Canadian_IBA_Criteria.pdf) are used to identify IBAs. Our study area covers `r meta$dataDescription$ZICO$Nombre` IBA sites with a total area of `r meta$dataDescription$ZICO$Superficie` $km^2$.
+
+It is important to note that these sites are land environments, meaning that they do not properly capture aquatic and marine use environments associated with these sites of importance. Extrapolation of an area of marine use based on variables such as the species range and number of individuals would enable us to address this gap [*e.g.* @lieske2020]. 
+
+
+### Endangered wildlife and plant species
+
+A number of [endangered species](https://www.environnement.gouv.qc.ca/biodiversite/especes/index.htm) frequent the waters and banks of the St. Lawrence and Saguenay rivers. In order to capture the sensitive nature of these species and incorporate them into our analysis, we considered the locations where these species have been historically sighted in the study area. The data used to characterize habitats for endangered species were prepared by the Quebec Natural Heritage Data Centre (Centre de données sur le patrimoine naturel du Québec) [CDPNQ; @cdpnq2021; @cdpnq2021b]. These data contain occurrences that delinetate a territory that is or was home to endangered species. We removed historical sightings from the database, as well as species that were extirpated or had not been sighted recently, i.e., since the year 2000. Lastly, we considered susceptible, vulnerable and threatened species. This resulted in a total of `r meta$dataDescription$CDPNQ$EspecesFaune` species and `r meta$dataDescription$CDPNQ$NombreFaune` sites for wildlife species, and `r meta$dataDescription$CDPNQ$EspecesFlore` species and `r meta$dataDescription$CDPNQ$NombreFlore` sites for plant species (Table \@ref(tab:statut)). 
+
+```{r statut}
+tab <- as.data.frame(meta$dataDescription$CDPNQ$details) |>
+  dplyr::select(type_en, loiemv_en, species, area)
+
+tab |>
+  knitr::kable(
+    col.names = c("Type", "Status", "Number of species", "Area $km^2$"),
+    row.names = FALSE,
+    caption = "Number of species and total area of sites of importance for endangered wildlife and floristic species in the study area [@cdpnq2021; @cdpnq2021b]."
+  )
+```
+
+
+These sites of importance for endangered species were integrated into the study grid as presence-absence based on status in order to identify sites that are home to susceptible, vulnerable or threatened wildlife or plant species. This means that the integrated data do not discriminate between the different species considered; rather, they provide a spatial delineation of areas frequented by endangered species. This results in 6 distinct categories of sites.
+
+The CDPNQ data were completed with data on aquatic species at risk designated under the Species at Risk Act [SARA; @mpo2022]. Like the CDPNQ data, the SARA data identify sites here endangered species have been observed. In the study area, the SARA data contains `r meta$dataDescription$LEP$NombreSites` sites for `r meta$dataDescription$LEP$NombreEspeces + 1` aquatic species. We however removed data on the beluga whale (*Delphinapterus leucas*), since that species is already considered through the marine mammals valued component.
+
+#### Natural environments
+
+##### Eelgrass
+
+Eelgrasses (*Zostera marina*) form complex, important habitats that can slow currents, decrease predation and erosion, and contribute to primary production [@hemminga2000; @cimon2021]. The spatial distribution of eelgrass within the study area was described by integrating three different databases. The first database is the most complete and comes from a  literature review for James Bay, Baie des Chaleurs, and the Estuary and Gulf of St. Lawrence covering the period from 1987 to 2009 from the Department of Fisheries and Oceans Canada [@mpo2009]. This literature review brings together data on eelgrass distribution from 24 different resources; it includes `r meta$dataDescription$zostere$mpo$sites` sites over an area of `r meta$dataDescription$zostere$mpo$superficie` $km^2$ in the study area.
+
+Two local databases providing additional information on eelgrass in the study area completed these data. The first is from an eelgrass restoration project in Anse de Pointe-au-Père in Rimouski that provides information on `r meta$dataDescription$zostere$pop$sites` sites covering an area of `r meta$dataDescription$zostere$pop$superficie` $km^2$ [@bois2018]; the second is from a similar exercise in Baie de Mitis and provides information on `r meta$dataDescription$zostere$metis$sites` sites covering an area of `r meta$dataDescription$zostere$metis$superficie` $km^2$ [@comitezipestuaire2012; @bachand2014]. These three databases were integrated into the study grid on a presence-absence basis.
+
+
+##### Floodplains
+
+The characterization of floodplains in the study area was done by combining data from the Flood Risk Areas Database [BDZI; @melcc2020] and data on the presence of floodplains prepared by the regional county municipalities [@mamh2020]. These databases provide the delineation of coastal areas at risk of flooding in Quebec according to a flood recurrence of 2 years, 20 years, or 100 yeras. We used all the zones identified to characterize floodplains in the study area. These data were integrated into the study grid on a presence-absence basis.
+
+
+##### Coastal environments
+
+The characterization of coastal environments comes from the bank characterization exercise in the fluvial portion of the St. Lawrence River [@bernier2020; @bernier2021]; coastal environments were thus unavailable in the marine sector of the study area. This database provides a characterization of the types of coasts we use as habitats in our assessment. A total of 5 coastal environments were considered for the assessment (Table \@ref(tab:habitatCat)): 
+
+- Soft without cliff
+- Rocky without bluff
+- Rocky without cliff
+- Beach terrace
+- Fluvial terrace
+
+These environments were mapped using high-resolution mapping approaches combining the data from land surveys, remote sensing, and local community knowledge [@bernier2020; @bernier2021]. These data were integrated into the study grid on a presence-absence basis.
+
+##### Wetlands
+
+```{r milhumsum, echo = FALSE, results = 'asis'}
+tab <- as.data.frame(meta$dataDescription$categories)
+uid <- tab$accronyme %in% c("eau_peu_profonde", "marais", "marecage", "milieu_humide")
+sup <- round(sum(tab$superficie[uid]), 2)
+```
+
+Wetlands are a link between aquatic and land environments, are home to an abundance of wildlife and plants, provide critical habitat during the life cycle of multiple species, and are critical habitats for many species at risk. Wetlands provide essential ecosystem services such as protecting shorelines from erosion, improving water quality, and storing carbon; they are also widely used for cultural and recreational activities such as hunting and tourism [@clarkson2013]. Wetlands encompass a significant diversity of habitat types, ranging from shallow water to swamp, with an increasing proportion of shrubs.
+
+Wetlands in the study area were characterized using a mapping project that delineated potential wetlands in Quebec [@melcc2019b; @melcc2019c]. This database provides a mapping of wetlands for all of Quebec, classified in broad types: shallow water, marsh, swamp and peatbog (Table \@ref(tab:habitatCat)). A general category for uncategorized wetlands is also available. Wetlands occupy a total area of `r sup` $km^2$ within the study area (Table \@ref(tab:habitatCat)). These data were integrated into the study grid on a presence-absence basis.
+
+
+##### Mollusk beds
+
+The data used to characterize mollusk beds in the study area were derived from a description of surf clam (*Mactromeris polynyma*) stocks in coastal environments in Quebec [@trottier2015; @mpo2019]. The data provide the delimitation of known and commercially harvested deposits, both historically or currently, for the entire Quebec region of the Estuary and Gulf of St. Lawrence. Those data were combined with areas of known unharvested or commercially harvested deposits of Arctic clam [*Mesodesma arctatum*; @mpo2022b], of Atlantic jackknife clam [*Ensis leei*; @mpo2022c] and of soft-shell clam [*Mya arenaria*; @mpo2022e]. Those data were prepared by the National Environmental Emergencies Centre (NEMC) and various projects and monitoring surveys of the Department of Fisheries and Oceand Canada. These data were integrated into the study grid on a presence-absence basis.
+
+##### Aquatic grass beds
+
+> ***We thank Marc Mingelbier and Marie-Josée Gagnon from the Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs du Québec for the discussions and support.***
+
+```{r herbier_data, results = 'asis'}
+uid <- meta$dataDescription$categories$accronyme %in%
+  c(
+    "biovolume_herbier_faible",
+    "biovolume_herbier_modere",
+    "biovolume_herbier_eleve"
+  )
+herbsup <- round(meta$dataDescription$categories$superficie[uid], 2)
+names(herbsup) <- meta$dataDescription$categories$accronyme[uid]
+```
+
+Biovolumes of aquatic grass beds were obtained from sonar data from 2021 surveys in the fluvial sector of the study area [@melccfp2022]. Only areas with biovolumes higher than 0.1 were included to characterize aquatic grass beds in this assessment. Grass beds were divided in 3 biovolume categories: low (`r herbsup["biovolume_herbier_faible"]` $km^2$), moderate (`r herbsup["biovolume_herbier_modere"]` $km^2$) and high (`r herbsup["biovolume_herbier_eleve"]` $km^2$), by using the 33rd and 66th quantile of observed biovolumes in the complete dataset. The biovolume categories were then added to the study grid by ensuring that each cell could contain only a single category. When multiple categories overlapped with a single cell, the highest category was retained. It should be noted that other surveys to characterize aquatic grass beds are planned for future years. These data were integrated into the study grid on a presence-absence basis.
+
+
+### Bank integrity
+
+> ***We thank Patrick Lajeunesse and Jean-François Bernier at Université Laval for the discussions and support.***
+
+```{r berge_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_cv_berge.yml")
+```
+
+The bank integrity valued component was characterized using geospatial data from a recent bank characterization exercise in the fluvial portion of the St. Lawrence River [@bernier2020; @bernier2021]. This characterization was conducted using a high-resolution mapping approach to spatially position, characterize and assess the susceptibility of natural and artificial banks to erosion; this was done using a combination of data from land surveys, remote sensing, and local community knowledge [@bernier2020; @bernier2021]. The geospatial data from this project provide a characterization of bank erosion susceptibility by classifying their state in a three-level erosion index [EI; Figure 2 in @bernier2021]:
+
+- Active (EI = 2): Apparent erosion or vegetation cover < 25%
+- Semi-vegetated (EI = 1): Apparent erosion or vegetation cover of 25 to 75%
+- Stable or vegetated (EI = 0): No apparent signs of erosion, and vegetation cover > 75% or presence of a protective structure
+
+For our study, we considered banks that have apparent signs of erosion, i.e., banks with an EI > 0. We also distinguish between natural and artificial banks; this distinction is made to separate the effects of shipping on natural banks, which have a higher ecological value than artificial banks. Combining the condition of the banks as described in @bernier2020 and @bernier2021 and the degraded state of the artificialities thus results in four categories of banks susceptible to the effects of erosion (Table \@ref(tab:bergeCat)).
+
+These four categories were incorporated into the grid as presence-absence data to assess the presence of the various categories of erosion-sensitive banks within the study area. It is important to note that this valued component was only characterized for the fluvial sector of the study area.
+
+```{r bergeCat}
+tab <- as.data.frame(meta$dataDescription$categories)
+tab <- dplyr::arrange(tab, francais)
+tab <- dplyr::select(tab, english, longueur)
+tab$longueur <- round(tab$longueur, 2)
+
+
+tab |>
+  knitr::kable(
+    col.names = c("Categories", "Length (km)"),
+    row.names = FALSE,
+    caption = "Categories of bank segments sensitive to erosion according to their artificiality and their erosion index (EI) considered for the CEA analysis and their total length in $km$ within the bank characterization data of the fluvial sector of the study area [@bernier2020; @bernier2021]"
+  )
+```
+
+
+### Marine mammals
+
+> ***We thank Sonia Giroux of the Marine Mammal Observation Network (Réseau d'observation de mammifères marins, ROMM) and Aurélie Cosandey-Godin of WWF-Canada for their discussions and support. We also thank Arnaud Mosnier from Fisheries and Oceans Canada for the data and for the discussions on marine mammals of the St. Lawrence.***
+
+```{r mm_setup, echo = FALSE, results = 'asis'}
+meta <- yaml::read_yaml("../data/data-metadata/int_cv_mammiferes_marins.yml")
+```
+
+
+The characterization of marine mammal distribution in the study area was taken from the second edition of a guidebook published for mariners who frequent the Northwest Atlantic [@wwfromm2021]. The purpose of this guide is to inform mariners on the problem of collisions between vessels and whales, how to minimize such incidents, the various species of whales and the leatherback turtle in the area and where they might be present, and on areas where heightened vigilance is required. This guide provides distribution maps for nine species of marine mammals that frequent the Northwest Atlantic [@wwfromm2021; @wwfromm2021b]. These species were selected because of their conservation status and their known risk of collision with vessels.
+
+Distribution maps were assessed by integrating 14 separate datasets from scientific and opportunistic sightings [@wwfromm2021c]. Sighting data covering the period 2010-2015 and geographic boundaries of $40^o$ to $55^o$ N and -72$^o$ to -48$^o$ W were selected to create the maps shared in the guide. The study area was divided into a regular 0.05$^o$ x 0.05$^o$ grid. For each species, the number of sightings recorded in the 14 available databases was quantified for each cell of the study grid. A Gaussian smoothing -- *i.e.* an interpolation method based on a normal distribution -- of 0.2$^o$ was then applied to the grid. The values obtained in each cell were normalized by the total number of sightings for a species; the value in a cell therefore represents the proportion of the total number of sightings per species within the study area. Lastly, a log transformation was then applied to minimize the effect of extreme values on the resulting maps.
+
+Caveats accompany these maps and are reported *verbatim* in this report:
+
+> - Sighting effort was not quantified and varies considerably in time and space. The data represent the relative occurrence of reported sightings rather than the actual density or abundance of the species.
+
+> - The quality of some of the sighting data is unknown. Sightings are reported from individuals with varying degrees of expertise in identifying marine mammals.
+
+Of the nine species for which mappings are available, five frequent the St. Lawrence Estuary and the Saguenay River: the St. Lawrence beluga whale (*Delphinapterus leucas*), the minke whale (*Balaenoptera acutorostrata*), the humpback whale (*Megaptera novaeangliae*), the blue whale (*Balaenoptera musculus*), and the fin whale (*Balaenoptera physalus*). For our study, we resampled the distribution maps produced [@wwfromm2021b] to integrate them into our 1 $km^2$ study grid using the average value of the guide grid cells that intersect each cell in our grid. The values were then normalized between 0 and 1 by dividing each value by the maximum value observed within the grid for each species. The resulting values can be interpreted as the relative density of marine mammal sightings, with values of 0 representing a low relative density and a value of 1 a high relative density.
+
+Data describing the distribution of minke whales, humpback whales, blue whales and fin whales were replaced by data from Fisheries and Oceans Canada describing the distribution of these four whale species within the St. Lawrence [@mosnier2022]. The data is the result of a modeling exercise using sea and aerial sighting data between 1995 and 2017. The maps used present relative occurrence probabilities obtained from Generalized Additive Models (GAM) explicitly considering biases associated with sampling effort; the resulting data is considered the best representation currently available of the distribution of these four species of baleen whales within the estuary. Outliers were identified using the upper interquartile range multiplied by 3 [@tukey1977]; the 95th percentile value was then assigned to these extreme values. The relative probabilities of occurrence were then normalized between 0 and 1. This normalization is done so as not to minimize the cumulative effects on these species compared to other marine mammal species whose values used vary between 0 and 1.
+
+To complete this characterization of marine mammals, we used data from the Marine Mammal Observation Network [MMON; @romm2021] available on the St. Lawrence Global Observatory website (SLGO; [https://ogsl.ca/bio/?lg=en](https://ogsl.ca/bio/?lg=en)). This database is made up of marine mammal sightings recorded by member observers who have been trained by MMON; the sightings are reported by the public and systematically collected by the MMON team, which then validates these sightings. More information about the program is available on a [dedicated page](https://ogsl.ca/en/biodiversity-marine-mammals-data-information/) on the SLGO website.
+
+This database contains nearly 50,000 marine mammal sightings of 21 different species between 1996 and 2021 [@romm2021]. Of these, we selected data for the period from 2000 to 2021 for species not described in the guide that had more than 50 unique sightings. We applied the same methodology described for the guide to characterize the distribution of four additional species frequenting the St. Lawrence and Saguenay rivers: harbour porpoise	(*Phocoena phocoena*), harbour seal	(*Phoca vitulina*), harp seal	(*Phoca groenlandica*) and grey seal	(*Halichoerus grypus*).
+
+It is important to note that the resulting distribution maps for these species are not informed by a process and amount of data similar to what was used to create the marine industry guide [@wwfromm2021]. As with the maps created from Guide data, the resulting values can be interpreted as the relative density of marine mammal sightings, with values of 0 representing a low relative density and a value of 1 a high relative density. An additional caveat must also accompany these data:
+
+> - A lack of data in a sector must not be interpreted as an absence of marine mammals. There are currently no data available on marine mammal traffic for some sectors and some periods of the year.
+
+Data for marine mammals were integrated in the study grid as continuous data to confer greater importance to environments where marine mammals sightings are more probable. 
+
+
+### Areas of cultural, heritage and archeological interest
+
+```{r site_setup, echo = FALSE}
+meta <- yaml::read_yaml("../data/data-metadata/int_cv_site.yml")
+```
+
+The St. Lawrence and Saguenay rivers constitute a system of major cultural, heritage and archeological importance for First Nations and the coastal communities. Areas of cultural, heritage and archeological interest were therefore identified as a valued component to be considered in the assessment of the cumulative effects of marine vessel activities. The areas of interest characterized are mainly provided by participating First Nations, as well as heritage sites listed in public registers and protected areas in the region. This results in a total of `r length(meta$dataDescription$categories$accronyme)` distinct subcategories of areas of interest (Table \@ref(tab:siteCat)). Data characterizing the areas of interest were incorporated directly into the study grid as presence-absence. The following sections describe the data used to characterize the spatial distribution of cultural, heritage and archeological areas of interest in the study area.
+
+
+```{r siteCat}
+tab <- as.data.frame(meta$dataDescription$categories)
+tab <- dplyr::arrange(tab, type, francais)
+tab <- dplyr::select(tab, type_en, english)
+
+uid <- logical(nrow(tab))
+for (i in 2:length(uid)) uid[i] <- ifelse(tab$type_en[i] == tab$type_en[i - 1], TRUE, FALSE)
+
+tab$type_en[uid] <- ""
+
+tab |>
+  knitr::kable(
+    col.names = c("Areas of interest", "Categories"),
+    row.names = FALSE,
+    caption = "Categories of identified areas of cultural, heritage and archeological interest for the St. Lawrence and Saguenay rivers"
+  )
+```
+
+#### Areas of interest to First Nations
+
+In this project, particular importance was given to areas of interest for First Nations. Marine vessel activities may affect the conditions that underlie the exercise of First Nations' Indigenous rights, especially in terms of access to resources and the land. A collaborative process was therefore initiated with Indigenous nations who conduct activities in the study area now or have done in the past. The following participating Indigenous Nations provided data
+
+- Huron-Wendat Nation
+- Innu Nation of Essipit
+- Mohawk Nation of Kahnawà:ke
+- Wolastoqiyik Wahsipekuk Nation
+- W8banaki Nation
+
+An information sharing protocol was developed in cooperation with the participating First Nations. This protocol provides a framework for data use that supports First Nations OCAP principles in research: PCAP$^{MD}$ (Ownership, Control, Access, Possession). Applying these principles serves to protect First Nations' information and knowledge assets. These principles state that a community, a nation, or a group owns information collectively. These principles apply to all types and fields of research conducted on First Nations lands and/or that concern First Nations.
+
+One-on-one meetings were held with representatives of participating First Nations to present the project and discuss the needs for information in order to incorporate the areas of interest into the cumulative effects assessment. The participating First Nations subsequently proceeded to gather cartographic and non-cartographic information representing their respective Nations' areas of interest. It is important to note that our research team was not involved in any way to collect data on areas of importance for First Nations; this work was carried out by the participating First Nations who voluntered to participate to this project and who subsequently shared data designating areas of interest that they wished to be considered in the cumulative effects assessment of marine vessel activities.
+
+An open access cartographic atlas developed by the Mi'kmaq and Maliseet Aboriginal Fisheries Management Association [MMAFMA; @arsenault2017] also provided land use data for the Gespeg Mi'kmaq, Gesgapegiag Mi'kmaq and Wolastoqiyik Wahsipekuk Nations.
+
+The areas of interest are generally identified through exercises to integrate knowledge from other studies conducted with First Nations members. The areas of interest identified by the participating First Nations can be broadly classified into 9 main categories:
+
+- Ritual or social activities
+- Hunting
+- Culture and heritage
+- Land use
+- Commercial fishing
+- Traditional fishing
+- Harvesting of vegetation
+- Archeological sites
+- Tourism
+
+The areas of interest identified by the Nations have been kept separate rather than integrated into a single layer by broad area of interest category, despite Nations identifying similar categories. For example, although most Nations identified areas of interest for hunting, the areas identified by individual First Nations remained separate for the cumulative effects assessment. This approach is intended to respect the independence of each Nation and to assign greater importance to an environment if it is identified by more than one Nation. This is the case of Lake St. Pierre, among other areas, which is identified as an area of interest by more than one participating Nation.
+
+Each Nation organized and categorized its own areas of interest; these categories have been kept as reported despite similarities between the categories having been identified among the participating First Nations. There has been no attempt to harmonize categories among the First Nations. This choice was made in order to avoid distorting the information transmitted by the Nations. In addition, since the areas identified by the various Nations remain separate for the assessment, harmonizing the categories of areas of interest would not have affected the assessment. We thus decided to keep the wording used in the data that was shared with us.
+
+There are a few points that must be kept in mind regarding areas of interest for First Nations. First, the information reported cannot be considered an exhaustive description of the areas of interest for all members of Indigenous Nations; the engagement process with the members of each Nation from which the information was derived was limited, and the information was integrated only in the context of the project assessing the cumulative effects of marine vessel activities. The areas of interest identified come from other studies whose data were integrated to meet the objectives of this study. In addition, not all First Nations with an area of interest in the study area were able to be involved in the project. For example, despite the areas of interest for the Wolastoqiyik Wahsipekuk Nation being included, a collaborative process similar to that carried out with the other Nations could not be established; the socio-cultural data of the Wolastoqiyik Wahsipekuk Nation could therefore not be included in our assessment. The characterization of the areas of interest cannot be deemed exhaustive for all the First Nations in the region being studied.
+
+Second, the First Nations' connection to place goes beyond a strictly utilitarian and functional perspective; this perspective is difficult to capture through a mapping of areas of interest, which has the effect of objectifying them. This means it is important to consider that the areas of interest identified are part of a broader cultural and ecological context as opposed to a mere geographical location. 
+
+Third, the concept of First Nations land use goes beyond mere use. Indeed, Indigenous customary activities are aboriginal rights protected by section 35(1) of the Canadian Constitution. The Constitution Act, 1982 affirms the existing aboriginal and treaty rights. However, most of these rights remain undefined and the Royal Proclamation of 1763 states that Aboriginal peoples continue to hold any lands they have not ceded or sold. It is therefore important to distinguish these food, ritual and social activities, which are protected by the Constitution and are linked to the Nation's subsistence, from non-native fishing, hunting and trapping which are for sport and leisure.
+
+Fourth, the spatio-temporal boundaries of the present study were raised as an important limitation in an Indigenous context since the study does not appropriately capture the evolving nature of their land occupation and use. The description of the areas of interest presented should not be interpreted as representative of the past or as a guarantee of the future. 
+
+Lastly, the First Nations' participation in this study is without prejudice to the exercise of their legal rights in their respective traditional territories to which their stewardship rights and responsibilities apply and which are based on the application of a broader ecosystemic approach. This means that the identified areas of interest must be interpreted in the broader context of these rights and responsibilities.
+
+The following sections briefly describe the data shared by the participating First Nations and the data accessible through open platforms.
+
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+##### Mi'kmaq and Maliseet Aboriginal Fisheries Management Association {#aghammportrait}
+
+> ***We thank Lisa M. Arsenault for the discussions and support.***
+
+The Mi'kmaq and Maliseet Aboriginal Fisheries Management Association (MMAFMA) has developed a cartographic atlas describing various sites and uses related to commercial and traditional fishing that are of importance to the Gesgapegiag, Gespeg and Wolastoqiyik Wahsipekuk Nations [@arsenault2017]. The Atlas describes commercial fishing targeting nine different species: whelk (*Buccinum* sp.), sea cucumber (*Holothuria* sp.), rock crab (*Cancer irroratus*), snow crab (*Chionoecetes opilio*), northern shrimp (*Pandalus* sp.), Atlantic halibut (*Hippoglossus hippoglossus*), Greenland halibut (*Reinhardtius hippoglossoides*), lobster (*Homarus americanus*), and sea urchin (*Strongylocentrotus* sp.) in the St. Lawrence Estuary [@arsenault2017; @racine2017]. Since most of these fisheries are conducted by the Wolastoqiyik Wahsipekuk Nation, these data are used to describe that Nation's commercial fisheries. Since the Gespeg Mi'kmaq Nation also has a commercial northern shrimp fishery in the St. Lawrence Estuary, we selected this fishery from the Atlas data.
+
+The Atlas also identifies the Rimouski, Métis and Matane rivers as sites of importance to Atlantic salmon fishing [*Salmo salar*; @arsenault2017]. We added a 3 $km$ buffer zone at the mouth of these three rivers to capture their presence as an area of interest for the assessment.
+
+
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+##### Innu Nation of Essipit
+
+> ***We thank the Innu Nation of Essipit for their participation, as well as Donald Bouchard and Pierre Tremblay for the discussions and support.***
+
+The data transmitted by the Innu Nation of Essipit are an integration of data from various sources [@bouchard2021]:
+
+- Inventory of archeological sites in Quebec.
+- Innu-Aitun follow-up, 2004 to 2018, Essipit.
+- History of the commercial (snow crab, sea urchin) and food (Atlantic halibut) fisheries, 1996 to 2020, Essipit.
+- Atlas of coastal and marine uses of the St. Lawrence by the Innu of the North Shore, Agence Mamu Innu Kaikusseht, 2019.
+- Collection of data on the harvesting of migratory birds in seven Innu communities of the North Shore, Agence Mamu Innu Kaihusseht, 2014
+
+The result of the integration of these data provides the location of areas of interest located in the St. Lawrence Estuary and the Saguenay River. These areas are divided into seven categories: 
+
+- Migratory bird hunting
+- Seal hunting
+- Commercial fishing
+- Traditional fishing
+- Tourist activities
+- Access to the water
+- Culture and heritage
+
+These categories of area of interest are used in the marine vessel activities cumulative effects assessment in the study area. It is important to note that the original data used cover a wider area than the study area of this assessment, but were intersected and limited to our study area.
+
+
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+##### Huron-Wendat Nation
+
+> ***We thank the Huron-Wendat Nation for their participation, as well as Maria Rodriguez, Stéphanie B. Nadeau and Mario Gros-Louis for their discussions and support.***
+
+
+The data transmitted by the Huron-Wendat Nation provide the location of areas of interest mainly in the fluvial portion of the St. Lawrence river, and to a lesser extent in the St. Lawrence estuary [@nhw2021]. The areas are composed of nine themes divided into three unique categories: 
+
+- Contemporary sites 
+  - Ritual or social activities
+  - Hunting
+  - Fishing
+  - Harvesting of vegetation
+  - Land use
+- Ecological sites
+  - Species at risk
+- Heritage sites 
+  - Archeology
+  - History 
+  - Toponymy
+
+The land use category groups together various types of areas of interest for the Huron-Wendat Nation. A general formula for designating these areas has been kept due to the sensitivity of the data included. The themes were considered as unique categories of valued components for the cumulative effects assessment. It is important to note that the original data used cover a wider area than the study area of this assessment, but were intersected and limited to our study area.
+
+
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+##### Mohawk Nation of Kahnawà:ke
+
+> ***We thank the Mohawk Nation of Kahnawà:ke for their participation, as well as the Mohawk Council Advisory Committee of Kahnawà:ke (Comité Consultatif du Conseil Mohawk de Kahnawà:ke) for the discussions and support.***
+
+The data transmitted by the Mohawk Nation of Kahnawà:ke provide the location of areas of interest in the fluvial portion of the St. Lawrence River in the Montreal and Lake St. Pierre area [@mck2021]. The areas identified focus primarily on hunting, fishing and vegetation harvesting activities for a variety of important species, cultural sites, and the use of certain portions of the territory by the Nation. These areas can be divided into seven categories:
+
+- Activities
+  - Waterfowl hunting
+  - Open water fishing
+  - Shoreline fishing
+  - Vegetation harvesting 
+- Sites of importance 
+  - Culture and heritage
+- Land use 
+  - Seigneurie du Sault-Saint-Louis
+  - Shipping
+
+The sites making up these eight categories were used for the cumulative effects assessment of marine vessel activities. It is important to note that the original data used cover a wider area than the study area of this assessment, but were intersected and limited to our study area.
+
+A clause accompanies the shared data, which we include here: 
+
+> The Mohawk Council of Kahnawà:ke (MCK) has gathered some information from community members concerning the value and use of the St. Lawrence River in the vicinity of Kahnawà:ke. These comments have been organized according to the valued components identified for the fluvial section of the river through the Cumulative Effects of Marine Shipping by the Transport Canada team in collaboration with project partners. Therefore, the information provided is based on a limited consultation of community members, with the intent of responding to the specific parameters of this Transport Canada study only and should not be interpreted as a comprehensive study of Mohawk traditional land use or rights throughout the study area. The information provided should also not be used to replace engagement, including the gathering of traditional land use information within the context of any other future study or project. In addition, our participation in this study is without prejudice to the exercise of our jurisdictional rights to our traditional territory to which our stewardship rights and responsibilities apply and that are based on the application of a broader ecosystem-based approach. Therefore, the identification of specific areas of concern or value, including the identification of specific fish species or archeological sites of interest is to be understood within the context of these broader rights and responsibilities.
+
+
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+##### W8banaki Nation
+
+> ***We thank the W8banaki Nation for their participation, as well as the Grand Council of the Waban-Aki Nation, Edgar Blanchet, Hadrien Bois and David Bernard for the discussions and support.***
+
+As part of this pilot project, the Grand Council of the Waban-Aki Nation (Grand Conseil de la Nation Waban-Aki; GCNWA) integrated spatialized and non-spatialized information from semi-directed individual and small group land use interviews previously conducted with members of the Nation. These studies include a sample of 33 respondents from 74 interviews. The mapping is supported by qualitative information primarily from 1) two focus group workshops held in 2016, workshop interviews held between 2019 and 2020 with women from the Nation, and 3) impact assessment analyses of port expansion projects on the Nation's ancestral rights. This integrative work has led to the production of a report outlining the known concerns of some Nation members about environmental pressures within their territory affecting the valued components covered by our marine vessel activities cumulative effects assessment [@gcnwa2021]. 
+
+The data provided by the GCNWA provide the location of areas of interest primarily in the fluvial portion of the St. Lawrence River [@gcnwa2021]. The identified sites are divided into 13 distinct categories: 
+
+- Contemporary land use and occupation 
+  - Fishing (*e.g.* perch, walleye, sturgeon)
+  - Migratory bird hunting (*e.g.* snow geese, Canada geese)
+  - Game hunting (*e.g.* white-tailed deer, ruffed grouse)
+  - Trapping of furbearing species (*e.g.* muskrat, snowshoe hare)
+  - Harvesting and gathering of vegetation (*e.g.* cattail, fiddlehead)
+  - Shipping 
+  - Overnight site (*e.g.* camps)
+  - Essential sites (*e.g.* baiting sites, calling sites)
+  - Activity areas (*e.g.* hunting area, trapping area)
+  - Problems related to the territory (*e.g.* site to which access has been lost)
+- Heritage, cultural and archeological sites
+  - Cultural sites (*e.g.* gathering site, sacred or ritual place)
+  - Archeological sites
+  - Sites with archeological potential
+
+These categories of areas of interest are used in the marine vessel activities cumulative effects assessment in the study area. It is important to note that the original data used cover a wider area than the study area of this assessment, but were intersected and limited to our study area.
+
+
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+<!-- =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= =~-~= -->
+##### Wolastoqiyik Wahsipekuk Nation
+
+> ***We thank the Wolastoqiyik Wahsipekuk Nation for their participation, as well as David Poissant for the discussions and support.***
+
+We are using data provided to us by representatives of the Wolastoqiyik Wahsipekuk Nation to characterize sites of importance to the commercial lobster [*Homarus americanus*; @pnww2021] fishery. These data identify environments deemed important to fishing on the south shore of the St. Lawrence. These data were complemented with data from the MMAFMA on commercial fishing of whelk (*Buccinum* sp.), sea cucumber (*Holothuria* sp.), rock crab (*Cancer irroratus*), snow crab (*Chionoecetes opilio*), northern shrimp (*Pandalus* sp.), Atlantic halibut (*Hippoglossus hippoglossus*), Greenland halibut (*Reinhardtius hippoglossoides*), lobster (*Homarus americanus*), and sea urchin (*Strongylocentrotus* sp.) in the St. Lawrence Estuary [@arsenault2017; @racine2017]. 
+
+Two areas of interest for beluga whale watching and harbour development are also considered areas of interest for the Wolastoqiyik Wahsipekuk Nation [@pnww2022]. It is important to note, however, that despite the inclusion of areas of interest to the Wolastoqiyik Wahsipekuk Nation, a collaborative process similar to that carried out with the other Nations could not be established. This means that the socio-cultural data of the Wolastoqiyik Wahsipekuk Nation beyond those presented here could not be included in our assessment. 
+
+
+#### Areas of public interest
+
+##### Protected areas
+
+> ***We thank Joannie Ferland from Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs for the discussions and support.***
+
+Protected areas in the study area were characterized by integrating four databases. The first database corresponds to the delineation of the different spatial management measures implemented in the Saguenay-St. Lawrence Marine Park [@apc2021]. This database includes the delineation of regulatory spatial measures (*e.g.* no-shipping zones and slow-down zones) as well as voluntary spatial measures (*e.g.* slow-down zones and avoidance zones). The second database comes from the Government of Canada and delineates environments where management measures are recognized as *other effective conservation measures by area* [EMCEZ; @mpo2021d]. Within our study area, this database shows a single protected area [upstream of the Saguenay River](https://www.dfo-mpo.gc.ca/oceans/oecm-amcepz/refuges/saguenay-eng.html) that limits fishing activities to protect beluga habitat and to avoid resuspension of contaminated sediments.
+
+Finally, data from the Register of Protected Areas in Quebec (Registre des aires protégées au Québec) [@melcc2021] was used to complete the portrait. This register provides a compilation of protected areas in Quebec -- identified according to the definitions of the Natural Heritage Conservation Act (NHCA; RLRQ, chapter C-61.01) or the International Union for Conservation of Nature (IUCN) -- and territories of conservation importance -- identified by the Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs (MELCCFP) or an authority of the Quebec government. These data were combined with data from work carried out by the MELCCFP's ecological knowledge department, integrating an update of the Register of protected areas in Quebec and its territories of importance [@melcc2022], of the Directory of voluntary conservation sites of Quebec [@rmnp2022], of wildlife habitats [@mffp2021b] and of exceptional forest ecosystems not appearing in the Registry [@mffp2022]. We removed wildlife habitats and land reserves for protected area purposes from these databases because these categories covered the entire study area, as well as the habitats of threatened or vulnerable plant species because that they were covered by other valued components.
+
+
+##### Heritage sites
+
+The characterization of public heritage sites comes from the integration of two databases from the Ministère de la Culture et des Communications. The first database presents data on heritage sites classified by the Minister and which are part of the heritage protected under the Cultural Heritage Act [R.S.Q., c. 21; @mcc2021]. The second database corresponds to heritage sites cited by municipalities and Indigenous communities [@mcc2021b]; these sites are also part of the heritage protected under the Cultural Heritage Act.
+
+
+##### Shipwrecks
+
+> ***We thank Francis Bouchard et Virginie Galindo of the Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs for the discussions and support.***
+
+Shipwrecks that are part of the archaeological heritage within the study area were characterized using data from the Ministère de l'Environnement, de la Lutte contre les changements climatiques, de la Faune et des Parcs [MELCCFP; @melccfp2023]. The data comes from a literature review on the subaquatic archaeological potential within the land reserves for the purposes of protected areas in the L'Isle-aux-Grues sector, the Kamouraska sector, the Basques sector, the Banc-des-Américains marine protected area and the proposed Manicouagan aquatic reserve carried out by AECOM [@aecom2021]. The data provided contains the potential location of wrecks within the St. Lawrence and a total of 428 wrecks are listed between Quebec and the eastern limit of the study area. Since these data are of a sensitive nature, a buffer zone of 1 km was used around each site; the resulting areas were then combined into a single layer. This layer was integrated into our 1 $km^2$ study grid in order to identify cells with subaquatic archaeological potential. This approach was used to avoid providing the specific location of known shipwrecks.
+
+
+
+## Vulnerability
+
+### Plant and wildlife habitats
+
+#### Natural environments
+
+
+Several exercises to assess the vulnerability of different habitat types to various environmental stressors have been published in Canada [e.g. @ban2010; @clarkemurray2015; @clarkemurray2015a] and elsewhere in the world [@teck2010; @kappel2012]. Originally developed by @halpern2007 to characterize habitat vulnerability on a global scale, this approach uses exposure and sensitivity metrics to assess five ecosystem vulnerability criteria (*i.e.* habitats in our study): spatial scale, frequency, trophic impact, resistance, and resilience (Table \@ref(tab:critereTeck)).
+
+<br/>
+
+```{r critereTeck}
+tab <- data.frame(
+  critere = c(
+    "Spatial scale", "Frequency",
+    "Trophic impact", "Resistance",
+    "Recovery time"
+  ),
+  descr = c(
+    "The spatial scale ($km^2$) at which a stressor impacts the habitat, both directly and indirectly",
+    "The mean annual frequency (number/year) of a stressor at a particular location within a given region",
+    "The degree to which marine life is affected by a stressor within a given ecosystem and region (i.e., one or more species, one or more trophic levels, or an entire ecosystem)",
+    "The degree (in %) to which species, trophic levels, or the natural state of an entire ecosystem is affected by the stressor",
+    "The mean time (in years) required for the affected species, trophic level(s), or entire community to return to its former natural state following disturbance caused by the stressor"
+  )
+)
+
+tab |>
+  knitr::kable(
+    col.names = c("Vulnerability criterion", "Description"),
+    row.names = FALSE,
+    caption = "Description of the five vulnerability criteria used to assess the relative vulnerability of habitats to each stressor [adapted from @teck2010]."
+  )
+```
+
+These allow the use of quantitative factors that provide greater transparency than the qualitative approach [@teck2010; @kappel2012]. The vulnerability scores $\mu$ are the weighted sum of the five vulnerability criteria:
+
+$$mu_{D_i,E_j} = \sum_{k = 1,...,5} W_k * D^j_{i,k}$$
+
+where $D^j_{i,k}$ is the value of stressor $i$ for criterion $k$ within ecosystem $j$ and $W_k$ is the weight associated with criterion $k$, with the sum of all weights equal to 1. The weight $W_k$ is thus used to weight the value attributed to individual criteria according to their individual importance. This additive and linear model assumes that vulnerability is monotonic for all vulnerability criteria, i.e. that vulnerability increases with an increase in the value of each criterion. A transformation of the $W_k$ values is required to ensure that the range of values is comparable for the different criteria. This equation ultimately generates a matrix of vulnerability scores for all stressor-ecosystem combinations.
+
+@teck2010 and @kappel2012 used expert surveys to assess the values and weights associated with each vulnerability criterion for each stressor-habitat combination. A total of 107 experts assessed the relative vulnerability of 19 habitat types to 53 environmental stressors. The resulting vulnerability matrices have been used and adapted many times since [*e.g.* @ban2010; @clarkemurray2015]. These vulnerability matrices also provide a starting point for our assessment; indeed, all of the environmental stressors, and a significant portion of the habitats considered for our assessment, are found in the list presented by @teck2010, @kappel2012 and @clarkemurray2015. Specifically, we used the vulnerability matrix from @kappel2012 to inform the vulnerability assessment of habitats for which a clear match could be made, i.e., natural environments. 
+
+Some habitats considered for our assessment, however, did not have a clear match with the matrix of @kappel2012. In these cases, we adopted the approach used by @clarkemurray2015 and selected the habitat(s) presented by @kappel2012 that were most like those for which a clear match was unavailable. For example, the @kappel2012 shallow soft sediment and salt marsh habitat scores were used for mollusk beds and fluvial terraces, respectively. If a habitat under consideration could aggregate multiple @kappel2012 habitats, we instead used the average score of these habitats to obtain a vulnerability score. Vulnerability scores assigned to floodplains were thus obtained based on the average of the vulnerability scores assigned to rocky intertidal, intertidal, and salt marsh environments in the @kappel2012 matrix. Similarly, the government and research shipping category includes a significant diversity of vessel types such as military craft, patrol vessels, and scientific research vessels. The vulnerability of habitats to this type of shipping was thus assessed using the average of the scores assigned to shipping, military, research, and scientific sampling from @kappel2012. Finally, the vulnerability scores for eelgrass and algal zones were used for aquatic grass bed habitats. Tables \@ref(tab:stresscomp) and \@ref(tab:cvcomp) present the equivalencies between our study and @kappel2012 for stressors and valued components, respectively.
+
+
+```{r stresscomp}
+tab <- data.frame(
+  stress = c(
+    "Anchorage",
+    "Accidental spills: Hydrocarbures",
+    "Accidental spills: Autres",
+    "Accidental spills: Contenu inconnu",
+    "Dredging: Dredging sites",
+    "Dredging: Disposal sites",
+    "Dredging: Planned capitalization dredging",
+    "Shipping: Cargo",
+    "Shipping: Containers",
+    "Shipping: Dry bulk",
+    "Shipping: Passenger / ferry / ro-ro",
+    "Shipping: Government / research",
+    "Shipping: Marine mammals observation",
+    "Shipping: Pleasure vessels",
+    "Shipping: Special ships",
+    "Shipping: Tanker",
+    "Shipping: Tugboat / port",
+    "Shipping: Port shipping	",
+    "Commercial fishing: Demersal, destructive, high-bycatch",
+    "Commercial fishing: Demersal, non-destructive, low-bycatch",
+    "Commercial fishing: Demersal, non-destructive, high-bycatch",
+    "Commercial fishing: Pelagic, low-bycatch",
+    "Commercial fishing: Pelagic, high-bycatch",
+    "Commercial fishing: Fluvial commercial fisheries",
+    "Shipwrecks",
+    "Marine pollution"
+  ),
+  clark = c(
+    "Direct human impact: trampling",
+    "Ocean dumping: toxic materials",
+    "Ocean dumping: toxic materials",
+    "Ocean dumping: toxic materials",
+    "Dredging",
+    "Sediment input: Increase",
+    "Dredging",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Shipping (large vessels), military activity, scientific research: collecting, scientific research: experiments/surveys",
+    "Tourism: Whale watching",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Shipping (large vessels)",
+    "Fishing: demersal, habitat-modifying",
+    "Fishing: demersal, non-habitat-modifying, low bycatch",
+    "Fishing: demersal, non-habitat-modifying, high bycatch",
+    "Fishing: pelagic, low bycatch",
+    "Fishing: pelagic, high bycatch",
+    "Fishing: demersal, non-habitat-modifying, high bycatch",
+    "Ocean dumping: shipwrecks",
+    "Ocean pollution from ships and ports"
+  )
+)
+
+tab |>
+  knitr::kable(
+    col.names = c("Environmental stressors", "Equivalencies"),
+    row.names = FALSE,
+    caption = "Equivalencies between environmental stressors considered for the cumulative effects assessments of marine vessel activities in the St. Lawrence and the Saguenay Rivers and those described in the vulnerability matrix proposed by @clarkemurray2015a."
+  )
+```
+
+```{r cvcomp}
+tab <- data.frame(
+  cv = c(
+    "Species at risk: Threatened wildlife species",
+    "Species at risk: Susceptible wildlife species",
+    "Species at risk: Vulnerable wildlife species",
+    "Species at risk: Threatened plant species",
+    "Species at risk: Susceptible plant species",
+    "Species at risk: Vulnerable plant species",
+    "Species at risk: Endangered species SARA",
+    "Species at risk: Threatened species SARA",
+    "Natural areas: Soft without cliff",
+    "Natural areas: Rocky without bluff",
+    "Natural areas: Rocky without cliff",
+    "Natural areas: Beach terrace",
+    "Natural areas: Fluvial terrace",
+    "Life cycles: Spawning sites",
+    "Life cycles: Nursery sites",
+    "Life cycles: Birds",
+    "Natural areas: Shallow water",
+    "Natural areas: Swamps",
+    "Natural areas: Marshes",
+    "Natural areas: Wetland",
+    "Natural areas: Mollusk beds",
+    "Natural areas: Eelgrass",
+    "Natural areas: Aquatic grass beds",
+    "Natural areas: Floodplain zones",
+    "Natural areas: Aquatic grass beds biovolume - low",
+    "Natural areas: Aquatic grass beds biovolume - moderate",
+    "Natural areas: Aquatic grass beds biovolume - high"
+  ),
+  clark = c(
+    "NA",
+    "NA",
+    "NA",
+    "NA",
+    "NA",
+    "NA",
+    "NA",
+    "NA",
+    "Tidal flat",
+    "Rocky intertidal",
+    "Rocky intertidal",
+    "Beach",
+    "Saltmarsh",
+    "NA",
+    "NA",
+    "NA",
+    "Saltmarsh",
+    "Saltmarsh",
+    "Saltmarsh",
+    "Saltmarsh",
+    "Nearshore soft bottom",
+    "Seagrass",
+    "Kelp forest",
+    "Rocky intertidal, tidal flats, saltmarsh",
+    "Algal zone, Eelgrass",
+    "Algal zone, Eelgrass",
+    "Algal zone, Eelgrass"
+  )
+)
+
+tab |>
+  knitr::kable(
+    col.names = c("Valued components", "Equivalencies"),
+    row.names = FALSE,
+    caption = "Equivalencies between valued components considered for the cumulative effects assessments of marine vessel activities in the St. Lawrence and the Saguenay river and those described in the vulnerability matrix proposed by @clarkemurray2015a."
+  )
+```
+
+
+Some modifications were also made to the vulnerability scores reported by @kappel2012. First, the vulnerability values assigned to wetlands were modified to appropriately capture the fineness of the dataset available for our study. The characterized wetlands reflect the tiered nature of wetlands, with shallow water wetlands, followed by marshes, then swamps, with the potential exposure of these environments to marine-based stressors gradually decreasing. We thus decreased the vulnerability of wetlands to all stressors proportionally by a factor of 5% for marshes and 10% for swamps. We retained the @kappel2012 assessment for the *wetland* habitat category containing wetlands of unknown type as a precaution. Second, accidental spills were categorized to differentiate hydrocarbon spills from other types of spills, meaning that we decrease the spill vulnerability values by a factor of 10% for *other* spills. As with the wetlands, we kept the vulnerability value intact for spills of unknown content as a precaution. Third, the vulnerability scores for aquatic grass beds was decreased by 10% per biovolume category under the assumption that higher biovolumes are more important, and thus have a higher vulnerability: high biovolume (100%), moderate biovolume (90%), and low biovolume (80%). Lastly, a relative score was estimated by normalizing the total scores by the maximum observed vulnerability value among the habitats considered (*i.e.* 3.6) to obtain vulnerability scores ranging from 0 to 1. The resulting vulnerability matrix can be viewed in Figure \@ref(fig:habitatvuln).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/vulnerability_habitat.png}
+\caption{Relative vulnerability scores of habitats to environmental stressors. Scores are obtained from @kappel2012 and normalized between 0 and 1 using the maximum vulnerability score among habitats considered (\textit{i.e} 3.6). Original scores from \citep{kappel2012} can be obtained by multiplying matrix values by 3.6.}
+\label{habitatvuln}
+\end{figure}
+\newpage 
+
+
+#### Habitats of importance to wildlife and plant species
+
+The vulnerability of habitats identified for their importance to life cycles and special status species cannot be assessed using the same approach used for natural environments. These sites differ from the habitats presented above in that they are environments whose characteristics may vary, but which perform essential functions for the maintenance of certain species, or are deemed important for the conservation of certain special status species. As such, the vulnerability of these sites cannot be assessed in the same way as the assessment presented in the previous section. An alternative approach using species-based criteria rather than habitat-based criteria was used to assess their relative vulnerability to the effects of the stressors under consideration.
+
+Exercises to assess species vulnerability to the effects of stressors are less common in cumulative effects assessments, although some assessment processes do exist [e.g. @maxwell2013; @trew2019; @ohara2021]. These assessments primarily involved marine megafauna species (e.g. whales and sharks) and species at risk. However, these publications do not cover all species and stressors included in this assessment. They do provide a set of criteria for assessing species vulnerability to stressors. We used a similar process to determine the vulnerability to marine vessel activities of environments of importance to species in the St. Lawrence and Saguenay rivers.
+
+The criteria used to assess species vulnerability to the effects of marine vessel activities are taken from @maxwell2013: 1) the frequency of stressors, 2) whether the effect of the stressor is direct or indirect, 3) the resistance of the species to the effects of the stressor, 4) the recovery time of the species, 5) the relative effect on reproduction, and 6) the relative effect on the population (Table \@ref(tab:vulnerabilitySpecies)). We added two criteria to this list in order to consider regional particularities specific to the St. Lawrence and Saguenay rivers, namely 7) the status of the species and 8) whether the species is resident in the study area (Table \@ref(tab:vulnerabilitySpecies)).
+
+<br/>
+
+```{r vulnerabilitySpecies, echo = FALSE}
+meta <- yaml::read_yaml("../data/data-metadata/vulnerability_mammiferes_marins.yml")
+criteres <- meta$criteres
+tab <- list()
+lin <- numeric()
+for (i in 1:length(criteres)) {
+  dat <- meta$details_en[[criteres[i]]]
+  nm <- character(length(dat$description$rank))
+  nm[1] <- glue::glue("***{dat$name}***")
+  nm[2] <- glue::glue("*{dat$question}*")
+  nm[3] <- ifelse(!is.null(dat$specification), dat$specification, "")
+  crit <- as.data.frame(dat$description)
+  tab[[i]] <- cbind(nm, crit)
+  lin[i] <- length(nm)
+}
+lin <- cumsum(lin)
+tab <- dplyr::bind_rows(tab)
+
+# -----
+tab |>
+  knitr::kable(
+    col.names = c("Vulnerability criteria", "Rank", "Categories", "Description", "Examples"),
+    row.names = FALSE,
+    caption = "Criteria considered for assessing the vulnerability of valued components with regard to species – i.e. - important environmental conditions for life cycles, special status species and marine mammals – to the stressors considered for the CEA of marine vessel activities in the St. Lawrence and the Saguenay river.  The criteria were adapted from @maxwell2013, to which species special status and residence criteria were added in order to account for the regional particularities of the St. Lawrence and the Saguenay river."
+  ) # %>%
+# kableExtra::row_spec(lin, extra_css = "border-bottom: 2px solid")
+```
+
+The criteria used varied depending on the habitat types assessed. The frequency of environmental stressors was used for all habitats of importance to the species. The vulnerability of spawning and nursery sites considered the frequency of environmental stressors and the effects on reproduction and population. The vulnerability of habitats of importance to seabirds was assessed by considering the frequency of stressors and the effects on populations. Lastly, the vulnerability of habitats of importance to special status species was assessed using the frequency of environmental stressors, effects on populations, and species status. It should be noted that the vulnerability of sites of importance to special status wildlife and plant species was considered in the same way. Although wildlife and plant species respond differently to environmental stressors, our assessment uses occurrences of species at risk as a proxy for vulnerable environments rather than a species-specific assessment. The general characterization used did not allow us to differentiate between species, so we focused on criteria specific to species status. 
+
+For each combination of valued component $CV_i$ and stressor $S_j$, the final vulnerability score $\mu_{CV_i, S_j}$ is obtained from the sum of the scores for each criterion:
+
+$$\mu_{CV_i, S_j} = \sum_{k \in K} C^i_{j,k}$$
+
+where $C^i_{j,k}$ is the value of the valued component $i$ for the stressor $j$ and the criterion $k$, and $K$ are the set of criteria considered to assess the vulnerability of the valued component $i$.
+
+Lastly, a relative score was assessed by normalizing the total scores by the maximum observed vulnerability value per habitat group assessed using the same criteria. Spawning and nursery sites were the first group, seabirds the second, and special status species the third. The final vulnerability scores are available in Figure \@ref(fig:speciesvuln) and the individual criteria assessment tables per habitat category are available in Appendix 8.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/vulnerability_faune_flore.png}
+\caption{Relative vulnerability scores of habitats of importance to wildlife and plant species to environmental stressors.}
+\label{speciesvuln}
+\end{figure}
+\newpage 
+
+
+### Marine mammals
+
+> *We thank Sonia Giroux of the Marine Mammal Observation Network and Marie Guilpin of the Royal Netherlands Institute for Sea Research for their discussions and support.*
+
+
+The previous section presents the different criteria used to characterize species vulnerability to environmental stressors. Vulnerability of marine mammals was assessed using the set of criteria presented in table \@ref(tab:vulnerabilitySpecies) and the equation presented in the previous section. The Committee on the Status of Endangered Wildlife in Canada (COSEWIC) federal statuses were used to determine the status of marine mammal species. The final vulnerability scores are available in Figure \@ref(fig:mmvuln) and the individual criteria assessment tables by marine mammal species are available in Appendix 9.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/vulnerability_mammiferes_marins.png}
+\caption{Relative vulnerability scores of marine mammals to environmental stressors.}
+\label{speciesvuln}
+\end{figure}
+\newpage 
+
+
+### Bank integrity
+
+Several environmental stressors of anthropogenic and natural origins are added to the natural geomorphological mechanisms that govern the dynamics of bank erosion. With respect to anthropogenic pressures, the factors exerting a particular impact on bank erosion are: wave action caused by marine traffic, flow management, dredging, bank artificialization, and coastal infrastructure and activities [@bernier2020; @bernier2021]. Climate change may also impact bank erosion by altering flood dynamics and water flows [@bernier2020; @bernier2021]. In our assessment, shipping and dredging are the stressors related to marine vessel activities with an established link to bank erosion. This means that we considered bank vulnerability to erosion from the other environmental stressors identified in our study to be zero.
+
+The vulnerability scores assigned to shipping and dredging were directly informed by the data used to characterize bank integrity in the study area, which provides a characterization of bank susceptibility to erosion by dividing bank state into three erosion index levels, with the third level identifying banks that are not vulnerable to erosion [@bernier2020; @bernier2021]. We also distinguished between natural and artificial banks, assigning a higher value to natural banks (see Full Picture of the Study Area).
+
+We can thus classify the categories of banks based on the magnitude of their vulnerability, for which we assigned a relative vulnerability score decreasing by 10% intervals:
+
+1. Natural - Active (EI = 2): 1.
+2. Artificial - Active (EI = 2): 0.9.
+3. Natural - Semi-vegetated (EI = 1): 0.8.
+4. Artificial - Semi-vegetated (EI = 1): 0.7.
+
+No comparison was made to distinguish the vulnerability of the banks to shipping from that of dredging; we instead opted to assign them similar vulnerability values (Figure \@ref(fig:bergevuln)).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/vulnerability_berge.png}
+\caption{"Relative vulnerability scores of coastlines to erosion from the effects of environmental stressors.}
+\label{bergevuln}
+\end{figure}
+\newpage 
+
+
+# Supplementary figures
+
+## Cumulative stresors
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/cumulative_st_panel.png}
+\caption{Distribution of cumulative stressors in the St. Lawrence and Saguenay rivers for each category of environmental stressors considered in this study. In cases where the stressors is composed of a single category (\textit{i.e.} anchorages and shipwrecks), this corresponds to the log-transformed and standardised intensity of those stressors.}
+\label{foodweb}
+\end{figure}
+\newpage 
+
+
+## Cumulative valued components
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/cumulative_cv_panel.png}
+\caption{Distribution of cumulative valued components in the St. Lawrence and Saguenay rivers for each category of valued component considered in this study, textit{i.e.} the sum of valued components categories in every grid cell.}
+\label{foodweb}
+\end{figure}
+\newpage 
+
+## Cumulative effects 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/cumulative_effects_panel.png}
+\caption{Distribution of the cumulative effects of environmental stressors arising from marine vessel activities on each valued component category considered in the St. Lawrence and Saguenay Rivers in eastern Canada.}
+\label{foodweb}
+\end{figure}
+\newpage 
+
+## Stressor contribution
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/cumulative_effects_regional_contribution.png}
+\caption{Mean contribution per $km^2$ of environmental stressor subcategories to the predicted cumulative effects on subcategories of valued component in the St. Lawrence and Saguenay Rivers in eastern Canada.}
+\label{foodweb}
+\end{figure}
+\newpage 
+
+## Regional assessments
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{../figures/cumulative_effects_region_cea_panel.png}
+\caption{Mean contribution per $km^2$ of environmental stressors to the predicted cumulative effects on bank integrity, habitats, marine mammals, and areas of cultural, heritage and archeological interest in provincial administrative regions of the St. Lawrence and Saguenay Rivers in eastern Canada.}
+\label{foodweb}
+\end{figure}
+\newpage 
+
+
+# Appendix A {-}
+
+Assessment of the vulnerability criteria for sites of importance for wildlife and flora to environmental stressors. Refer to table \@ref(tab:vulnerabilitySpecies) for more details on criteria.
+
+```{r fnccriteresspecies}
+tab <- function(nm, fr, en) {
+  meta <- read.csv("../data/data-metadata/metadata_stresseurs.csv")
+  dat <- read.csv(glue::glue("../data/data-raw/data0063-vulnerabilite_faune_flore/vulnerabilite_{nm}.csv"))
+
+  dat <- dplyr::left_join(meta[, c("accronyme", "english")], dat, by = c("accronyme" = "categories")) |>
+    dplyr::select(-accronyme)
+
+  # Adjust column names
+  # WARNING: This is ugly but it works...
+  nm <- colnames(dat)
+  nm[1] <- "Environmental stressors"
+  nm <- gsub("frequence", "Frequency", nm)
+  nm <- gsub("direct", "Direct or indirect effects", nm)
+  nm <- gsub("resistance", "Resistance", nm)
+  nm <- gsub("retablissement", "Recovery time", nm)
+  nm <- gsub("reproduction", "Effect of reproduction", nm)
+  nm <- gsub("population", "Effect on the population", nm)
+  nm <- gsub("statut", "Status of the species", nm)
+  nm <- gsub("residente", "Resident species", nm)
+  colnames(dat) <- nm
+
+  dat |>
+    knitr::kable(
+      align = c("l", rep("c", (ncol(dat) - 1))),
+      caption = glue::glue("Assessment of the vulnerability criteria for {en} to environmental stressors.")
+    )
+}
+```
+
+
+```{r frayerecriteres}
+tab("frayere", "frayères", "spawning sites")
+```
+
+\newpage 
+
+```{r alevinagecriteres}
+tab("site_alevinage", "sites d'alevinage", "nursery sites")
+```
+
+```{r oiseauxcriteres}
+tab("oiseaux", "oiseaux marins", "birds")
+```
+
+\newpage 
+
+```{r susceptiblecriteres}
+tab("statut_susceptible", "espèces fauniques et floristiques susceptibles", "susceptible wildlife and plant species")
+```
+
+\newpage 
+
+```{r vulnerablecriteres}
+tab("statut_vulnerable", "espèces fauniques et floristiques vulnérables", "vulnerable wildlife and plant species")
+```
+
+\newpage 
+
+```{r menaceecriteres}
+tab("statut_menace", "espèces fauniques et floristiques menacées", "threatened wildlife and plant species")
+```
+
+\newpage 
+
+# Appendix B {-}
+
+Assessment of the vulnerability criteria for marine mammals to environmental stressors. Refer to table \@ref(tab:vulnerabilitySpecies) for more details on criteria.
+
+
+```{r fnccriteresmm, results = 'asis'}
+tab <- function(nm, fr) {
+  meta <- read.csv("../data/data-metadata/metadata_stresseurs.csv")
+  dat <- read.csv(glue::glue("../data/data-raw/data0064-vulnerabilite_mammiferes_marins/vulnerabilite_{nm}.csv"))
+
+  dat <- dplyr::left_join(meta[, c("accronyme", "english")], dat, by = c("accronyme" = "categories")) |>
+    dplyr::select(-accronyme)
+
+  # Adjust column names
+  # WARNING: This is ugly but it works...
+  nm <- colnames(dat)
+  nm[1] <- "Environmental stressors"
+  nm <- gsub("frequence", "Frequency", nm)
+  nm <- gsub("direct", "Direct or indirect effects", nm)
+  nm <- gsub("resistance", "Resistance", nm)
+  nm <- gsub("retablissement", "Recovery time", nm)
+  nm <- gsub("reproduction", "Effect of reproduction", nm)
+  nm <- gsub("population", "Effect on the population", nm)
+  nm <- gsub("statut", "Status of the species", nm)
+  nm <- gsub("residente", "Resident species", nm)
+  colnames(dat) <- nm
+
+  dat |>
+    knitr::kable(
+      align = c("l", rep("c", (ncol(dat) - 1))),
+      caption = glue::glue("Assessment of the vulnerability criteria for {fr} to environmental stressors.")
+    ) # %>%
+  # kableExtra::kable_styling(font_size = 10)
+}
+```
+
+
+```{r belugacriteres, results = 'asis'}
+tab("beluga", "St. Lawrence beluga whale (*Delphinapterus leucas*)")
+```
+
+\newpage
+
+```{r harbourpurpoisecriteres, results = 'asis'}
+tab("harbour_porpoise", "harbour porpoise (*Phocoena phocoena*)")
+```
+
+\newpage
+
+```{r petitrorqualcriteres, results = 'asis'}
+tab("petit_rorqual", "minke whale (*Balaenoptera acutorostrata*)")
+```
+
+\newpage
+
+```{r harborsealcriteres, results = 'asis'}
+tab("harbor_seal", "harbor seal (*Phoca vitulina*)")
+```
+
+\newpage
+
+```{r harpsealcriteres, results = 'asis'}
+tab("harp_seal", "harp seal (*Phoca groenlandica*)")
+```
+
+\newpage
+
+```{r greysealcriteres, results = 'asis'}
+tab("grey_seal", "grey seal (*Halichoerus grypus*)")
+```
+
+\newpage
+
+```{r rorqualabossecriteres, results = 'asis'}
+tab("rorqual_a_bosse", "humpback whale (*Megaptera novaeangliae*)")
+```
+
+\newpage
+
+```{r rorqualbleucriteres, results = 'asis'}
+tab("rorqual_bleu", "blue whale (*Balaenoptera musculus*)")
+```
+
+\newpage
+
+```{r rorqualcommuncriteres, results = 'asis'}
+tab("rorqual_commun", "fin whale (*Balaenoptera physalus*)")
+```
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
