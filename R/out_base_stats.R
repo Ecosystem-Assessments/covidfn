@@ -75,6 +75,53 @@ out_base_stats <- function() {
   )
 
   # --------------------------------------------------
+  # Scale indicator data
+  # --------------------------------------------------
+  covid$longitude <- (covid$longitude - min(covid$longitude)) / diff(range(covid$longitude))
+  trs <- c("region", "health_region", "name_canonical", "population", "cases", "death")
+  uid <- lapply(trs, function(x) stringr::str_detect(colnames(covid), x)) |>
+    data.frame() |>
+    rowSums() |>
+    as.logical()
+  covid[, !uid] <- apply(covid[, !uid], 2, function(x) x / max(x))
+
+
+  # --------------------------------------------------
+  # Indicator autocorrelation
+  # --------------------------------------------------
+  ind <- covid[, !uid]
+  dat <- cor(ind) |>
+    round(2)
+  ndat <- ncol(dat)
+  nm <- colnames(dat)
+  cols <- abs(dat) * 100
+  cols <- viridis::mako(101, direction = -1)[cols]
+  cols <- matrix(data = cols, ncol = ndat)
+
+  png(
+    here::here(out, "autocorrelation.png"),
+    res = 300,
+    width = (ndat * 10) + 100,
+    height = (ndat * 10) + 100,
+    units = "mm",
+    pointsize = 10
+  )
+  par(
+    mar = c(1, 1, 1, 1)
+  )
+  graphicsutils::plot0(x = c(-6, ndat), y = c(-6, ndat))
+  for (j in seq_len(ndat)) {
+    text(x = j, y = 0, adj = c(1, .5), labels = nm[j], srt = 90)
+    text(x = 0, y = j, adj = c(1, .5), labels = nm[j])
+    for (i in seq_len(ndat)) {
+      points(x = j, y = i, pch = 22, bg = cols[j, i], col = "#00000000", cex = 7)
+      text(x = j, y = i, labels = dat[j, i], col = "#ffffff")
+    }
+  }
+  dev.off()
+
+
+  # --------------------------------------------------
   # Correlations
   # --------------------------------------------------
   dat <- covid |>
