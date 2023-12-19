@@ -45,7 +45,7 @@ out_extract_hr <- function() {
 
     cases <- dplyr::left_join(geo, cases, by = "hruid") |>
       dplyr::left_join(hr, by = "hruid") |>
-      dplyr::mutate(cases_pop = cases / (pop / 1000)) |>
+      dplyr::mutate(cases_pop = cases / pop) |>
       dplyr::select(
         region = region.x,
         health_region = hruid,
@@ -58,7 +58,7 @@ out_extract_hr <- function() {
 
     deaths <- dplyr::left_join(geo, deaths, by = "hruid") |>
       dplyr::left_join(hr, by = "hruid") |>
-      dplyr::mutate(deaths_pop = deaths / (pop / 1000)) |>
+      dplyr::mutate(deaths_pop = deaths / pop) |>
       dplyr::select(
         region = region.x,
         health_region = hruid,

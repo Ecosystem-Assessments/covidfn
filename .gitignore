@@ -32,6 +32,7 @@ raw/
 *.gpkg
 *.rds
 *raw.tar.xz
+*.png
 
 # Specific files & folders
 figures/*
