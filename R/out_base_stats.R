@@ -24,7 +24,7 @@ out_base_stats <- function() {
   correlations_heatmap("cases", TRUE, out, "cases_prop")
   correlations_heatmap("deaths", TRUE, out, "deaths_prop")
   linear_regressions(dat, out)
-  # multiple_regressions(dat, out)
+  explo <- multivariate_exploration(dat, TRUE)
 
   # ===========================================================================
   # Statistical exploration: outome ~ indicators
@@ -34,6 +34,14 @@ out_base_stats <- function() {
   correlations_heatmap("cases", FALSE, out, "cases")
   correlations_heatmap("deaths", FALSE, out, "deaths")
   glm_regressions(dat, out)
+  explo <- multivariate_exploration(dat, FALSE)
+
+  # ===========================================================================
+  # Statistical exploration: outome ~ indicators
+  # Using Generalized linear models with negative binomial distribution
+  # Population as an offset variable
+  dat <- scale_indicators(covid)
+  glmnb_regressions(dat, out)
 }
 
 # ------------------------------------------------------------
@@ -165,7 +173,7 @@ data_transformation <- function(covid) {
   trs <- c(
     "cases_pop",
     "deaths_pop",
-    "distance_critical_healthcare",
+    "distance_criti cal_healthcare",
     "distance_longterm_healthcare",
     "distance_road_network",
     "dwelling_condition",
@@ -573,7 +581,11 @@ models <- function(type, prop) {
 }
 
 
-make_formula <- function(nm, outcome, prop) {
+# ------------------------------------------------------------
+make_formula <- function(outcome, prop) {
+  covid <- read.csv("output/covid_data/covid.csv")
+  nm <- colnames(covid)
+
   # Wrapper to build formulas
   mk_fml <- function(y, x) {
     z <- lapply(x, function(x) paste(x, collapse = " + "))
@@ -629,32 +641,174 @@ make_formula <- function(nm, outcome, prop) {
 }
 
 
+# # ------------------------------------------------------------
+# glmnb_regressions <- function(covid, out) {
+#   # Make this ugly, use two nested loops
+#   dat <- covid |>
+#     dplyr::select(-region, -health_region, -name_canonical)
+
+#   # Cases and deaths per population size
+#   cases <- stringr::str_detect(colnames(dat), "cases")
+#   death <- stringr::str_detect(colnames(dat), "deaths")
+#   pop <- stringr::str_detect(colnames(dat), "_pop")
+#   cases <- (cases + !pop) == 2
+#   death <- (death + !pop) == 2
+
+#   # Indicators
+#   ind <- stringr::str_detect(colnames(dat), "cases") +
+#     stringr::str_detect(colnames(dat), "deaths")
+#   ind <- !as.logical(ind)
+#   ind[which(colnames(dat) == "population")] <- FALSE
+
+#   # Rows & columns
+#   cols <- c(which(cases), which(death))
+#   rows <- which(ind)
+#   nm <- colnames(dat)
+#   nM <- length(rows) * length(cols)
+#   mods <- data.frame(
+#     x = character(nM),
+#     y = character(nM),
+#     coef = numeric(nM),
+#     p = numeric(nM),
+#     r2 = numeric(nM)
+#   )
+
+#   k <- 1
+#   for (j in 1:length(rows)) {
+#     for (i in 1:length(cols)) {
+#       # ev <- glm(dat[, cols[i]] ~ dat[, rows[j]], family = poisson, offset = log(dat$population))
+#       try({
+#         ev <- MASS::glm.nb(dat[, cols[i]] ~ dat[, rows[j]])
+#       sev <- summary(ev)
+#       mods$x[k] <- nm[rows[j]]
+#       mods$y[k] <- nm[cols[i]]
+#       mods$coef[k] <- coef(ev)[2]
+#       mods$p[k] <- sev$coefficients[2, "Pr(>|z|)"]
+#       mods$r2[k] <- (ev$null.deviance - ev$deviance) / ev$null.deviance
+#       })
+#       k <- k + 1
+#     }
+#   }
+
+#   tmp <- dplyr::mutate(mods,
+#     coef = round(coef, 4),
+#     p = round(p, 4),
+#     r2 = round(r2, 4)
+#   ) |>
+#     tidyr::pivot_wider(
+#       # id_cols = c("x","y"),
+#       names_from = c("y"),
+#       values_from = c("coef", "p", "r2")
+#     )
+#   write.csv(tmp, here::here(out, "glm_poisson.csv"), row.names = FALSE)
+
+#   # Prepare table for figures
+#   tmp <- mods |>
+#     dplyr::mutate(
+#       coef = round(coef, 4),
+#       p = round(p, 4),
+#       r2 = round(r2, 4),
+#       sig = p <= 0.1
+#     ) |>
+#     dplyr::mutate(type = stringr::str_detect(y, "cases")) |>
+#     dplyr::group_by(type) |>
+#     dplyr::group_split() |>
+#     lapply(function(x) {
+#       add_colors(x) |>
+#         dplyr::select(-type) |>
+#         dplyr::group_by(y) |>
+#         dplyr::group_split()
+#     })
+
+#   # Figures
+#   type <- c("deaths", "cases")
+#   nRow <- nrow(tmp[[1]][[1]])
+#   nCol <- length(tmp[[1]])
+#   nmRow <- tmp[[1]][[1]]$x
+#   xG <- .3
+#   xG2 <- xG * 1.35
+#   yG <- .5
+#   yG2 <- yG * .9
+
+#   for (i in seq_len(length(type))) {
+#     nmCol <- unique(dplyr::bind_rows(tmp[[i]])$y)
+#     png(
+#       here::here(out, glue::glue("glm_{type[i]}.png")),
+#       res = 300,
+#       width = (nCol * 80) + 100,
+#       height = (nRow * 10) + 100,
+#       units = "mm",
+#       pointsize = 10
+#     )
+#     par(
+#       mar = c(1, 1, 1, 2)
+#     )
+#     graphicsutils::plot0(x = c(-1, nCol + 1), y = c(0, nRow + 2))
+#     text(x = seq_len(nCol), y = nRow + 2, adj = .5, labels = nmCol)
+#     text(x = 0, y = seq_len(nRow), adj = c(1, .5), labels = nmRow)
+#     for (j in 1:length(tmp[[i]])) {
+#       text(x = c(j - xG, j, j + xG), y = rep(nRow + 1, 3), labels = c("coef", "p", "R2"), adj = .5)
+#       for (k in seq_len(nRow)) {
+#         rect(j - xG2, k - yG2, j + xG2, k + yG2, col = tmp[[i]][[j]]$cols[k], border = "#00000000")
+#         text(x = j - xG, y = k, adj = .5, labels = tmp[[i]][[j]]$coef[k], font = tmp[[i]][[j]]$sig[k])
+#         text(x = j, y = k, adj = .5, labels = tmp[[i]][[j]]$p[k], font = tmp[[i]][[j]]$sig[k])
+#         text(x = j + xG, y = k, adj = .5, labels = tmp[[i]][[j]]$r2[k], font = tmp[[i]][[j]]$sig[k])
+#       }
+#     }
+#     dev.off()
+#   }
+# }
 
 
 
-# # Some manual exploration
-# y <- "cases_2021.11.01_2022.03.11"
-# x <- c(
-#   "gini_index_adj_household_total_income",
-#   "low_income_cutoffs_aftertax_percent",
-#   "percent_no_certificate_diploma_degree",
-#   "housing_suitability",
-#   "distance_critical_healthcare",
-#   "longitude",
-#   "latitude",
-#   "percent_indigenous_identity", "population"
-# )
-# z <- paste(x, collapse = " + ")
-# fml <- formula(glue::glue("{y} ~ {z}"))
-# ev <- glm(fml, data = dat, family = poisson) # , offset = log(dat$population))
-# # summary(ev)
-# (ev$null.deviance - ev$deviance) / ev$null.deviance
-# DescTools::PseudoR2(ev, which = "all")
+# # ------------------------------------------------------------
+multivariate_exploration <- function(dat, prop) {
+  if (prop) {
+    # Multivariate linear regressions
+    # Cases
+    cases <- list()
+    fml <- make_formula("cases", TRUE)
+    for (i in 1:length(fml)) {
+      ev <- lm(fml[[i]], data = dat)
+      cases[[i]] <- summary(ev)
+    }
 
-# ev <- glm(dat[, cols[i]] ~ dat[, rows[j]], family = poisson, offset = log(dat$population))
-# sev <- summary(ev)
-# mods$x[k] <- nm[rows[j]]
-# mods$y[k] <- nm[cols[i]]
-# mods$coef[k] <- coef(ev)[2]
-# mods$p[k] <- sev$coefficients[2, "Pr(>|z|)"]
-# mods$r2[k] <- (ev$null.deviance - ev$deviance) / ev$null.deviance
+    # Deaths
+    deaths <- list()
+    fml <- make_formula("deaths", TRUE)
+    for (i in 1:length(fml)) {
+      ev <- lm(fml[[i]], data = dat)
+      deaths[[i]] <- summary(ev)
+    }
+    return(c(cases, deaths))
+  }
+
+  if (!prop) {
+    # Multivariate generalized linear models
+    # Cases
+    cases <- list()
+    cases_r2 <- list()
+    fml <- make_formula("cases", FALSE)
+    for (i in 1:length(fml)) {
+      ev <- glm(fml[[i]], data = dat, family = poisson, offset = log(dat$population))
+      cases_r2[[i]] <- (ev$null.deviance - ev$deviance) / ev$null.deviance
+      cases[[i]] <- summary(ev)
+    }
+
+    # Deaths
+    deaths <- list()
+    deaths_r2 <- list()
+    fml <- make_formula("deaths", TRUE)
+    for (i in 1:length(fml)) {
+      ev <- glm(fml[[i]], data = dat, family = poisson, offset = log(dat$population))
+      deaths_r2[[i]] <- (ev$null.deviance - ev$deviance) / ev$null.deviance
+      deaths[[i]] <- summary(ev)
+    }
+    return(
+      list(
+        models = c(cases, deaths),
+        r2 = c(cases_r2, deaths_r2)
+      )
+    )
+  }
+}
