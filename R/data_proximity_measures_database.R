@@ -26,7 +26,7 @@ proximity_measures_database <- function() {
     xmn = bb$xmin, ymn = bb$ymin,
     xmx = bb$xmax, ymx = bb$ymax,
     crs = sf::st_crs(dat)$epsg,
-    res = 1000
+    res = 500
   ) |>
     stars::st_as_stars()
 
