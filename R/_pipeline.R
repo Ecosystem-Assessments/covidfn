@@ -14,6 +14,9 @@ pipeline <- function() {
   library(pipedat)
   pipedat::pipeflow()
 
+  # A bit of a change of pace here.
+  canadian_census()
+
   # Extract values for each Health Region
   out_extract_hr()
   out_base_stats()
