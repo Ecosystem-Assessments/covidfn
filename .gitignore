@@ -33,6 +33,8 @@ raw/
 *.rds
 *raw.tar.xz
 *.png
+*.gdb
+*.mxd
 
 # Specific files & folders
 figures/*

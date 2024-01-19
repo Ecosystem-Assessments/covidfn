@@ -3,13 +3,17 @@
 #' @export
 
 canadian_census <- function() {
+  # Outout folder
+  out <- here::here("data", "pipedat_light", "canadian_census")
+  pipedat::chk_create(out)
+
   # Dataset
   dataset <- "CA21" # 2021 Census
   geolvl <- "CD" # Census division level
   region <- cancensus::list_census_regions(dataset) |>
     dplyr::filter(
-      level == geolvl &
-        PR_UID == 24 # To remove
+      level == geolvl # &
+      # PR_UID == 24 # To remove
     )
 
   # Indicators
@@ -92,5 +96,29 @@ canadian_census <- function() {
     unlist()
   dat <- dat[, -uid]
 
-  # Export!
+  # Export
+  sf::st_write(dat, here::here(out, "canadian_census.gpkg"), quiet = TRUE, append = FALSE)
+
+  # Prepare names and template to integrate in grid
+  datNames <- colnames(dat)[stringr::str_detect(colnames(dat), ":")]
+  bb <- sf::st_bbox(dat)
+  rt <- raster::raster(
+    xmn = bb$xmin, ymn = bb$ymin,
+    xmx = bb$xmax, ymx = bb$ymax,
+    crs = sf::st_crs(dat)$epsg,
+    res = .01
+  ) |>
+    stars::st_as_stars()
+
+  # Rasterize
+  r <- list()
+  for (i in seq_len(length(datNames))) {
+    r[[i]] <- stars::st_rasterize(dat[, datNames[i]], rt) |>
+      pipedat::masteringrid()
+  }
+
+  # Export
+  nm <- stringr::str_split(datNames, ":")
+  for (i in seq_len(length(nm))) nm[[i]] <- nm[[i]][1]
+  for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, nm[i]))
 }

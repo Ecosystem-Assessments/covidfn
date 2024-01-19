@@ -14,8 +14,9 @@ pipeline <- function() {
   library(pipedat)
   pipedat::pipeflow()
 
-  # A bit of a change of pace here.
+  # A bit of a change of pace here, I do not want to keep developing pipedat just yet in light of our current work
   canadian_census()
+  proximity_measures_database()
 
   # Extract values for each Health Region
   out_extract_hr()
