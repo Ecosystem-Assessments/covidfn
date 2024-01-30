@@ -118,6 +118,8 @@ canadian_census <- function() {
   }
 
   # Export
+  out <- here::here(out, "ingrid")
+  pipedat::chk_create(out)
   nm <- stringr::str_split(datNames, ":")
   for (i in seq_len(length(nm))) nm[[i]] <- nm[[i]][1]
   for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, nm[i]))

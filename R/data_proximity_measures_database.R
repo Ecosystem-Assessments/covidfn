@@ -38,6 +38,8 @@ proximity_measures_database <- function() {
   }
 
   # Export
+  out <- here::here(out, "ingrid")
+  pipedat::chk_create(out)
   nm <- datNames
   for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, nm[i]))
 }
