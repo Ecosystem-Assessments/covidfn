@@ -17,6 +17,7 @@ pipeline <- function() {
   # A bit of a change of pace here, I do not want to keep developing pipedat just yet in light of our current work
   canadian_census()
   proximity_measures_database()
+  cchs()
 
   # Extract values for each Health Region
   out_extract_hr()
