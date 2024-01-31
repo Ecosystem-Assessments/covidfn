@@ -73,147 +73,147 @@ cchs <- function() {
     # 0053-0053 Perceived health - (D)
     # Class 0: Poor
     # Class 1: Fair
-    c("GENDVHDI", "0,1", "percent"),
+    c("GENDVHDI", "0,1", "percent", "poor_fair_perceived_health_percent"),
 
     # 0054-0054 Perceived mental health - (D)
     # Class 0: Poor
     # Class 1: Fair
-    c("GENDVMHI", "0,1", "percent"),
+    c("GENDVMHI", "0,1", "percent", "poor_fair_perceived_mental_health_percent"),
 
     # 0084-0084 BMI classification 18 and + (adjusted) - intl standard - (D)
     # Class 3: overweight
     # Class 4: Obese - Class I, II, III
-    c("HWTDGBCC", "3,4", "percent"),
+    c("HWTDGBCC", "3,4", "percent", "overweight_obese_percent"),
 
     # 0088-0088 Has asthma
     # Class 1: Yes
-    c("CCC_015", "1", "percent"),
+    c("CCC_015", "1", "percent", "asthma_percent"),
 
     # 0091-0091 Has a COPD
     # Class 1: Yes
-    c("CCC_030", "1", "percent"),
+    c("CCC_030", "1", "percent", "copd_percent"),
 
     # 0098-0098 Has high blood pressure
     # Class 1: Yes
-    c("CCC_065", "1", "percent"),
+    c("CCC_065", "1", "percent", "high_blood_pressure_percent"),
 
     # 0100-0100 Has high blood cholesterol / lipids
     # Class 1: Yes
-    c("CCC_075", "1", "percent"),
+    c("CCC_075", "1", "percent", "high_blood_cholesterol_lipids_percent"),
 
     # 0102-0102 Has heart disease
     # Class 1: Yes
-    c("CCC_085", "1", "percent"),
+    c("CCC_085", "1", "percent", "heart_disease_percent"),
 
     # 0104-0104 Has diabetes
     # Class 1: Yes
-    c("CCC_095", "1", "percent"),
+    c("CCC_095", "1", "percent", "diabetes_percent"),
 
     # 0113-0113 Has cancer
     # Class 1: Yes
-    c("CCC_130", "1", "percent"),
+    c("CCC_130", "1", "percent", "cancer_percent"),
 
     # 0129-0129 Has an anxiety disorder (phobia, OCD, panic)
     # Class 1: Yes
-    c("CCC_200", "1", "percent"),
+    c("CCC_200", "1", "percent", "anxiety_disorder_percent"),
 
     # 0251-0252 Number of hours per night usually spent sleeping
-    c("SLPG005", "96,99", "mean"),
+    c("SLPG005", "96,99", "mean", "hours_sleep_mean"),
 
     # 0319-0319 Type of smoker (daily / occasionally / not at all) - presently
     # Classes 1 (Daily)
-    c("SMK_005", "1", "percent"),
+    c("SMK_005", "1", "percent", "daily_smoker_percent"),
 
     # 0322-0322 Smoked more than 100 cigarettes - lifetime
     # Class 1: Yes
-    c("SMK_020", "1", "percent"),
+    c("SMK_020", "1", "percent", "more_100_cigarettes_lifetime_percent"),
 
     # 0366-0366 Alternative tobacco product usage - (D)
     # Class 1 (Has used an alternative tobacco product)
-    c("TALDVUSE", "1", "percent"),
+    c("TALDVUSE", "1", "percent", "alternative_tobacco_product_usage_percent"),
 
     # 0386-0386 Type of drinker - 12 months - (D)
     # Class 1: regular drinker
-    c("ALCDVTTM", "1", "percent"),
+    c("ALCDVTTM", "1", "percent", "regular_drinker_percent"),
 
     # 0416-0416 Increased long term risk due to drinking - (D)
     # Class 1: Increased long term health risk due to drinking
-    c("ALWDVLTR", "1", "percent"),
+    c("ALWDVLTR", "1", "percent", "increased_long_term_risk_due_to_drinking_percent"),
 
     # 0417-0417 Increased short term risks due to drinking - (D)
     # Class 1: Increased short term health risks due to drinking
-    c("ALWDVSTR", "1", "percent"),
+    c("ALWDVSTR", "1", "percent", "increased_short_term_risk_due_to_drinking_percent"),
 
     # 0447-0449 Active transportation - 7 d - total - hours
-    c("PAA_015", "996,997,998,999", "mean"),
+    c("PAA_015", "996,997,998,999", "mean", "adult_active_transportation_hours_mean"),
 
     # 0463-0465 Sports / fitness / recreational physical act - 7 d - total - hours
-    c("PAA_045", "996,997,998,999", "mean"),
+    c("PAA_045", "996,997,998,999", "mean", "adult_sports_fitness_recreational_activities_hours_mean"),
 
     # 0482-0485 Other physical activities - 7 d - total - minutes
-    c("PAA_080", "9996,9997,9999", "mean"),
+    c("PAA_080", "9996,9997,9999", "mean", "adult_other_physical_activities_minutes_mean"),
 
     # 0490-0493 Physical activities - vigorous intensity - 7 d - total - minutes
-    c("PAA_105", "9996,9997,9998,9999", "mean"),
+    c("PAA_105", "9996,9997,9998,9999", "mean", "adult_physical_activities_vigorous_intensity_minutes_mean"),
 
     # 0494-0498 Total minutes - active transportation - 7 d - (D)
-    c("PAADVTRV", "99996,99999", "mean"),
+    c("PAADVTRV", "99996,99999", "mean", "adult_active_transportation_minutes_mean"),
 
     # 0505-0509 Total minutes - recreational physical activities - 7 d - (D)
-    c("PAADVREC", "99996,99999", "mean"),
+    c("PAADVREC", "99996,99999", "mean", "adult_recreational_physical_activities_minutes_mean"),
 
     # 0516-0520 Total minutes - other physical activities - 7 d - (D)
-    c("PAADVOTH", "99996,99999", "mean"),
+    c("PAADVOTH", "99996,99999", "mean", "adult_other_physical_activities_minutes_mean"),
 
     # 0527-0531 Total minutes - moderate to vigorous physical activities - 7 d - (D)
-    c("PAADVMVA", "99996,99999", "mean"),
+    c("PAADVMVA", "99996,99999", "mean", "adult_moderate_to_vigorous_physical_activities_minutes_mean"),
 
     # 0534-0538 Total minutes - vigorous physical activities - 7 d - (D)
-    c("PAADVVIG", "99996,99999", "mean"),
+    c("PAADVVIG", "99996,99999", "mean", "adult_vigorous_physical_activities_minutes_mean"),
 
     # 0539-0543 Volume of weekly activity - 7 d (METs*mins/week) - (D)
-    c("PAADVVOL", "99996,99999", "mean"),
+    c("PAADVVOL", "99996,99999", "mean", "adult_volume_of_weekly_activity_mean"),
 
     # 0532-0532 Physical activity indicator - (D)
     # Class 2: Physically active below recommended level from CPAG
-    c("PAADVACV", "2", "percent"),
+    c("PAADVACV", "2", "percent", "adult_physically_active_below_recommended_level_from_CPAG_percent"),
 
     # 0552-0553 Num of days - physically active - 7 d - (D)
-    c("PAADVDYS", "96,99", "mean"),
+    c("PAADVDYS", "96,99", "mean", "adult_physically_active_days_mean"),
 
     # 0583-0587 Total minutes - active transportation - 7 d - (D)
-    c("PAYDVTTR", "99996,99999", "mean"),
+    c("PAYDVTTR", "99996,99999", "mean", "youth_active_transportation_minutes_mean"),
 
     # 0633-0637 Total minutes - physical activities - 7 d - (D)
-    c("PAYDVMNS", "99996,99999", "mean"),
+    c("PAYDVMNS", "99996,99999", "mean", "youth_physical_activities_minutes_mean"),
 
     # 0652-0653 Num of days - meeting / exceeding physical activity guidelines - (D)
-    c("PAYDVDPG", "96,99", "mean"),
+    c("PAYDVDPG", "96,99", "mean", "youth_days_meeting_exceeding_physical_activity_guidelines_mean"),
 
     # 0655-0659 Total minutes - vigorous physical activity - 7 d - (D)
-    c("PAYDVVIG", "99996,99999", "mean"),
+    c("PAYDVVIG", "99996,99999", "mean", "youth_vigorous_physical_activity_mean"),
 
     # 0800-0800 Had a seasonal flu shot (excluding H1N1) - lifetime
     # Class 1: Yes
-    c("FLU_005", "1", "percent"),
+    c("FLU_005", "1", "percent", "seasonal_flu_shot_lifetime_percent"),
 
     # 1312-1314 Total usual hours worked per week - (D)
-    c("LBFDGHPW", "996,999", "mean"),
+    c("LBFDGHPW", "996,999", "mean", "total_hours_work_week_mean"),
 
     # 1359-1359 Food security - adult status - (D)
     # Class 1: Moderately food insecure
     # Class 2: Severely food insecure
-    c("FSCDVAFS", "1,2", "percent"),
+    c("FSCDVAFS", "1,2", "percent", "adult_moderately_severely_food_insecure_percent"),
 
     # 1360-1360 Food security - child status - (D)
     # Class 1: Moderately food insecure
     # Class 2: Severely food insecure
-    c("FSCDVCFS", "1,2", "percent"),
+    c("FSCDVCFS", "1,2", "percent", "child_moderately_severely_food_insecure_percent"),
 
     # 1361-1361 Household food security status - (D)
     # Class 1: Moderately food insecure
     # Class 2: Severely food insecure
-    c("FSCDVHFS", "1,2", "percent")
+    c("FSCDVHFS", "1,2", "percent", "household_moderately_severely_food_insecure_percent")
   )
 
   # Filter and apply functions to summarize CCHS data
@@ -311,7 +311,12 @@ cchs <- function() {
 
   # ------------------------------------------------------------------------------------
   # Prepare names and template to integrate in grid
+  for (i in seq_len(length(voi))) voi[[i]] <- data.frame(t(voi[[i]]))
+  voi <- dplyr::bind_rows(voi)
+  colnames(voi) <- c("uid", "code", "method", "name")
   datNames <- colnames(sf::st_drop_geometry(dat))
+  stopifnot(all(datNames == voi$uid))
+
   bb <- sf::st_bbox(dat)
   rt <- raster::raster(
     xmn = bb$xmin, ymn = bb$ymin,
@@ -326,16 +331,32 @@ cchs <- function() {
   for (i in seq_len(length(datNames))) {
     r[[i]] <- stars::st_rasterize(dat[, datNames[i]], rt) |>
       pipedat::masteringrid()
+    names(r[[i]]) <- glue::glue("{datNames[i]}_{voi$name[i]}")
   }
+
+  # Data list
+  name <- stringr::str_replace_all(voi$name, "_", " ") |>
+    stringr::str_replace_all("percent", "(percent)") |>
+    stringr::str_replace_all("mean", "(mean)") |>
+    stringr::str_to_sentence()
+  df <- data.frame(
+    dataset = "Canadian Community Health Survey 2017-2018",
+    code = datNames,
+    name = name,
+    file = glue::glue("{datNames}_{voi$name}")
+  )
+
 
   # ------------------------------------------------------------------------------------
   # Export
   # Vector data
   out <- here::here(input)
   sf::st_write(dat, here::here(out, "cchs.gpkg"), quiet = TRUE, append = FALSE)
+  pipedat::masterwrite(df, here::here(out, "cchs_list"))
 
   # Gridded data
   out <- here::here(input, "ingrid")
+  nm <- glue::glue("{datNames}_{voi$name}")
   chk_create(out)
-  for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, datNames[i]))
+  for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, nm[i]))
 }

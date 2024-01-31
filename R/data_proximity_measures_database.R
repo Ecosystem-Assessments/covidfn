@@ -37,7 +37,19 @@ proximity_measures_database <- function() {
       pipedat::masteringrid()
   }
 
+  # Data list
+  name <- stringr::str_replace_all(datNames, "_", " ") |>
+    stringr::str_replace("prox", "proximity") |>
+    stringr::str_to_sentence()
+  df <- data.frame(
+    dataset = "Proximity measures database",
+    code = "",
+    name = name,
+    file = datNames
+  )
+
   # Export
+  pipedat::masterwrite(df, here::here(out, "proximity_measures_database_list"))
   out <- here::here(out, "ingrid")
   pipedat::chk_create(out)
   nm <- datNames

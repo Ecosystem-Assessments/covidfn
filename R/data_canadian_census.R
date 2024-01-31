@@ -117,10 +117,26 @@ canadian_census <- function() {
       pipedat::masteringrid()
   }
 
+  # Raster list
+  nm <- stringr::str_split(datNames, ":")
+  code <- name <- list()
+  for (i in seq_len(length(nm))) code[[i]] <- nm[[i]][1]
+  for (i in seq_len(length(nm))) name[[i]] <- nm[[i]][2]
+  code <- unlist(code)
+  name <- unlist(name) |>
+    stringr::str_trim()
+
+  df <- data.frame(
+    dataset = "2021 Canadian Census",
+    code = code,
+    name = name,
+    file = code
+  )
+
   # Export
+  pipedat::masterwrite(df, here::here(out, "census_list"))
   out <- here::here(out, "ingrid")
   pipedat::chk_create(out)
-  nm <- stringr::str_split(datNames, ":")
   for (i in seq_len(length(nm))) nm[[i]] <- nm[[i]][1]
-  for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, nm[i]))
+  for (i in seq_len(length(r))) pipedat::masterwrite(r[[i]], here::here(out, nm[[i]]))
 }

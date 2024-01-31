@@ -18,8 +18,13 @@ pipeline <- function() {
   canadian_census()
   proximity_measures_database()
   cchs()
+  community_wellbeing_index()
 
-  # Extract values for each Health Region
+  # Prepare data for analysis
+  format_data()
+
+
+
   out_extract_hr()
   out_base_stats()
 
