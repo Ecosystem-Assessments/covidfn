@@ -8,6 +8,7 @@ format_data <- function() {
   out$out <- here::here("data", "data_format")
   out$covid <- here::here(out$out, "covid")
   out$ind <- here::here(out$out, "indicators")
+  out$geo <- here::here(out$out, "geo")
   lapply(out, chk_create)
 
   # --------------------------------------------------------------------------------
@@ -68,7 +69,8 @@ format_data <- function() {
 
     cases <- dplyr::left_join(geo, cases, by = "hruid") |>
       dplyr::left_join(hr, by = "hruid") |>
-      dplyr::mutate(cases_pop = cases / pop) |>
+      # For covid normalized by population size
+      # dplyr::mutate(cases_pop = cases / pop) |>
       dplyr::select(
         region = region.x,
         hruid,
@@ -77,14 +79,16 @@ format_data <- function() {
         area,
         centroid_lon,
         centroid_lat,
-        !!glue::glue("cases_{dates[[i]][1]}_{dates[[i]][2]}") := cases,
-        !!glue::glue("cases_pop_{dates[[i]][1]}_{dates[[i]][2]}") := cases_pop
+        !!glue::glue("cases_{dates[[i]][1]}_{dates[[i]][2]}") := cases # ,
+        # For covid normalized by population size
+        # !!glue::glue("cases_pop_{dates[[i]][1]}_{dates[[i]][2]}") := cases_pop
       ) # |>
     # stars::st_rasterize()
 
     deaths <- dplyr::left_join(geo, deaths, by = "hruid") |>
       dplyr::left_join(hr, by = "hruid") |>
-      dplyr::mutate(deaths_pop = deaths / pop) |>
+      # For covid normalized by population size
+      # dplyr::mutate(deaths_pop = deaths / pop) |>
       dplyr::select(
         region = region.x,
         hruid,
@@ -93,8 +97,9 @@ format_data <- function() {
         area,
         centroid_lon,
         centroid_lat,
-        !!glue::glue("deaths_{dates[[i]][1]}_{dates[[i]][2]}") := deaths,
-        !!glue::glue("deaths_pop_{dates[[i]][1]}_{dates[[i]][2]}") := deaths_pop
+        !!glue::glue("deaths_{dates[[i]][1]}_{dates[[i]][2]}") := deaths # ,
+        # For covid normalized by population size
+        # !!glue::glue("deaths_pop_{dates[[i]][1]}_{dates[[i]][2]}") := deaths_pop
       ) |>
       sf::st_drop_geometry()
     # stars::st_rasterize()
@@ -118,9 +123,6 @@ format_data <- function() {
       by = c("region", "hruid", "name_canonical", "population", "area", "centroid_lon", "centroid_lat")
     ) |>
     dplyr::mutate(population_density = population / area)
-
-  pipedat::masterwrite(cases, here::here(out$covid, "cases"))
-  pipedat::masterwrite(deaths, here::here(out$covid, "deaths"))
 
   # Spatial vectors
   cases_sf <- dplyr::left_join(geo, cases, by = c("region", "hruid", "name_canonical"))
@@ -149,6 +151,16 @@ format_data <- function() {
     merge()
   pipedat::masterwrite(cases_ras, here::here(out$covid, "cases"))
   pipedat::masterwrite(deaths_ras, here::here(out$covid, "deaths"))
+
+  # Export data tables
+  geodat <- cases |>
+    dplyr::select(hruid, region, name_canonical, population, area, centroid_lon, centroid_lat, population_density)
+  cases <- dplyr::select(cases, hruid, dplyr::contains("cases")) 
+  deaths <- dplyr::select(deaths, hruid, dplyr::contains("deaths")) 
+  pipedat::masterwrite(cases, here::here(out$covid, "cases"))
+  pipedat::masterwrite(deaths, here::here(out$covid, "deaths"))
+  pipedat::masterwrite(geodat, here::here(out$geo, "geo"))
+
 
   # --------------------------------------------------------------------------------
   # Indicators  data

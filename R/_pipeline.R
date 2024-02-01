@@ -23,7 +23,7 @@ pipeline <- function() {
   # Prepare data for analysis
   format_data()
 
-
+  # Analyses
 
   out_extract_hr()
   out_base_stats()
