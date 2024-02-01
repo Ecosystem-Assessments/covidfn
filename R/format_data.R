@@ -170,6 +170,10 @@ format_data <- function() {
   )
   indicators_ras <- do.call("c", indicators_ras)
 
+  # Remove raster on road network
+  uid <- names(indicators_ras) == "census_road_network_file_2021-7daa23ee-road_network.tif"
+  indicators_ras <- indicators_ras[!uid]
+
   # Data tables
   indicators <- aggregate(indicators_ras, geo, FUN = mean, na.rm = TRUE, exact = TRUE) |>
     data.frame() |>
@@ -179,7 +183,37 @@ format_data <- function() {
   # Single band for indicators
   indicators_ras <- merge(indicators_ras)
 
+  # List of indicators
+  # Manual for road network and healthcare
+  df <- data.frame(
+    dataset = c(
+      "Census road network 2021",
+      rep("Open database on healthcare facilities", 2)
+    ),
+    code = "",
+    name = c(
+      "Distance to road network",
+      "Distance to critical healthcare facilities",
+      "Distance to longterm healthcare facilities"
+    ),
+    file = c(
+      "census_road_network_file_2021-7daa23ee-distance_to_road_network",
+      "open_database_healthcare_facilities-8b0bbc44-critical",
+      "open_database_healthcare_facilities-8b0bbc44-longterm"
+    )
+  )
+
+  ind_list <- list(
+    df,
+    vroom::vroom(here::here(pl, "cchs", "cchs_list.csv")),
+    vroom::vroom(here::here(pl, "canadian_census", "census_list.csv")),
+    vroom::vroom(here::here(pl, "community_wellbeing_index", "community_wellbeing_index_list.csv")),
+    vroom::vroom(here::here(pl, "proximity_measures_database", "proximity_measures_database_list.csv"))
+  ) |>
+    dplyr::bind_rows()
+
   # Export
   pipedat::masterwrite(indicators, here::here(out$ind, "indicators"))
   pipedat::masterwrite(indicators_ras, here::here(out$ind, "indicators"))
+  pipedat::masterwrite(ind_list, here::here(out$ind, "indicators_list"))
 }

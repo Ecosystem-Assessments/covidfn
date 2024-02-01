@@ -125,7 +125,7 @@ community_wellbeing_index <- function() {
   name <- stringr::str_replace_all(datNames, "_", " ") |>
     stringr::str_to_sentence()
   df <- data.frame(
-    dataset = "Canadian Wellbeing Index",
+    dataset = "Community Wellbeing Index",
     code = "",
     name = name,
     file = datNames
@@ -136,7 +136,7 @@ community_wellbeing_index <- function() {
   # Export
   # Vector data
   sf::st_write(cwi, here::here(out, "community_wellbeing_index.gpkg"), quiet = TRUE, append = FALSE)
-  pipedat::masterwrite(df, here::here(out, "canadian_wellbeing_index_list"))
+  pipedat::masterwrite(df, here::here(out, "community_wellbeing_index_list"))
 
   # Gridded data
   out <- here::here(out, "ingrid")
