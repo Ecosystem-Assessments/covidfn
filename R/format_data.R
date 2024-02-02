@@ -123,6 +123,8 @@ format_data <- function() {
       by = c("region", "hruid", "name_canonical", "population", "area", "centroid_lon", "centroid_lat")
     ) |>
     dplyr::mutate(population_density = population / area)
+  colnames(cases) <- stringr::str_replace_all(colnames(cases), "-", "_")
+  colnames(deaths) <- stringr::str_replace_all(colnames(deaths), "-", "_")
 
   # Spatial vectors
   cases_sf <- dplyr::left_join(geo, cases, by = c("region", "hruid", "name_canonical"))
