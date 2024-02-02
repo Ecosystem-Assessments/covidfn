@@ -155,11 +155,27 @@ format_data <- function() {
   # Export data tables
   geodat <- cases |>
     dplyr::select(hruid, region, name_canonical, population, area, centroid_lon, centroid_lat, population_density)
-  cases <- dplyr::select(cases, hruid, dplyr::contains("cases")) 
-  deaths <- dplyr::select(deaths, hruid, dplyr::contains("deaths")) 
+  cases <- dplyr::select(cases, hruid, dplyr::contains("cases"))
+  deaths <- dplyr::select(deaths, hruid, dplyr::contains("deaths"))
   pipedat::masterwrite(cases, here::here(out$covid, "cases"))
   pipedat::masterwrite(deaths, here::here(out$covid, "deaths"))
   pipedat::masterwrite(geodat, here::here(out$geo, "geo"))
+
+  # Covid list
+  files <- c(
+    colnames(cases)[stringr::str_detect(colnames(cases), "cases")],
+    colnames(deaths)[stringr::str_detect(colnames(deaths), "deaths")]
+  )
+  name <- files |>
+    stringr::str_replace_all("_", " ") |>
+    stringr::str_to_sentence()
+  df <- data.frame(
+    dataset = "COVID-19 Timeline Canada",
+    code = "",
+    name = name,
+    file = files
+  )
+  pipedat::masterwrite(df, here::here(out$covid, "covid_list"))
 
 
   # --------------------------------------------------------------------------------
@@ -186,11 +202,15 @@ format_data <- function() {
   uid <- names(indicators_ras) == "census_road_network_file_2021-7daa23ee-road_network.tif"
   indicators_ras <- indicators_ras[!uid]
 
+  # Replace "-" for "_"
+  names(indicators_ras) <- stringr::str_replace_all(names(indicators_ras), "-", "_")
+
   # Data tables
   indicators <- aggregate(indicators_ras, geo, FUN = mean, na.rm = TRUE, exact = TRUE) |>
     data.frame() |>
     dplyr::select(-geometry) |>
     dplyr::mutate(hruid = geo$hruid)
+  colnames(indicators) <- tools::file_path_sans_ext(colnames(indicators))
 
   # Single band for indicators
   indicators_ras <- merge(indicators_ras)
@@ -209,9 +229,9 @@ format_data <- function() {
       "Distance to longterm healthcare facilities"
     ),
     file = c(
-      "census_road_network_file_2021-7daa23ee-distance_to_road_network",
-      "open_database_healthcare_facilities-8b0bbc44-critical",
-      "open_database_healthcare_facilities-8b0bbc44-longterm"
+      "census_road_network_file_2021_7daa23ee_distance_to_road_network",
+      "open_database_healthcare_facilities_8b0bbc44_critical",
+      "open_database_healthcare_facilities_8b0bbc44_longterm"
     )
   )
 
