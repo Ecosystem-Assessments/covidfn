@@ -28,17 +28,6 @@ pipeline <- function() {
   out_glm_nb()
   out_glm_nb_multi()
 
-
-  out_extract_hr()
-  out_base_stats()
-
-  # # Extract values under points
-  # fn_extract()
-
-  # # Explore relationships between covid and social vulnerabilities
-  # out_lm()
-  # out_cluster()
-
   # # Figures
   # fig_aoi()
   # fig_ingrid()

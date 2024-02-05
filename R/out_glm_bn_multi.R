@@ -37,8 +37,9 @@ out_glm_nb_multi <- function() {
   indicators <- apply(indicators, 2, function(x) x / max(x, na.rm = TRUE))
 
   # Step-wise & within-group indicator removal based on correlation and AIC
+  y <- cbind(cases, deaths)
   indicators <- select_indicators(
-    y = cbind(cases, deaths),
+    y = y,
     x = indicators,
     off_data = geo[, "population", drop = FALSE],
     threshold = 0.8
@@ -48,7 +49,7 @@ out_glm_nb_multi <- function() {
   mods <- list()
   for (i in seq_len(length(indicators))) {
     mods[[i]] <- stepwise_glm_nb(
-      y = y[, names(indicators)[i]],
+      y = y[, names(indicators)[i], drop = FALSE],
       x = indicators[[i]],
       off_data = geo[, "population", drop = FALSE]
     )
@@ -58,12 +59,13 @@ out_glm_nb_multi <- function() {
 
 # ------------------------------------------------------------
 stepwise_glm_nb <- function(y, x, off_data = NULL) {
+  # http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/154-stepwise-regression-essentials-in-r/
   # Full model formula
   stopifnot(ncol(y) == 1)
   f <- glue::glue("{colnames(y)} ~ .")
   if (!is.null(off_data)) {
     stopifnot(ncol(off_data) == 1)
-    f <- glue::glue("{f} + log({colnames(off_data)})")
+    f <- glue::glue("{f} + offset(log({colnames(off_data)}))")
   } else {
     off <- NULL
   }
