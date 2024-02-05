@@ -25,7 +25,8 @@ pipeline <- function() {
 
   # Analyses & figures
   figures()
-
+  out_glm_nb()
+  out_glm_nb_multi()
 
 
   out_extract_hr()
