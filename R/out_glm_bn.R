@@ -110,7 +110,8 @@ glm_bn <- function(formulas, dat) {
       MASS::glm.nb(
         formula = formula(x),
         data = dat,
-        link = log
+        link = log,
+        control = glm.control(maxit = 1000)
       )
     )
   })

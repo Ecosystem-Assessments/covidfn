@@ -33,8 +33,45 @@ out_glm_nb_multi <- function() {
   indicators <- remid(indicators)
   geo <- remid(geo)
 
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  # WARNING:
+  #   Remove indicators, mainly due to:
+  #     - insufficient spatial distribution
+  #     - irrelevant at the scale of health regions
+  #
+  #   This could be done sooner in the code
+  #   For now I would rather keep all datasets intact
+  # ------------------------------------------------------------
+  remove_indicators <- c(
+    "ALWDVLTR_increased_long_term_risk_due_to_drinking_percent",
+    "ALWDVSTR_increased_short_term_risk_due_to_drinking_percent",
+    "SLPG005_hours_sleep_mean",
+    "TALDVUSE_alternative_tobacco_product_usage_percent",
+    "cwb",
+    "education",
+    "housing",
+    "income",
+    "labour_force_activity",
+    "childcare_prox",
+    "educpri_prox",
+    "educsec_prox",
+    "employment_prox",
+    "grocery_prox",
+    "health_prox",
+    "library_prox",
+    "park_prox",
+    "pharma_prox",
+    "transit_prox",
+    "v_CA21_1085"
+  )
+  indicators <- indicators[, !colnames(indicators) %in% remove_indicators]
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   # Scale indicators data
   indicators <- apply(indicators, 2, function(x) x / max(x, na.rm = TRUE))
+
+  # Add small constant to indicators
+  indicators <- indicators + .1
 
   # Step-wise & within-group indicator removal based on correlation and AIC
   y <- cbind(cases, deaths)
@@ -54,6 +91,25 @@ out_glm_nb_multi <- function() {
       off_data = geo[, "population", drop = FALSE]
     )
   }
+
+  # Single data.frames
+  r2 <- coefs <- list()
+  # mods[[i]]$coef$y <- mods[[i]]$summary$y
+  for (i in seq_len(length(mods))) {
+    r2[[i]] <- mods[[i]]$summary
+    coefs[[i]] <- mods[[i]]$coef |>
+      as.data.frame() |>
+      dplyr::mutate(
+        y = r2[[i]]$y,
+        x_name = rownames(mods[[i]]$coef)
+      )
+  }
+  r2 <- dplyr::bind_rows(r2)
+  coefs <- dplyr::bind_rows(coefs)
+
+  # Export
+  write.csv(r2, here::here(out, "glm_bn_multivariate_r2.csv"), row.names = FALSE)
+  write.csv(coefs, here::here(out, "glm_bn_multivariate_coefficients.csv"), row.names = FALSE)
 }
 
 
@@ -77,7 +133,8 @@ stepwise_glm_nb <- function(y, x, off_data = NULL) {
   null_model <- MASS::glm.nb(
     formula = formula(f),
     data = dat,
-    link = log
+    link = log,
+    control = glm.control(maxit = 1000)
   )
 
   # Stepwise model selection
@@ -106,6 +163,7 @@ stepwise_glm_nb <- function(y, x, off_data = NULL) {
 select_indicators <- function(y, x, off_data = NULL, threshold = 0.8) {
   # Indicators list
   ind_list <- vroom::vroom(here::here(input, "indicators", "indicators_list.csv")) |>
+    dplyr::filter(file %in% colnames(indicators)) |>
     dplyr::group_by(group) |>
     dplyr::group_split()
 
