@@ -19,6 +19,18 @@ fig_glm_bn_multi <- function() {
 
   # Spatial figures
   plot_spat <- function(dat) {
+    # Basemap
+    aoi <- sf::st_read(
+      "data/pipedat/covid_timeline_canada-a56e753b/format/covid_timeline_canada-a56e753b-hr_wgs84.gpkg",
+      quiet = TRUE
+    )
+    canada <- sf::st_read("data/basemap/canada_full.gpkg", quiet = TRUE)
+    pr <- sf::st_read(
+      "data/pipedat/covid_timeline_canada-a56e753b/format/covid_timeline_canada-a56e753b-pt_wgs84.gpkg",
+      quiet = TRUE
+    )
+
+    # Data
     p <- quantile(
       dat[[1]],
       probs = seq(0, 1, by = .1),
@@ -28,10 +40,6 @@ fig_glm_bn_multi <- function() {
 
     # Names
     nm <- names(dat)
-    name <- stringr::str_split(nm, "_") |>
-      lapply(function(x) {
-        glue::glue("Number of {x[1]}\n{x[2]}-{x[3]}-{x[4]} to {x[5]}-{x[6]}-{x[7]}")
-      })
 
     for (i in seq_len(length(dat))) {
       png(
@@ -42,13 +50,17 @@ fig_glm_bn_multi <- function() {
         units = "mm",
         pointsize = 10
       )
-      plot(
+      image(
         dat[i],
-        col = viridis::viridis(sum(p > 0)),
+        # col = viridis::magma(sum(p > 0)),
+        col = viridis::magma(length(p) - 1),
         breaks = p,
         axes = FALSE,
         main = NULL
       )
+      plot(sf::st_geometry(aoi), lwd = .5, border = "#bbbbbb", col = "#00000000", add = TRUE)
+      plot(sf::st_geometry(pr), lwd = 1.25, border = "#bbbbbb", col = "#00000000", add = TRUE)
+      plot(sf::st_geometry(canada), lwd = 1.25, border = "#bbbbbb", col = "#00000000", add = TRUE)
       dev.off()
     }
   }
@@ -152,7 +164,7 @@ fig_glm_bn_multi <- function() {
   }
   plot_mod(coefs)
 
-  # # ----------------------------------------------------------------------------------------------------------------
+  # ----------------------------------------------------------------------------------------------------------------
   # Functions
   nm_title <- function(img, chr) {
     wd <- magick::image_info(img)$width * .5
