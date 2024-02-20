@@ -55,9 +55,11 @@ fig_aoi <- function() {
   plot(sf::st_geometry(pr), lwd = .75, border = "#000000", col = "#00000000", add = TRUE)
   plot(sf::st_geometry(canada), lwd = .75, border = "#000000", col = "#00000000", add = TRUE)
 
-  # Legend
-  # Provinces & territories
-  # Health regions
+  # # Legend
+  # xR <-
+  # # Provinces & territories
+  # lines(x = c())
+  # # Health regions
 
   # ---------------------------
   dev.off()
