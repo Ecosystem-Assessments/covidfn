@@ -233,11 +233,17 @@ fig_glm_bn_multi <- function() {
 
   # deaths
   deaths <- list(
-    magick::image_append(c(img[[5]], img[[6]]), stack = FALSE),
-    magick::image_append(c(img[[7]], img[[8]]), stack = FALSE)
+    magick::image_append(c(img[[6]], img[[7]]), stack = FALSE),
+    magick::image_append(c(img[[8]], img[[9]]), stack = FALSE)
   )
   deaths <- magick::image_append(c(deaths[[1]], deaths[[2]]), stack = TRUE)
   magick::image_write(deaths, here::here(out, "glm_nb_multi_deaths.png"))
   rm(deaths)
+  gc()
+
+  # Single period
+  single <- magick::image_append(c(img[[5]], img[[10]]), stack = FALSE)
+  magick::image_write(single, here::here(out, "glm_nb_multi_pandemic.png"))
+  rm(single)
   gc()
 }

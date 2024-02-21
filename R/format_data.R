@@ -44,7 +44,8 @@ format_data <- function() {
     as.Date(c("2020-01-01", "2020-10-31")), # Onset
     as.Date(c("2020-11-01", "2021-04-30")),
     as.Date(c("2021-05-01", "2021-10-31")),
-    as.Date(c("2021-11-01", "2022-03-11")) # Omicron
+    as.Date(c("2021-11-01", "2022-03-11")), # Omicron
+    as.Date(c("2020-01-01", "2022-03-11")) # Whole pandemic
   )
 
   dat <- list()
